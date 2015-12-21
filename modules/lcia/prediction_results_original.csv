@@ -1,0 +1,14 @@
+,NAME,prediction results,prediction confidence
+0,CC(C)(C)CC(C)(C)c1ccc(cc1)OCCOCCO,54.0247509451,Low
+1,c1ccc(cc1)C(=O)OCCOCCOC(=O)c2ccccc2,152.923393454,Low
+2,CCC(OC(CC)OC(=O)c1ccccc1)OC(=O)c2ccccc2,194.080986343,Low
+3,c1cc[n](c(c1)[S])[O][Na],264.35950274,High
+4,CCCCOC(=O)C=CCC(=C)C(=O)OC,38.357135932,Low
+5,O,49.1682411941,Low
+6,C(=O)([O])[O][Na][Na],185.973374973,High
+7,c1cc[n](cc1)CC2=C(N3[C@@H]([C@@H](C3=O)NC(=O)Cc4cccs4)SC2)C(=O)[O],160.645032263,Low
+8,C(=O)([O])[O][Ca2],81.9181317293,High
+9,O=[Ti]=O,20.082737968,Low
+10,C(CSSCCO)O,252.166224515,High
+11,c1ccc2c(c1)c(ns2)O,64.378898743,High
+12,CC(C(=O)CCCCCC(=O)O)N,61.9500458941,Low
