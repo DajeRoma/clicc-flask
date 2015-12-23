@@ -18,8 +18,8 @@ from pybrain.tools.shortcuts     import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.tools.validation import CrossValidator, Validator
 from pybrain.tools.validation import ModuleValidator
-from pybrain.tools.xml import NetworkWriter
-from pybrain.tools.xml import NetworkReader
+from pybrain.tools.customxml import NetworkWriter
+from pybrain.tools.customxml import NetworkReader
 from pybrain.structure.modules.linearlayer import LinearLayer
 
 from pybrain.structure.modules.sigmoidlayer import SigmoidLayer

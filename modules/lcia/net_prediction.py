@@ -97,7 +97,7 @@ class NetPrediction:
         #     np.savetxt('prediction_results.csv',self.prediction_results,delimiter=',')
         #     print "Prediction results saved [prediction_results]. Make a copy if you want to keep it."
         results_array = self.prediction_results.tolist()
-        confidence = self.prediction_conf()
+        confidence = self.predict_conf()
         results = []
 
         for idx, smiles in enumerate(self.smiles):
@@ -105,7 +105,7 @@ class NetPrediction:
 
         return results
 
-    def prediction_conf(self):
+    def predict_conf(self):
         '''
         Prediction Confidence Level,
         Base on the distance to the centroid of training data
