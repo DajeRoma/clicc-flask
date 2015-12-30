@@ -2,13 +2,13 @@ import math
 from exposure_constants import *
 import xlrd
 import numpy as np
+import datetime
 
 class ExposureMod:
     def __init__(self):
-        self.defaults = {
-            'run_full': True,
-            'time_to_equilibrium': 365
-        }
+        self.arrays = {}
+        self.time_to_equilibrium = 365
+
 
     def run(self, inputs={}):
         time1 = datetime.datetime.now()
@@ -24,20 +24,20 @@ class ExposureMod:
             # Densities - kg/m^3 Constants
 
             self.densitySoil2 = inputs['densitySoil2']
-            self.kOctanolWater =	inputs['kOctanolWater'],
-            self.kAirWater =	inputs['kAirWater'],
-            self.kDegredationInSoil =	inputs['kDegredationInSoil'],
+            self.kOctanolWater = inputs['kOctanolWater']
+            self.kAirWater = inputs['kAirWater']
+            self.kDegredationInSoil = inputs['kDegredationInSoil']
             self.BAF_fish = 8.93E-01
             self.densityAir = 1.29
             self.densityWater = 1000
             # duration(days)
-            if(inputs[ft_duration]):
-                self.T = inputs[ft_duration]
-            else:
+            if(inputs['T']):
                 self.T = inputs['T']
+            else:
+                self.T = 3653
             # population size(persons)
-            if(inputs[ft_population]):
-                self.p = inputs[ft_population]
+            if(inputs['p']):
+                self.p = inputs['p']
             else:
                 self.p = 1
         else:
@@ -75,25 +75,25 @@ class ExposureMod:
         self.BTF_meat =	10.0**(meat_intermediary)
 
         results = {}
-        for idx in len(self.properties['T']) - self.properties['time_to_equilibrium']:
-            i = idx + self.properties['time_to_equilibrium']
+        for i in range(self.time_to_equilibrium, self.T):
             cycle_values = {}
-            for name, array in self.arrays:
-                cycle_values[name] = array[i]
+            for name, array in self.arrays.iteritems():
+                cycle_values[name] = array[i-1]
 
             cycle_results = self.cycle(cycle_values)
+            cycle_results['day'] = i
 
-            for name, array in cycle_results:
-                if results[name]:
-                    results[name].append(array[i])
+            for name, value in cycle_results.iteritems():
+                if results.has_key(name):
+                    results[name][i-self.time_to_equilibrium]=(value)
                 else:
-                    results[name] = []
-                    results[name].append(array[i])
+                    results[name] = [None]*(self.T-self.time_to_equilibrium)
+                    results[name][i-self.time_to_equilibrium]=(value)
 
         time2 = datetime.datetime.now()
         total_time = time2 - time1
         print total_time
-        # return results
+        return results
 
 
     def cycle(self, inputs):
@@ -113,6 +113,6 @@ class ExposureMod:
         # expand variables from excel defined dicts to individual object attributes.
         # the only purpose of this is to be able to copy in the excel formulas
         # and references tables easily. does require appending self to each formula value.
-        for table in [self.properties, ingestion_food, ingestion_water, inhalation]:
+        for table in [ingestion_food, ingestion_water, inhalation]:
             for key, value in table.items():
                 setattr(self, key, value)

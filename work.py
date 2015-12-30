@@ -1,6 +1,5 @@
 from flask import Flask, request, redirect, jsonify, url_for
 from utils import *
-from modules import *
 from threading import Thread
 from werkzeug import secure_filename
 app = Flask(__name__)
@@ -30,23 +29,23 @@ def send_email(subject, sender, recipients, text_body, html_body):
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
 
-@app.route('/submit', methods=['POST'])
-def run_job():
-    query = request.form['query']
-    chem = chem_spider.get_chem(query)
-    if chem:
-        results = modules.run(chem)[0]
-        return jsonify(results)
-    else:
-        return 204
+# @app.route('/submit', methods=['POST'])
+# def run_job():
+#     query = request.form['query']
+#     chem = chem_spider.get_chem(query)
+#     if chem:
+#         results = modules.run(chem)[0]
+#         return jsonify(results)
+#     else:
+#         return 204
 
 
-@app.route('/search', methods=['POST'])
-def search_cs():
-    query = request.form['query']
-    # hooks=dict(response=print_url)
-    chem = chem_spider.get_chem(query)
-    return jsonify(chem)
+# @app.route('/search', methods=['POST'])
+# def search_cs():
+#     query = request.form['query']
+#     # hooks=dict(response=print_url)
+#     chem = chem_spider.get_chem(query)
+#     return jsonify(chem)
 
 @app.route('/exposure_test', methods=['GET'])
 def run_exposure_default_values():
@@ -80,7 +79,7 @@ def upload_file():
 @app.route('/test_ft_exposure', methods=['GET'])
 def test_ft_exposure():
         fat_outs = fat.run({})
-        exposure_results = exp.run(ft_outs)
+        exposure_results = exp.run(fat_outs)
         return jsonify({'results': exposure_results})
 
 

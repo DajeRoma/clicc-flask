@@ -12,17 +12,24 @@ import datetime
 from astropy.table import Table, Column
 import csv
 from math import exp, sqrt
+import inspect
 
+
+ft_filename = inspect.getfile(inspect.currentframe())
+if '.py' in ft_filename:
+    ft_class_directory = ft_filename.split('\\')
+    ft_class_directory.remove('fate_and_transport_lvl4.py')
+    ft_class_directory = '\\'.join(ft_class_directory)
 
 class FateAndTransport:
-    
-
+    def __init__(self):
+        self.directory = ft_class_directory
 
     def run(self, inputs):
         time1 = datetime.datetime.now()
         print time1, "1"
         #DETERMINE COMPARTMENT EXISTENCE
-        main_workbook = xlrd.open_workbook( self.properties.'Environment_SF_Organics_PCB_input_new5.xlsx')
+        main_workbook = xlrd.open_workbook( self.directory + '\\Environment_SF_Organics_PCB_input_new5.xlsx')
         environment_worksheet = main_workbook.sheet_by_name('Environment')
         environment_code = environment_worksheet.col_values(2, start_rowx=2,end_rowx=None)
         environment_value = environment_worksheet.col_values(3, start_rowx=2,end_rowx=None)
@@ -1779,11 +1786,7 @@ class FateAndTransport:
         dDeepS3removal = np.multiply(-1,factor10)
 
 
-
-        print "#############################"
-
         days = len(new_datetime)
-        print days, "days"
 
         bg0 = np.array([bgConcAir, bgConcFW, bgConcSW, bgConcSoil1, bgConcSoil2, bgConcSoil3, bgConcFWsed, bgConcSWsed, bgConcSoil1, bgConcSoil2, bgConcSoil3])
 
@@ -1837,11 +1840,9 @@ class FateAndTransport:
         indices.append(ds3choice)
 
         time1 = datetime.datetime.now()
-        print time1, "1"
 
         indices = np.array(indices)
         matrix_index = np.where(indices > 0)
-        print matrix_index
 
         bg0 = bg0[matrix_index]
 
@@ -1851,9 +1852,6 @@ class FateAndTransport:
         fresults.append(bg0)
         for i in range(days):
             index = i
-            print index
-
-            print "####### d1 #######"
 
             dAremoval_val =  [x[index] for x in dAremoval]
             dFWtoA_val =  [dFWtoA[index]]
@@ -1877,8 +1875,6 @@ class FateAndTransport:
             d1 = dm1[matrix_index]
 
 
-            print "####### d2 #######"
-
             dAtoFW_val = [dAtoFW[index]]
             dFWremoval_val = [x[index] for x in dFWremoval]
             dSWtoFW_val = [x[index] for x in dSWtoFW]
@@ -1899,8 +1895,6 @@ class FateAndTransport:
             dm2 = np.fromiter(d2_func(1), dtype=float)
             d2 = dm2[matrix_index]
 
-            print "####### d3 #######"
-
             dAtoSW_val = [dAtoSW[index]]
             dFWtoSW_val = [dFWtoSW[index]]
             dSWremoval_val = [x[index] for x in dSWremoval]
@@ -1920,8 +1914,6 @@ class FateAndTransport:
                         yield i
             dm3 = np.fromiter(d3_func(1), dtype=float)
             d3 = dm3[matrix_index]
-
-            print "####### d4 #######"
 
             dAtoS1_val = [dAtoS1[index]]
             dFWtoS1_val = [x[index] for x in dFWtoS1]
@@ -1944,7 +1936,6 @@ class FateAndTransport:
             dm4 = np.fromiter(d4_func(1), dtype=float)
             d4 = dm4[matrix_index]
 
-            print "####### d5 #######"
 
             dAtoS2_val = [dAtoS2[index]]
             dFWtoS2_val = [x[index] for x in dFWtoS2]
@@ -1967,7 +1958,6 @@ class FateAndTransport:
             dm5 = np.fromiter(d5_func(1), dtype=float)
             d5 = dm5[matrix_index]
 
-            print "####### d6 #######"
 
             dAtoS3_val = [dAtoS3[index]]
             dFWtoS3_val = [x[index] for x in dFWtoS3]
@@ -1989,7 +1979,6 @@ class FateAndTransport:
             dm6 = np.fromiter(d6_func(1), dtype=float)
             d6 = dm6[matrix_index]
 
-            print "####### d7 #######"
 
             dAtoFSed_val = [x[index] for x in dAtoFSed]
             dFWtoFSed_val =  [dFWtoFSed[index]]
@@ -2011,7 +2000,6 @@ class FateAndTransport:
             dm7 = np.fromiter(d7_func(1), dtype=float)
             d7 = dm7[matrix_index]
 
-            print "####### d8 #######"
 
             dAtoSSed_val = [x[index] for x in dAtoSSed]
             dFWtoSSed_val = [x[index] for x in dFWtoSSed]
@@ -2033,7 +2021,6 @@ class FateAndTransport:
             dm8 = np.fromiter(d8_func(1), dtype=float)
             d8 = dm8[matrix_index]
 
-            print "####### d9 #######"
 
             dAtoDeepS1_val = [x[index] for x in dAtoDeepS1]
             dFWtoDeepS1_val = [x[index] for x in dFWtoDeepS1]
@@ -2056,7 +2043,6 @@ class FateAndTransport:
             dm9 = np.fromiter(d9_func(1), dtype=float)
             d9 = dm9[matrix_index]
 
-            print "####### d10 #######"
 
             dAtoDeepS2_val = [x[index] for x in dAtoDeepS2]
             dFWtoDeepS2_val = [x[index] for x in dFWtoDeepS2]
@@ -2078,7 +2064,6 @@ class FateAndTransport:
             dm10 = np.fromiter(d10_func(1), dtype=float)
             d10 = dm10[matrix_index]
 
-            print "####### d10 #######"
 
             dAtoDeepS3_val = [x[index] for x in dAtoDeepS3]
             dFWtoDeepS3_val = [x[index] for x in dFWtoDeepS3]
@@ -2128,11 +2113,6 @@ class FateAndTransport:
             dmatrix = []
 
 
-
-
-            print "####### ODE SOLVER #######"
-
-
             def ode_solv(t, bg, dmat, releasevec):
                 yyy = dmat.dot(bg)
                 return yyy + releasevec
@@ -2155,7 +2135,6 @@ class FateAndTransport:
             soln.set_initial_value(last, t0)
             soln.set_f_params(dmatrix2, releasevec).set_jac_params(dmatrix2, releasevec)
             bg = soln.integrate(t1)
-            print index, index, index, index
             fresults.append(bg)
             f_calcs.append(bg)
 
@@ -2512,17 +2491,17 @@ class FateAndTransport:
 
 
         T = Table(data_columns, names = rowtitles)
-        print T
+
         T.write('new_fugacity_data.csv',format='csv')
 
 
         T2 = Table(data_columns2, names = rowtitles2)
-        print T2
+
         T2.write('new_conc_mole_data.csv',format='csv')
 
 
         T3 = Table(data_columns3, names = rowtitles3)
-        print T3
+
         T3.write('new_conc_mass_data.csv',format='csv')
 
         time2 = datetime.datetime.now()
@@ -2532,10 +2511,10 @@ class FateAndTransport:
 
         exposure_inputs = {
         # Concentrations - kg/m^3
-            'air':	air_conc_mass,
-            'aerosol':	aerosol_conc_mass,
-            'freshwater':	fw_conc_mass,
-            'seawater':	sw_conc_mass,
+            'c_air':	air_conc_mass,
+            'c_aerosol':	aerosol_conc_mass,
+            'c_freshwater':	fw_conc_mass,
+            'c_seawater':	sw_conc_mass,
             'agricultural_soil':	soil3_conc_mass,
             'agricultural_soil_water':	soil3_water_conc_mass,
         # Densities - kg/m^3
