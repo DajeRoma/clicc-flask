@@ -13,12 +13,16 @@ from astropy.table import Table, Column
 import csv
 from math import exp, sqrt
 
+
 class FateAndTransport:
+    
+
+
     def run(self, inputs):
         time1 = datetime.datetime.now()
         print time1, "1"
         #DETERMINE COMPARTMENT EXISTENCE
-        main_workbook = xlrd.open_workbook('Environment_SF_Organics_PCB_input_new5.xlsx')
+        main_workbook = xlrd.open_workbook( self.properties.'Environment_SF_Organics_PCB_input_new5.xlsx')
         environment_worksheet = main_workbook.sheet_by_name('Environment')
         environment_code = environment_worksheet.col_values(2, start_rowx=2,end_rowx=None)
         environment_value = environment_worksheet.col_values(3, start_rowx=2,end_rowx=None)
