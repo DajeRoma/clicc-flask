@@ -1,34 +1,49 @@
 import math
 from exposure_constants import *
+import xlrd
+import numpy as np
 
 class ExposureMod:
+    def __init__(self):
+        self.defaults = {
+            'run_full': True,
+            'time_to_equilibrium': 365
+        }
+
     def run(self, inputs={}):
+        time1 = datetime.datetime.now()
+
         if inputs:
-            self.properties = {}
-            # Concentrations - kg/m^3
-            self.properties['air'] = inputs['c_air']
-            self.properties['aerosol'] = inputs['c_aerosol']
-            self.properties['freshwater'] = inputs['c_freshwater']
-            self.properties['seawater'] = inputs['c_seawater']
-            self.properties['agricultural_soil'] = inputs['agricultural_soil']
-            self.properties['agricultural_soil_water'] = inputs['agricultural_soil_water']
-            # Densities - kg/m^3
-            self.properties['densitySoil2'] = inputs['densitySoil2']
-            self.properties['densityAir'] = 1.29
-            self.properties['densityWater'] = 1000
+            # Concentrations - kg/m^3 Big Arrays
+            self.arrays['air'] = inputs['c_air']
+            self.arrays['aerosol'] = inputs['c_aerosol']
+            self.arrays['freshwater'] = inputs['c_freshwater']
+            self.arrays['seawater'] = inputs['c_seawater']
+            self.arrays['agricultural_soil'] = inputs['agricultural_soil']
+            self.arrays['agricultural_soil_water'] = inputs['agricultural_soil_water']
+            # Densities - kg/m^3 Constants
+
+            self.densitySoil2 = inputs['densitySoil2']
+            self.kOctanolWater =	inputs['kOctanolWater'],
+            self.kAirWater =	inputs['kAirWater'],
+            self.kDegredationInSoil =	inputs['kDegredationInSoil'],
+            self.BAF_fish = 8.93E-01
+            self.densityAir = 1.29
+            self.densityWater = 1000
             # duration(days)
             if(inputs[ft_duration]):
-                self.properties['T'] = inputs[ft_duration]
+                self.T = inputs[ft_duration]
             else:
-                self.properties['T'] = 3653
+                self.T = inputs['T']
             # population size(persons)
             if(inputs[ft_population]):
-                self.properties[p] = inputs[ft_population]
+                self.p = inputs[ft_population]
             else:
-                self.properties[p] = 1
+                self.p = 1
         else:
             # for testing purposes
             self.properties = default_inputs
+
 
         self.expand_variables()
 
@@ -60,16 +75,39 @@ class ExposureMod:
         self.BTF_meat =	10.0**(meat_intermediary)
 
         results = {}
-        results['In_inh'] = self.air*self.inhal_air*self.T*self.p
-        results['In_wat'] = self.freshwater*self.ing_water*self.T*self.p
-        results['In_ingffre'] = self.freshwater*(self.BAF_fish/1000)*self.ing_fishfre*self.T*self.p
-        results['In_ingfmar'] = self.seawater*(self.BAF_fish/1000)*self.ing_fishmar*self.T*self.p
-        results['In_ingexp'] = (self.aerosol*(self.BAF_airp_exp/self.densityAir)+self.air*(self.BAF_airg_exp/self.densityAir)+self.agricultural_soil_water*(self.BAF_soil_exp/self.densitySoil2))*self.ing_exp*self.T*self.p
-        results['In_ingunexp'] = self.agricultural_soil_water*(self.BAF_soil_unexp/self.densitySoil2)*self.ing_unexp*self.T*self.p
-        results['In_inmeat'] = ((self.air*self.meat_air+(self.aerosol*(self.BAF_airp_exp/self.densityAir)+self.air*(self.BAF_airp_exp/self.densityAir))*self.meat_veg)+(self.freshwater*(self.meat_water/self.densityWater))+(self.agricultural_soil*(self.meat_soil/self.densitySoil2)+self.agricultural_soil_water*(self.BAF_soil_exp/self.densitySoil2)*self.meat_veg))*self.BTF_meat*self.ing_meat*self.T*self.p
-        results['In_milk'] =((self.air*self.dairy_air+(self.aerosol*(self.BAF_airp_exp/self.densityAir)+self.air*(self.BAF_airp_exp/self.densityAir))*self.dairy_veg)+(self.freshwater*(self.dairy_water/self.densityWater))+(self.agricultural_soil*(self.dairy_soil/self.densitySoil2)+self.agricultural_soil_water*(self.BAF_soil_exp/self.densitySoil2)*self.dairy_veg))*self.BTF_dairy*self.ing_dairy*self.T*self.p
-        
+        for idx in len(self.properties['T']) - self.properties['time_to_equilibrium']:
+            i = idx + self.properties['time_to_equilibrium']
+            cycle_values = {}
+            for name, array in self.arrays:
+                cycle_values[name] = array[i]
+
+            cycle_results = self.cycle(cycle_values)
+
+            for name, array in cycle_results:
+                if results[name]:
+                    results[name].append(array[i])
+                else:
+                    results[name] = []
+                    results[name].append(array[i])
+
+        time2 = datetime.datetime.now()
+        total_time = time2 - time1
+        print total_time
+        # return results
+
+
+    def cycle(self, inputs):
+        results = {}
+        results['In_inh'] = inputs['air']*self.inhal_air*self.T*self.p
+        results['In_wat'] = inputs['freshwater']*self.ing_water*self.T*self.p
+        results['In_ingffre'] = inputs['freshwater']*(self.BAF_fish/1000)*self.ing_fishfre*self.T*self.p
+        results['In_ingfmar'] = inputs['seawater']*(self.BAF_fish/1000)*self.ing_fishmar*self.T*self.p
+        results['In_ingexp'] = (inputs['aerosol']*(self.BAF_airp_exp/self.densityAir)+inputs['air']*(self.BAF_airg_exp/self.densityAir)+inputs['agricultural_soil_water']*(self.BAF_soil_exp/self.densitySoil2))*self.ing_exp*self.T*self.p
+        results['In_ingunexp'] = inputs['agricultural_soil_water']*(self.BAF_soil_unexp/self.densitySoil2)*self.ing_unexp*self.T*self.p
+        results['In_inmeat'] = ((inputs['air']*self.meat_air+(inputs['aerosol']*(self.BAF_airp_exp/self.densityAir)+inputs['air']*(self.BAF_airp_exp/self.densityAir))*self.meat_veg)+(inputs['freshwater']*(self.meat_water/self.densityWater))+(inputs['agricultural_soil']*(self.meat_soil/self.densitySoil2)+inputs['agricultural_soil_water']*(self.BAF_soil_exp/self.densitySoil2)*self.meat_veg))*self.BTF_meat*self.ing_meat*self.T*self.p
+        results['In_milk'] =((inputs['air']*self.dairy_air+(inputs['aerosol']*(self.BAF_airp_exp/self.densityAir)+inputs['air']*(self.BAF_airp_exp/self.densityAir))*self.dairy_veg)+(inputs['freshwater']*(self.dairy_water/self.densityWater))+(inputs['agricultural_soil']*(self.dairy_soil/self.densitySoil2)+inputs['agricultural_soil_water']*(self.BAF_soil_exp/self.densitySoil2)*self.dairy_veg))*self.BTF_dairy*self.ing_dairy*self.T*self.p
         return results
+
 
     def expand_variables(self):
         # expand variables from excel defined dicts to individual object attributes.

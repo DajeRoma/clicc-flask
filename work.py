@@ -7,11 +7,13 @@ app = Flask(__name__)
 from modules.exposure.exposure_mod import ExposureMod as Exposure
 from modules.qsar.qsar_mod import QSARmod as QSAR
 from modules.lcia.net_prediction import NetPrediction as LCIA
+from modules.ft.fate_and_transport_lvl4 import FateAndTransport as FAT
 
 ALLOWED_EXTENSIONS = set(['txt'])
 exp = Exposure()
 qsar = QSAR()
 lcia = LCIA()
+fat = FAT()
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -74,6 +76,14 @@ def upload_file():
                     chem.update(module.run(chem))
 
             return jsonify({'parsed_results':chems_array})
+
+@app.route('/test_ft_exposure', methods=['GET'])
+def test_ft_exposure():
+        fat_outs = fat.run({})
+        exposure_results = exp.run(ft_outs)
+        return jsonify({'results': exposure_results})
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

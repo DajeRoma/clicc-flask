@@ -7,5 +7,6 @@
 "run_test": false,
 "run_vega": false,
 "parse_results": true,
-"query_chemspider": false
+"query_chemspider": false,
+"run_exposure_full":true
 }
