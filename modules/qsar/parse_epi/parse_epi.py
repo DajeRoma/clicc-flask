@@ -1,38 +1,41 @@
 import re
 
+# kDegAero and kDegSSed needed
 wanted = {
     'smiles': None,
-    'molecular_weight': None,
-    'kOctanolWater': None,
-    'organic_carbon_water_partition_coefficient': None,
+    'MW': None,
+    'kOctWater': None,
+    'kOrgWater': None,
     'kAirWater': None,
-    'aerosol_air_partition_coefficient': None,
+    'kAerAir': None,
     'vapor_pressure_at_25_C': None,
     'water_solubility_at_25_C': None,
-    'degradation_rate_in_air': None,
-    'degradation_rate_in_water': None,
-    'kDegredationInSoil': None,
-    'degradation_rate_in_sediment': None,
+    'kDegAir': None,
+    'kDegWater': None,
+    'kDegSoil': None,
+    'kDegSed': None,
+    'kDegSSed': None,
+    'kDegAero': None,
     'bioconcentration_factor': None,
 }
 # BAF_fish
 
 search_for = {
-    'MOL WT' : 'molecular_weight',
-    'Log Kow (E' : 'kOctanolWater',
-    'LogKoc' : 'organic_carbon_water_partition_coefficient',
+    'MOL WT' : 'MW',
+    'Log Kow (E' : 'kOctWater',
+    'Log Koc' : 'kOrgWater',
     'Log Kaw' : 'kAirWater',
-    'Log Koa (K' : 'aerosol_air_partition_coefficient',
+    'Log Koa (K' : 'kAerAir',
     'VP (Pa' : 'vapor_pressure_at_25_C',
     'Water Solubility' : 'water_solubility_at_25_C',
     '(BCF' : 'bioconcentration_factor',
 }
 
 search_fugacity = {
-    'Air    ' : 'degradation_rate_in_air' ,
-    'Water    ' : 'degradation_rate_in_water',
-    'Soil    ' : 'kDegredationInSoil',
-    'Sediment  ' : 'degradation_rate_in_sediment'
+    'Air    ' : 'kDegAir' ,
+    'Water    ' : 'kDegWater',
+    'Soil    ' : 'kDegSoil',
+    'Sediment  ' : 'kDegSed'
 }
 
 def find_value(stringly):
@@ -73,5 +76,12 @@ def parse(input_path):
             for key in dict.keys(search_fugacity):
                 if key in line:
                     current_chem[search_fugacity[key]] = find_fugacity_value(line)
+
+
+    for log_value in ['kOctWater','kOrgWater','kAirWater','kAerAir']:
+        if current_chem[log_value]:
+            current_chem[log_value] = 10.0**float(current_chem[log_value])
+
     chemicals.append(current_chem)
+
     return chemicals

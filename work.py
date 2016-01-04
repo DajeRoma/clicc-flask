@@ -29,6 +29,22 @@ def send_email(subject, sender, recipients, text_body, html_body):
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
 
+
+@app.route('/run_job', methods=['POST'])
+def run_job():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            chem = qsar.run(file)[0]
+            chem['MD'] = request.form['MD']
+            fat_results = fat.run(chem)
+            exposure_results = exp.run(fat_results['exposure_inputs'])
+            return jsonify({'results':  {
+                'exposure': exposure_results,
+                'fat': fat_results['fat_outputs'],
+                'qsar': chem
+                }})
 # @app.route('/submit', methods=['POST'])
 # def run_job():
 #     query = request.form['query']
