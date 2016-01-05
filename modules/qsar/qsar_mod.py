@@ -9,6 +9,7 @@ import inspect
 qsar_filename = inspect.getfile(inspect.currentframe())
 if '.py' in qsar_filename:
     qsar_class_directory = qsar_filename.split('\\')
+    print qsar_class_directory
     qsar_class_directory.remove('qsar_mod.py')
     qsar_class_directory = '\\'.join(qsar_class_directory)
 
