@@ -10,6 +10,7 @@ import sys, getopt
 import pandas as pd
 import numpy as np
 from ANN_Packages.regression import predicting as Predictor
+import inspect
 
 lcia_filename = inspect.getfile(inspect.currentframe())
 if '.py' in lcia_filename:
