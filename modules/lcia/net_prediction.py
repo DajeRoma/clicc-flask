@@ -85,7 +85,7 @@ class NetPrediction:
         Call package functions to predict
         '''
         if descs == None:
-            self.descs = self.__readDescs('./modules/lcia/descriptors/output.txt')
+            self.descs = self.__readDescs(self.directory + '/descriptors/output.txt')
         else:
             self.descs = descs
 
