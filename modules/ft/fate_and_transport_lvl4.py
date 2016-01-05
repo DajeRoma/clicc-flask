@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from datetime import date, time
 import datetime
 from astropy.table import Table, Column
-import csv
+# import csv
 from math import exp, sqrt
 import inspect
 
