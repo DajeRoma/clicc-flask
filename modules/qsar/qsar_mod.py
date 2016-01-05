@@ -8,21 +8,21 @@ import inspect
 
 qsar_filename = inspect.getfile(inspect.currentframe())
 if '.py' in qsar_filename:
-    qsar_class_directory = qsar_filename.split('\\')
+    qsar_class_directory = qsar_filename.split('/')
     print qsar_class_directory
     qsar_class_directory.remove('qsar_mod.py')
-    qsar_class_directory = '\\'.join(qsar_class_directory)
+    qsar_class_directory = '/'.join(qsar_class_directory)
 
 class QSARmod:
 
     def __init__(self):
         # open config file and create dict from contents
         self.directory = qsar_class_directory
-        self.smiles_path = self.directory + '\\smiles.txt'
-        self.script_folder = self.directory + '\\batch_files'
-        self.results_folder = self.directory + '\\results'
-        self.default_inputs = self.directory + '\\inputs.txt'
-        config_file = open(self.directory + '\\configuration.txt', 'r')
+        self.smiles_path = self.directory + '/smiles.txt'
+        self.script_folder = self.directory + '/batch_files'
+        self.results_folder = self.directory + '/results'
+        self.default_inputs = self.directory + '/inputs.txt'
+        config_file = open(self.directory + '/configuration.txt', 'r')
         self.config = json.loads(config_file.read())
         config_file.close()
 

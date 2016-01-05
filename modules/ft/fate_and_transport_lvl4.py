@@ -17,9 +17,9 @@ import inspect
 
 ft_filename = inspect.getfile(inspect.currentframe())
 if '.py' in ft_filename:
-    ft_class_directory = ft_filename.split('\\')
+    ft_class_directory = ft_filename.split('/')
     ft_class_directory.remove('fate_and_transport_lvl4.py')
-    ft_class_directory = '\\'.join(ft_class_directory)
+    ft_class_directory = '/'.join(ft_class_directory)
 
 class FateAndTransport:
     def __init__(self):
@@ -29,7 +29,7 @@ class FateAndTransport:
         time1 = datetime.datetime.now()
         print time1, "1"
         #DETERMINE COMPARTMENT EXISTENCE
-        main_workbook = xlrd.open_workbook( self.directory + '\\Environment_SF_Organics_PCB_input_new5.xlsx')
+        main_workbook = xlrd.open_workbook( self.directory + '/Environment_SF_Organics_PCB_input_new5.xlsx')
         environment_worksheet = main_workbook.sheet_by_name('Environment')
         environment_code = environment_worksheet.col_values(2, start_rowx=2,end_rowx=None)
         environment_value = environment_worksheet.col_values(3, start_rowx=2,end_rowx=None)
