@@ -1,8 +1,5 @@
 {
-"inputs_text": ".\\modules\\qsar\\inputs.txt",
 "sikuli_cmd": "C:\\Users\\Johanna\\SikuliX\\runsikulix.cmd",
-"script_path": ".\\modules\\qsar\\",
-"results_folder": ".\\modules\\qsar\\results",
 "run_epi": false,
 "run_test": false,
 "run_vega": false,
