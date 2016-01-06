@@ -34,16 +34,16 @@ inhalation = {
 }
 
 default_inputs = {
-    'air':	5.27E-11,
-    'aerosol':	3.51E+00,
-    'freshwater':	2.51E-05,
-    'seawater':	4.58E-06,
-    'agricultural_soil':	1.20E-06,
-    'agricultural_soil_water':	2.99E-06,
+    'c_air':	[5.27E-11],
+    'c_aerosol':	[3.51E+00],
+    'c_freshwater':	[2.51E-05],
+    'c_seawater':	[4.58E-06],
+    'agricultural_soil':	[1.20E-06],
+    'agricultural_soil_water':	[2.99E-06],
     'densitySoil2':	1.50E+03,
     'densityAir':	1.29E+00,
     'densityWater':	1.00E+03,
-    'T':	3653,
+    'T':	1,
     'p':	1.00E+00,
     'kOctanolWater':	2.63E-02,
     'kAirWater':	1.16E-21,

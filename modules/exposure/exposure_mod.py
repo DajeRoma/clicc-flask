@@ -7,43 +7,43 @@ import datetime
 class ExposureMod:
     def __init__(self):
         self.arrays = {}
-        self.time_to_equilibrium = 365
-
 
     def run(self, inputs={}):
         time1 = datetime.datetime.now()
-
-        if inputs:
+        if not inputs:
+            for key, value in default_inputs.items():
+                inputs[key] = value
             # Concentrations - kg/m^3 Big Arrays
-            self.arrays['air'] = inputs['c_air']
-            self.arrays['aerosol'] = inputs['c_aerosol']
-            self.arrays['freshwater'] = inputs['c_freshwater']
-            self.arrays['seawater'] = inputs['c_seawater']
-            self.arrays['agricultural_soil'] = inputs['agricultural_soil']
-            self.arrays['agricultural_soil_water'] = inputs['agricultural_soil_water']
-            # Densities - kg/m^3 Constants
+        self.arrays['air'] = inputs['c_air']
+        self.arrays['aerosol'] = inputs['c_aerosol']
+        self.arrays['freshwater'] = inputs['c_freshwater']
+        self.arrays['seawater'] = inputs['c_seawater']
+        self.arrays['agricultural_soil'] = inputs['agricultural_soil']
+        self.arrays['agricultural_soil_water'] = inputs['agricultural_soil_water']
+        # Densities - kg/m^3 Constants
 
-            self.densitySoil2 = inputs['densitySoil2']
-            self.kOctanolWater = inputs['kOctanolWater']
-            self.kAirWater = inputs['kAirWater']
-            self.kDegredationInSoil = inputs['kDegredationInSoil']
-            self.BAF_fish = 8.93E-01
-            self.densityAir = 1.29
-            self.densityWater = 1000
-            # duration(days)
-            if(inputs['T']):
-                self.T = inputs['T']
-            else:
-                self.T = 3653
-            # population size(persons)
-            if(inputs['p']):
-                self.p = inputs['p']
-            else:
-                self.p = 1
+        self.densitySoil2 = inputs['densitySoil2']
+        self.kOctanolWater = inputs['kOctanolWater']
+        self.kAirWater = inputs['kAirWater']
+        self.kDegredationInSoil = inputs['kDegredationInSoil']
+        self.BAF_fish = 8.93E-01
+        self.densityAir = 1.29
+        self.densityWater = 1000
+        # duration(days)
+        if(inputs['T']):
+            self.T = inputs['T']
         else:
-            # for testing purposes
-            self.properties = default_inputs
+            self.T = 3653
+        # population size(persons)
+        if(inputs['p']):
+            self.p = inputs['p']
+        else:
+            self.p = 1
 
+        if self.T == 1:
+            self.time_to_equilibrium = 0
+        else:
+            self.time_to_equilibrium = 365
 
         self.expand_variables()
 

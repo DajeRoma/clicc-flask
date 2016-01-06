@@ -46,7 +46,7 @@ def run_job():
         exposure_results = exp.run(fat_results['exposure_inputs'])
         return jsonify({'results':  {
             'exposure': exposure_results,
-            # 'fat': fat_results['fat_outputs'],
+            'fat': fat_results['fat_outputs'],
             'qsar': qsar_results
             }})
 # @app.route('/submit', methods=['POST'])
@@ -99,7 +99,7 @@ def upload_file():
 @app.route('/test_ft_exposure', methods=['GET'])
 def test_ft_exposure():
         fat_outs = fat.run({})
-        exposure_results = exp.run(fat_outs)
+        exposure_results = exp.run(fat_outs['exposure_inputs'])
         return jsonify({'results': exposure_results})
 
 
