@@ -7,6 +7,7 @@ from modules.exposure.exposure_mod import ExposureMod as Exposure
 from modules.qsar.qsar_mod import QSARmod as QSAR
 from modules.lcia.net_prediction import NetPrediction as LCIA
 from modules.ft.fate_and_transport_lvl4 import FateAndTransport as FAT
+import copy
 
 ALLOWED_EXTENSIONS = set(['txt'])
 exp = Exposure()
@@ -36,14 +37,17 @@ def run_job():
             chemical = request.files['file']
         else:
             chemical = request.form['file']
-        chem = qsar.run(chemical)[0]
+        qsar_results = qsar.run(chemical)[0]
+        chem = copy.copy(qsar_results)
         chem['MD'] = request.form['MD']
+        print chem
         fat_results = fat.run(chem)
+        print 'fat complete'
         exposure_results = exp.run(fat_results['exposure_inputs'])
         return jsonify({'results':  {
             'exposure': exposure_results,
-            'fat': fat_results['fat_outputs'],
-            'qsar': chem
+            # 'fat': fat_results['fat_outputs'],
+            'qsar': qsar_results
             }})
 # @app.route('/submit', methods=['POST'])
 # def run_job():

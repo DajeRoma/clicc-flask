@@ -25,8 +25,7 @@ class FateAndTransport:
     def __init__(self):
         self.directory = ft_class_directory
 
-    def run(self, inputs1):
-        inputs = copy.copy(inputs1)
+    def run(self, inputs):
         time1 = datetime.datetime.now()
         print time1, "1"
         #DETERMINE COMPARTMENT EXISTENCE
@@ -2592,5 +2591,7 @@ class FateAndTransport:
                 'new_conc_mass_results': conc_mass_results
             }
         }
+        print exposure_inputs
+        print self.directory
 
         return result
