@@ -40,6 +40,7 @@ def run_job():
             chem['MD'] = request.form['MD']
             fat_results = fat.run(chem)
             exposure_results = exp.run(fat_results['exposure_inputs'])
+            print chem
             return jsonify({'results':  {
                 'exposure': exposure_results,
                 'fat': fat_results['fat_outputs'],
