@@ -33,19 +33,22 @@ def send_email(subject, sender, recipients, text_body, html_body):
 @app.route('/run_job', methods=['POST'])
 def run_job():
     if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            chem = qsar.run(file)[0]
+        if request.files has 'file' && allowed_file(request.files['file'].filename):
+            chemical = request.files['file']
             chem['MD'] = request.form['MD']
-            fat_results = fat.run(chem)
-            exposure_results = exp.run(fat_results['exposure_inputs'])
-            print chem
-            return jsonify({'results':  {
-                'exposure': exposure_results,
-                'fat': fat_results['fat_outputs'],
-                'qsar': chem
-                }})
+        else:
+            chemical = request.data['file']
+            chem['MD'] = request.data['MD']
+
+        chem = qsar.run(chemical)[0]
+        fat_results = fat.run(chem)
+        exposure_results = exp.run(fat_results['exposure_inputs'])
+        print chem
+        return jsonify({'results':  {
+            'exposure': exposure_results,
+            'fat': fat_results['fat_outputs'],
+            'qsar': chem
+            }})
 # @app.route('/submit', methods=['POST'])
 # def run_job():
 #     query = request.form['query']
