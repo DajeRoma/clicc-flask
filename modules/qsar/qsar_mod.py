@@ -6,17 +6,22 @@ from chem_spider_api import ChemSpiderAPI
 from parse_epi import ParseEpi
 import inspect
 
-qsar_filename = inspect.getfile(inspect.currentframe())
-if '.py' in qsar_filename:
-    qsar_class_directory = qsar_filename.split('/')
-    qsar_class_directory.remove('qsar_mod.py')
-    qsar_class_directory = '/'.join(qsar_class_directory)
+filename = inspect.getfile(inspect.currentframe())
+if '.py' in filename:
+    class_directory = filename.split('/')
+    if len(class_directory) == 1:
+        class_directory = class_directory[0].split('\\')
+        class_directory.remove('qsar_mod.py')
+        class_directory = '\\'.join(class_directory)
+    else:
+        class_directory.remove('qsar_mod.py')
+        class_directory = '/'.join(class_directory)
 
 class QSARmod:
 
     def __init__(self):
         # open config file and create dict from contents
-        self.directory = qsar_class_directory
+        self.directory = class_directory
         self.smiles_path = self.directory + '/smiles.txt'
         self.script_folder = self.directory + '/batch_files'
         self.results_folder = self.directory + '/results'
@@ -76,6 +81,6 @@ class QSARmod:
             if file_in:
                 epi_output = file_in
             else:
-                epi_output = self.results_folder + '\\EPI_results.txt'
+                epi_output = self.results_folder + '/EPI_results.txt'
             chems = ParseEpi.parse(epi_output)
             return chems

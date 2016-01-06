@@ -53,16 +53,15 @@ def find_fugacity_value(stringly):
     return stringly.split()[2]
 
 def parse(input_path):
-    if type(input_path) is str and len(input_path) > 50:
-        print "long input string"
-        lines = tuple(input_path)
-    elif type(input_path) is str:
+    if type(input_path) is str:
         print "file name"
         lines = tuple(open(input_path, 'r'))
+    elif len(input_path) > 50:
+        print "long other"
+        lines = tuple(input_path.splitlines())
     else:
         print "other"
-        lines = tuple(input_path.splitlines())
-
+        lines = tuple(input_path)
 
     chemicals = []
     current_chem = dict.copy(wanted)

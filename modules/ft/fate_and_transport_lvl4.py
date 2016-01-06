@@ -15,15 +15,20 @@ from math import exp, sqrt
 import inspect
 import copy
 
-ft_filename = inspect.getfile(inspect.currentframe())
-if '.py' in ft_filename:
-    ft_class_directory = ft_filename.split('/')
-    ft_class_directory.remove('fate_and_transport_lvl4.py')
-    ft_class_directory = '/'.join(ft_class_directory)
+filename = inspect.getfile(inspect.currentframe())
+if '.py' in filename:
+    class_directory = filename.split('/')
+    if len(class_directory) == 1:
+        class_directory = class_directory[0].split('\\')
+        class_directory.remove('fate_and_transport_lvl4.py')
+        class_directory = '\\'.join(class_directory)
+    else:
+        class_directory.remove('fate_and_transport_lvl4.py')
+        class_directory = '/'.join(class_directory)
 
 class FateAndTransport:
     def __init__(self):
-        self.directory = ft_class_directory
+        self.directory = class_directory
 
     def run(self, inputs):
         time1 = datetime.datetime.now()

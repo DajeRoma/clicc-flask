@@ -12,16 +12,21 @@ import numpy as np
 from ANN_Packages.regression import predicting as Predictor
 import inspect
 
-lcia_filename = inspect.getfile(inspect.currentframe())
-if '.py' in lcia_filename:
-    lcia_class_directory = lcia_filename.split('/')
-    lcia_class_directory.remove('net_prediction.py')
-    lcia_class_directory = '/'.join(lcia_class_directory)
+filename = inspect.getfile(inspect.currentframe())
+if '.py' in filename:
+    class_directory = filename.split('/')
+    if len(class_directory) == 1:
+        class_directory = class_directory[0].split('\\')
+        class_directory.remove('net_prediction.py')
+        class_directory = '\\'.join(class_directory)
+    else:
+        class_directory.remove('net_prediction.py')
+        class_directory = '/'.join(class_directory)
 
 class NetPrediction:
 
     def __init__(self):
-        self.directory = lcia_class_directory
+        self.directory = class_directory
         self.networks = self.directory + '/nets/CED_new.xml'
         self.trn = self.__readTrn(self.directory + '/descriptors/trn_data_30.csv')
 #         try:
