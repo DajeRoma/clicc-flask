@@ -4,9 +4,7 @@ import numpy as np
 import scipy as sp
 from scipy import integrate
 from scipy.integrate import ode
-import matplotlib.pyplot as plt
 from xlrd import open_workbook
-import matplotlib.pyplot as plt
 from datetime import date, time
 import datetime
 # from astropy.table import Table, Column

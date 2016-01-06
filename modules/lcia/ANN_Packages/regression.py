@@ -18,8 +18,13 @@ from pybrain.tools.shortcuts     import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.tools.validation import CrossValidator, Validator
 from pybrain.tools.validation import ModuleValidator
-from pybrain.tools.customxml import NetworkWriter
-from pybrain.tools.customxml import NetworkReader
+try:
+    from pybrain.tools.customxml import NetworkWriter
+    from pybrain.tools.customxml import NetworkReader
+except ImportError:
+    from pybrain.tools.xml import NetworkWriter
+    from pybrain.tools.xml import NetworkReader
+
 from pybrain.structure.modules.linearlayer import LinearLayer
 
 from pybrain.structure.modules.sigmoidlayer import SigmoidLayer
@@ -29,9 +34,9 @@ from numpy.random.mtrand import permutation
 import csv
 import numpy as np
 from scipy import stats
-import matplotlib.pyplot as plt
-from matplotlib import style
-style.use('ggplot')
+# import matplotlib.pyplot as plt
+# from matplotlib import style
+# style.use('ggplot')
 
 
 class training:
