@@ -13,7 +13,7 @@ import datetime
 # import csv
 from math import exp, sqrt
 import inspect
-
+import copy
 
 ft_filename = inspect.getfile(inspect.currentframe())
 if '.py' in ft_filename:
@@ -25,7 +25,8 @@ class FateAndTransport:
     def __init__(self):
         self.directory = ft_class_directory
 
-    def run(self, inputs):
+    def run(self, inputs1):
+        inputs = copy.copy(inputs1)
         time1 = datetime.datetime.now()
         print time1, "1"
         #DETERMINE COMPARTMENT EXISTENCE
