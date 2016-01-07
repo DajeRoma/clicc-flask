@@ -2243,13 +2243,19 @@ class FateAndTransport:
             new_test = np.delete(new_test, 0, 0)
 
 
-        rowtitles = ['new_datetime']
-        rowtitles2 = ['new_datetime']
-        rowtitles3 = ['new_datetime']
-        data_columns = [(new_datetime)]
-        data_columns2 = [(new_datetime)]
-        data_columns3 = [(new_datetime)]
+        # rowtitles = ['new_datetime']
+        # rowtitles2 = ['new_datetime']
+        # rowtitles3 = ['new_datetime']
+        # data_columns = [(new_datetime)]
+        # data_columns2 = [(new_datetime)]
+        # data_columns3 = [(new_datetime)]
 
+        rowtitles = []
+        rowtitles2 = []
+        rowtitles3 = []
+        data_columns = []
+        data_columns2 = []
+        data_columns3 = []
 
         if len(air_fugacity) !=0:
             air_conc_mole = np.multiply(air_fugacity,zAir)
@@ -2596,7 +2602,5 @@ class FateAndTransport:
                 'new_conc_mass_results': conc_mass_results
             }
         }
-        print exposure_inputs
-        print self.directory
 
         return result
