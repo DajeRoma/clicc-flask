@@ -62,19 +62,19 @@ class QSARmod:
 
         # execute batch file to run epi suite
         if self.config['run_epi']:
-            epi_batch_path = self.script_folder + 'batch_files/run_epiweb_sikuli.cmd'
+            epi_batch_path = self.script_folder + '/run_epiweb_sikuli.cmd'
             e = Popen([epi_batch_path , smiles_path, self.results_folder], cwd=self.script_folder)
             stdout, stderr = e.communicate()
 
         # execute batch file to run TEST
         if self.config['run_test']:
-            test_batch_path = self.script_folder + 'batch_files/run_test_sikuli.cmd'
+            test_batch_path = self.script_folder + '/run_test_sikuli.cmd'
             t = Popen([test_batch_path, smiles_path, self.results_folder], cwd=self.script_folder)
             stdout, stderr = t.communicate()
 
         # execute batch file to run VEGA
         if self.config['run_vega']:
-            vega_batch_path = self.script_folder + 'batch_files/run_vega_sikuli.cmd'
+            vega_batch_path = self.script_folder + '/run_vega_sikuli.cmd'
             v = Popen([vega_batch_path, smiles_path, self.results_folder], cwd=self.script_folder)
             stdout, stderr = v.communicate()
 

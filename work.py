@@ -67,6 +67,11 @@ def run_job():
 #     chem = chem_spider.get_chem(query)
 #     return jsonify(chem)
 
+@app.route('/sikuli_test', methods=['GET'])
+def run_sikuli_test():
+    result = qsar.run()
+    return jsonify(result)
+
 @app.route('/exposure_test', methods=['GET'])
 def run_exposure_default_values():
     result = exp.run()
@@ -75,7 +80,6 @@ def run_exposure_default_values():
 @app.route('/qsar_test', methods=['GET'])
 def run_qsar_default_values():
     result = qsar.run()
-    print result
     return jsonify({'parsed_results':result})
 
 @app.route('/lcia_test', methods=['GET'])
