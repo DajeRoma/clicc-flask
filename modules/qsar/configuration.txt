@@ -1,9 +1,9 @@
 {
-"sikuli_cmd": "C:\\Users\\Johanna\\SikuliX\\runsikulix.cmd",
-"run_epi": false,
+"sikuli_cmd": "C:\\ThisPC\\Downloads\\runsikulix.cmd",
+"run_epi": true,
 "run_test": false,
 "run_vega": false,
 "parse_results": true,
 "query_chemspider": false,
-"run_exposure_full":true
+"run_exposure_full": true
 }
