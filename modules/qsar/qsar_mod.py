@@ -32,22 +32,22 @@ class QSARmod:
 
         # construct epi suite batch file based on paths from config.txt
         epi_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd'] + " -r "
-                            + self.script_folder + 'epi_script.sikuli --args %%*%\nexit')
-        epi_batch_file = open('./batch_files/run_epiweb_sikuli.cmd', 'w+')
+                            + self.script_folder + '/epi_script.sikuli --args %%*%\nexit')
+        epi_batch_file = open(os.path.join(self.script_folder, 'run_epiweb_sikuli.cmd'), 'w+')
         epi_batch_file.write(epi_batch_string)
         epi_batch_file.close()
 
         # construct TEST batch file based on paths from config.txt
         test_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd'] + " -r "
-                            + self.script_folder + 'test_script.sikuli --args %%*%\nexit')
-        test_batch_file = open(os.path.join('./batch_files/', 'run_test_sikuli.cmd'), 'w+')
+                            + self.script_folder + '/test_script.sikuli --args %%*%\nexit')
+        test_batch_file = open(os.path.join(self.script_folder, '/run_test_sikuli.cmd'), 'w+')
         test_batch_file.write(test_batch_string)
         test_batch_file.close()
 
         # construct VEGA batch file
         vega_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd'] + " -r "
-                            + self.script_folder + 'vega_script.sikuli --args %%*%\nexit')
-        vega_batch_file = open(os.path.join('./batch_files/', 'run_vega_sikuli.cmd'), 'w+')
+                            + self.script_folder + '/vega_script.sikuli --args %%*%\nexit')
+        vega_batch_file = open(os.path.join(self.script_folder, '/run_vega_sikuli.cmd'), 'w+')
         vega_batch_file.write(vega_batch_string)
         vega_batch_file.close()
 
