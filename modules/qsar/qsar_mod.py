@@ -33,7 +33,7 @@ class QSARmod:
         # construct epi suite batch file based on paths from config.txt
         epi_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd'] + " -r "
                             + self.script_folder + '/epi_script.sikuli --args %%*%\nexit')
-        epi_batch_file = open(os.path.join(self.script_folder, 'run_epiweb_sikuli.cmd'), 'w+')
+        epi_batch_file = open(os.path.join(self.script_folder, '/run_epiweb_sikuli.cmd'), 'w+')
         epi_batch_file.write(epi_batch_string)
         epi_batch_file.close()
 

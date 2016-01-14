@@ -1,0 +1,161 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>test_script.sikuli</h2> <a href="test_script.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> sys
+<span class="kw">print</span> sys.argv
+smiles_location = sys.argv[<span class="dig">1</span>]
+destination_folder = sys.argv[<span class="dig">2</span>]
+
+switchApp(<span class="str">"T.E.S.T (Toxicity Estimation Software Tool)"</span>)
+close_batch_button = exists(<img src="1444861040674.png" />)
+<span class="kw">if</span> close_batch_button:
+    <span class="skw">click</span>(close_batch_button)
+
+<span class="skw">click</span>(<img src="1444850471970.png" />)
+<span class="skw">click</span>(<img src="1444850488942.png" />)
+<span class="skw">type</span>(smiles_location)
+<span class="skw">click</span>(<img src="1444850546160.png" />)
+
+
+<span class="skw">click</span>(<img src="1444850586082.png" />)
+<span class="skw">click</span>(<img src="1444850597386.png" />)
+text_field = <span class="skw">find</span>(<img src="1444851328866.png" />).left(<span class="dig">100</span>)
+<span class="skw">click</span>(text_field)
+<span class="skw">type</span>(<span class="str">'a'</span>,KEY_CTRL)
+<span class="skw">type</span>(destination_folder)
+<span class="skw">click</span>(<img src="1444850700783.png" />)
+
+endpoint_menu = <span class="skw">find</span>(<img src="1444851023626.png" />).right(<span class="dig">100</span>)
+endpoint_list = endpoint_menu.above(<span class="dig">50</span>)
+
+<span class="kw">def</span> close_result():
+    <span class="cmt">#I would kill for function hoisting</span>
+    <span class="skw">wait</span>(<img src="1445639543422.png" />, <span class="dig">3600</span>)
+    <span class="skw">type</span>(<span class="str">'w'</span>,KEY_CTRL)
+    switchApp(<span class="str">"T.E.S.T (Toxicity Estimation Software Tool)"</span>)
+    <span class="skw">click</span>(endpoint_menu)
+
+<span class="cmt">#fatheadminnow LC50</span>
+<span class="skw">click</span>(endpoint_menu)
+wheel(endpoint_list, WHEEL_UP, <span class="dig">5</span>)
+fathead_button = <span class="skw">find</span>(<img src="1444860952236.png" />)
+<span class="kw">if</span> fathead_button:
+    <span class="skw">click</span>(fathead_button)
+<span class="skw">click</span>(<img src="1444850761650.png" />)
+close_result()
+
+<span class="cmt">#menu items are 16 pixels separate</span>
+<span class="cmt">#Dap. magna lc50</span>
+<span class="skw">click</span>(<img src="1444853683124.png" />)
+<span class="skw">click</span>(<img src="1444850761650.png" />)
+close_result()
+
+<span class="cmt">#T.pyrifo</span>
+<span class="skw">click</span>(<img src="1444853736895.png" />)
+<span class="skw">click</span>(<img src="1444850761650.png" />)
+close_result()
+
+<span class="cmt">#oal rat ld50</span>
+<span class="skw">click</span>(<img src="1444853772273.png" />)
+<span class="skw">click</span>(<img src="1444850761650.png" />)
+close_result()
+
+<span class="cmt">#bioaccum</span>
+<span class="skw">click</span>(<img src="1444853805690.png" />)
+<span class="skw">click</span>(<img src="1444850761650.png" />)
+close_result()
+
+<span class="cmt">#developmental</span>
+<span class="skw">click</span>(<img src="1444853827216.png" />)
+<span class="skw">click</span>(<img src="1444850761650.png" />)
+close_result()
+
+<span class="cmt">#mutagen</span>
+<span class="skw">click</span>(<img src="1444853855190.png" />)
+<span class="skw">click</span>(<img src="1444850761650.png" />)
+close_result()
+
+<span class="cmt">#vapor presssure</span>
+wheel(endpoint_list, WHEEL_DOWN, <span class="dig">1</span>)
+<span class="skw">click</span>(<img src="1444854732672.png" />)
+<span class="skw">click</span>(<img src="1444850761650.png" />)
+close_result()
+
+<span class="cmt">#water sol</span>
+wheel(endpoint_list, WHEEL_DOWN, <span class="dig">4</span>)
+<span class="skw">click</span>(<img src="1444854831199.png" />)
+<span class="skw">click</span>(<img src="1444850761650.png" />)
+<span class="skw">wait</span>(<img src="1444853237918.png" />, <span class="dig">3600</span>)
+<span class="skw">type</span>(<span class="str">'w'</span>,KEY_CTRL)
+</pre>
+</body>
+</html>
