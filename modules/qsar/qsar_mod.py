@@ -52,7 +52,7 @@ class QSARmod:
         vega_batch_file.close()
 
     def run(self, file_in=None):
-        smiles_path = self.class_directory + '/inputs.txt'
+        smiles_path = self.directory + '/inputs.txt'
 
         if self.config['query_chemspider']:
             # generate smiles from inputs. can be smiles, casrn, or common names
