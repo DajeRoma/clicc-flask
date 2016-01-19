@@ -4,9 +4,8 @@ try:
     smiles_location = sys.argv[1]
     destination_folder = sys.argv[2]
 except:
-    smiles_location = "C:\Users\clicc\Documents\Flask_Server\clicc-flask\modules\qsar\inputs.txt"
-    destination_folder = "C:\Users\clicc\Documents\Flask_Server\clicc-flask\modules\qsar\results"
-
+    smiles_location = r"C:\Users\clicc\Documents\Flask_Server\clicc-flask\modules\qsar\inputs.txt"
+    destination_folder = r"C:\Users\clicc\Documents\Flask_Server\clicc-flask\modules\qsar\results"
 
 switchApp("EPI Suite")
 click("1444335166809.png")
