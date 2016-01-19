@@ -1,3 +1,3 @@
 @echo off
-call C:\Users\Johanna\SikuliX\runsikulix.cmd -r C:\Users\Johanna\Documents\LawStuff\module_code\qsar\epi_script.sikuli --args %%*%
+call C:\ThisPC\Downloads\runsikulix.cmd -r C:\Users\clicc\Documents\Flask_Server\clicc-flask\modules\qsar\batch_files\epi_script.sikuli --args %%*%
 exit

@@ -72,8 +72,12 @@
 <pre class="sikuli-code">
 <span class="kw">import</span> sys
 <span class="kw">print</span> sys.argv
-smiles_location = sys.argv[<span class="dig">1</span>]
-destination_folder = sys.argv[<span class="dig">2</span>]
+<span class="kw">try</span>:
+    smiles_location = sys.argv[<span class="dig">1</span>]
+    destination_folder = sys.argv[<span class="dig">2</span>]
+<span class="kw">except</span>:
+    smiles_location = <span class="str">"C:\Users\clicc\Documents\Flask_Server\clicc-flask\modules\qsar\inputs.txt"</span>
+    destination_folder = <span class="str">"C:\Users\clicc\Documents\Flask_Server\clicc-flask\modules\qsar\results"</span>
 
 
 switchApp(<span class="str">"EPI Suite"</span>)

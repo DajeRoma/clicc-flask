@@ -22,20 +22,24 @@ class QSARmod:
     def __init__(self):
         # open config file and create dict from contents
         self.directory = class_directory
-        self.smiles_path = self.directory + '/smiles.txt'
-        self.script_folder = self.directory + '/batch_files'
-        self.results_folder = self.directory + '/results'
-        self.default_inputs = self.directory + '/inputs.txt'
-        config_file = open(self.directory + '/configuration.txt', 'r')
+        self.smiles_path = self.directory + '\\smiles.txt'
+        self.script_folder = self.directory + '\\batch_files'
+        self.results_folder = self.directory + '\\results'
+        self.default_inputs = self.directory + '\\inputs.txt'
+        config_file = open(self.directory + '\\configuration.txt', 'r')
         self.config = json.loads(config_file.read())
         config_file.close()
 
         # construct epi suite batch file based on paths from config.txt
         epi_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd'] + " -r "
-                            + self.script_folder + '/epi_script.sikuli --args %%*%\nexit')
-        epi_batch_file = open(os.path.join(self.script_folder, '/run_epiweb_sikuli.cmd'), 'w+')
-        epi_batch_file.write(epi_batch_string)
-        epi_batch_file.close()
+                            + self.script_folder + '\\epi_script.sikuli --args %%*%\nexit')
+	try:        
+		epi_batch_file = open(self.script_folder + '\\run_epiweb_sikuli.cmd', 'w+')
+		epi_batch_file.write(epi_batch_string)
+        	epi_batch_file.close()
+	except IOError as (errno,strerror):
+		print "I/O error({0}): {1}".format(errno, strerror)
+
 
         # construct TEST batch file based on paths from config.txt
         test_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd'] + " -r "
@@ -52,7 +56,7 @@ class QSARmod:
         vega_batch_file.close()
 
     def run(self, file_in=None):
-        smiles_path = self.directory + '/inputs.txt'
+        smiles_path = self.directory + '\\inputs.txt'
 
         if self.config['query_chemspider']:
             # generate smiles from inputs. can be smiles, casrn, or common names
@@ -62,7 +66,8 @@ class QSARmod:
 
         # execute batch file to run epi suite
         if self.config['run_epi']:
-            epi_batch_path = self.script_folder + '/run_epiweb_sikuli.cmd'
+            epi_batch_path = self.script_folder + '\\run_epiweb_sikuli.cmd'
+	    import pdb; pdb.set_trace()
             e = Popen([epi_batch_path , smiles_path, self.results_folder], cwd=self.script_folder)
             stdout, stderr = e.communicate()
 
