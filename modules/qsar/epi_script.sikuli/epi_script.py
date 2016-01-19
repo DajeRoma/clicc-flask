@@ -1,7 +1,11 @@
 import sys
 print sys.argv
-smiles_location = sys.argv[1]
-destination_folder = sys.argv[2]
+try:
+    smiles_location = sys.argv[1]
+    destination_folder = sys.argv[2]
+except:
+    smiles_location = r''
+    destination_folder = r''
 
 
 switchApp("EPI Suite")
