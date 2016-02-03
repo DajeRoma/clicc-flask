@@ -11,17 +11,9 @@ import pandas as pd
 import numpy as np
 from ANN_Packages.regression import predicting as Predictor
 import inspect
+import os.path
 
-filename = inspect.getfile(inspect.currentframe())
-if '.py' in filename:
-    class_directory = filename.split('/')
-    if len(class_directory) == 1:
-        class_directory = class_directory[0].split('\\')
-        class_directory.remove('net_prediction.py')
-        class_directory = '\\'.join(class_directory)
-    else:
-        class_directory.remove('net_prediction.py')
-        class_directory = '/'.join(class_directory)
+class_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 class NetPrediction:
 

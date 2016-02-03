@@ -71,21 +71,31 @@
 </div>
 <pre class="sikuli-code">
 <span class="kw">import</span> sys
-<span class="kw">print</span> sys.argv
+<span class="kw">import</span> datetime
+<span class="kw">import</span> os
+
 <span class="kw">try</span>:
     smiles_location = sys.argv[<span class="dig">1</span>]
     destination_folder = sys.argv[<span class="dig">2</span>]
+    log_file = sys.argv[<span class="dig">3</span>]
 <span class="kw">except</span>:
-    smiles_location = <span class="str">"C:\Users\clicc\Documents\Flask_Server\clicc-flask\modules\qsar\inputs.txt"</span>
-    destination_folder = <span class="str">"C:\Users\clicc\Documents\Flask_Server\clicc-flask\modules\qsar\results"</span>
+    smiles_location = <span class="str">r"C:\inetpub\wwwroot\clicc-flask\modules\qsar\smiles.txt"</span>
+    destination_folder = <span class="str">r"C:\inetpub\wwwroot\clicc-flask\modules\qsar\results"</span>
+    log_file = <span class="str">r"C:\inetpub\wwwroot\clicc-flask\modules\qsar\logging\logging.txt"</span>
 
+<span class="kw">if</span> log_file:
+    <span class="kw">try</span>:
+       log = open(log_file, <span class="str">'a'</span>)
+       log.write(<span class="str">"Started Epi Script. Log Loaded\n"</span>)
+    <span class="kw">except</span>:
+       log = False
 
-switchApp(<span class="str">"EPI Suite"</span>)
-<span class="skw">click</span>(<img src="1444335166809.png" />)
-<span class="skw">click</span>(<img src="1444335203652.png" />)
-<span class="skw">wait</span>(<img src="1444335236072.png" />, <span class="dig">20</span>)
-<span class="skw">click</span>(<img src="1444335236072.png" />)
-<span class="skw">wait</span>(Pattern(<img src="1445283522889.png" />).targetOffset(<span class="dig">70</span>,<span class="dig">0</span>), <span class="dig">20</span>)
+App.focus(<span class="str">"EPI Suite"</span>)
+<span class="skw">click</span>(<img src="1454457927406.png" />)
+<span class="skw">click</span>(<img src="1454458022016.png" />)
+<span class="skw">wait</span>(Pattern(<img src="1454109316523.png" />).similar(<span class="dig">0.80</span>),<span class="dig">10</span>)
+<span class="skw">click</span>(Pattern(<img src="1454109316523.png" />).similar(<span class="dig">0.80</span>).targetOffset(<span class="dig">0</span>,-<span class="dig">6</span>))
+<span class="skw">wait</span>(Pattern(<img src="1445283522889.png" />).targetOffset(<span class="dig">70</span>,<span class="dig">0</span>), <span class="dig">10</span>)
 <span class="skw">type</span>(Pattern(<img src="1445283522889.png" />).targetOffset(<span class="dig">70</span>,<span class="dig">0</span>), smiles_location)
 <span class="skw">click</span>(<img src="1444335871023.png" />)
 <span class="skw">click</span>(<img src="1444335889514.png" />)
@@ -95,8 +105,11 @@ switchApp(<span class="str">"EPI Suite"</span>)
 <span class="skw">wait</span>(<img src="1445288333209.png" />, <span class="dig">3600</span>)
 <span class="skw">click</span>(<img src="1444335954211.png" />)
 <span class="skw">wait</span>(<img src="1445288120483.png" />, <span class="dig">3600</span>)
-<span class="skw">type</span>(destination_folder + <span class="str">"\\EPI_results.txt"</span>)
+<span class="skw">type</span>(destination_folder + <span class="str">r"\EPI_results.txt"</span>)
 <span class="skw">click</span>(<img src="1445288153400.png" />)
+<span class="kw">if</span> log:
+    log.write(<span class="str">"script reached end.\n\n"</span>)
+    log.close()
 </pre>
 </body>
 </html>

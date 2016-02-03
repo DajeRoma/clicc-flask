@@ -1,5 +1,5 @@
 {
-"sikuli_cmd": "C:\\ThisPC\\Downloads\\runsikulix.cmd",
+"sikuli_cmd": "C:\\SikuliX\\runsikulix.cmd",
 "run_epi": true,
 "run_test": false,
 "run_vega": false,

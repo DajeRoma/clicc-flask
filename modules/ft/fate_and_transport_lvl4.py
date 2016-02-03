@@ -13,18 +13,10 @@ import datetime
 # import csv
 from math import exp, sqrt
 import inspect
+import os.path
 import copy
 
-filename = inspect.getfile(inspect.currentframe())
-if '.py' in filename:
-    class_directory = filename.split('/')
-    if len(class_directory) == 1:
-        class_directory = class_directory[0].split('\\')
-        class_directory.remove('fate_and_transport_lvl4.py')
-        class_directory = '\\'.join(class_directory)
-    else:
-        class_directory.remove('fate_and_transport_lvl4.py')
-        class_directory = '/'.join(class_directory)
+class_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 class FateAndTransport:
     def __init__(self):
@@ -193,7 +185,7 @@ class FateAndTransport:
         molecular_volume = np.true_divide(molecular_mass,molecular_density)
         molecular_mass = np.true_divide(molecular_mass,1000)
 
-
+        
 
         ##########CLIMATE PROPERTIES##########
         airTemp = climate_temp

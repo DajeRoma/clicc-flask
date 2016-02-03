@@ -9,6 +9,7 @@ from modules.lcia.net_prediction import NetPrediction as LCIA
 from modules.ft.fate_and_transport_lvl4 import FateAndTransport as FAT
 import copy
 
+
 ALLOWED_EXTENSIONS = set(['txt'])
 exp = Exposure()
 qsar = QSAR()
@@ -29,6 +30,10 @@ def send_email(subject, sender, recipients, text_body, html_body):
     msg.html = html_body
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
+
+@app.route('/server_test')
+def index():
+    return 'Hello'
 
 @app.route('/run_job', methods=['POST'])
 def run_job():
@@ -109,4 +114,4 @@ def test_ft_exposure():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug = True)
