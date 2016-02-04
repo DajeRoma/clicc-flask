@@ -1,5 +1,5 @@
 import json
-from subprocess import Popen
+from subprocess import Popen, PIPE, STDOUT
 import os.path
 import subprocess
 from chem_spider_api import ChemSpiderAPI
@@ -13,6 +13,7 @@ class QSARmod:
         # open config file and create dict from contents
         self.directory = class_directory
         self.logging_file = os.path.join(self.directory, 'logging', 'logging.txt')
+        self.cmd_logging_file = os.path.join(self.directory, 'logging', 'cmd_logging.txt')
         self.smiles_path = os.path.join(self.directory, 'smiles.txt')
         self.batch_folder = os.path.join(self.directory, 'batch_files')
         self.results_folder = os.path.join(self.directory, 'results')
@@ -22,7 +23,7 @@ class QSARmod:
         config_file.close()
 
         # construct epi suite batch file based on paths from config.txt
-        epi_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd'] + " -r " + self.directory + '\\epi_script.sikuli --args %%*%\nexit')
+        epi_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd'] + " -r " + self.directory + '\\epi_script.sikuli --args %%*% >> log.txt\nexit')
     	try:
     		epi_batch_file = open(os.path.join(self.batch_folder, 'run_epiweb_sikuli.cmd'),'w+')
     		epi_batch_file.write(epi_batch_string)
@@ -58,8 +59,8 @@ class QSARmod:
         if self.config['run_epi']:
             epi_batch_path = os.path.join(self.batch_folder, 'run_epiweb_sikuli.cmd')
             try:
-                e = Popen([epi_batch_path , smiles_path, self.results_folder, self.logging_file], cwd=self.batch_folder)
-                stdout, stderr = e.communicate()
+                e = Popen([epi_batch_path , smiles_path, self.results_folder, self.logging_file], cwd=self.batch_folder, shell=True)
+                stdout = e.communicate()[0]
                 return({'path': epi_batch_path, 'batch folder': self.batch_folder, 'stdout': stdout})
             except IOError as (errno,strerror):
         		print "I/O error({0}): {1}".format(errno, strerror)
