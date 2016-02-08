@@ -1,1 +1,1 @@
-import qsar_pipe_and_parser
+import qsar_mod

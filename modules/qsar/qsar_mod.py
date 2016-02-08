@@ -1,11 +1,9 @@
 import json
-from subprocess import Popen
+from subprocess import Popen, PIPE, STDOUT
 import os.path
 import subprocess
 from chem_spider_api import ChemSpiderAPI
 from parse_epi import ParseEpi
-from pipes.pipe_receive import PipeIn
-from pipes.pipe_send import PipeOut
 import inspect
 
 class_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -13,10 +11,6 @@ class_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.curren
 class QSARmod:
     def __init__(self):
         # open config file and create dict from contents
-        self.pipe_server = PipeIn("to_qsar")
-        self.pipe_server.set_callback(self.callback)
-        self.pipe_client = PipeOut("to_parser")
-
         self.directory = class_directory
         self.logging_file = os.path.join(self.directory, 'logging', 'logging.txt')
         self.cmd_logging_file = os.path.join(self.directory, 'logging', 'cmd_logging.txt')
@@ -38,7 +32,7 @@ class QSARmod:
         except IOError as (errno,strerror):
     		print "I/O error({0}): {1}".format(errno, strerror)
 
-        # construct TEST batch file based on paths from config.txt
+            # construct TEST batch file based on paths from config.txt
         # test_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd'] + " -r "
         #                     + self.batch_folder + '/test_script.sikuli --args %%*%\nexit')
         # test_batch_file = open(os.path.join(self.batch_folder, 'run_test_sikuli.cmd'), 'w+')
@@ -83,10 +77,11 @@ class QSARmod:
             v = Popen([vega_batch_path, smiles_path, self.results_folder], cwd=self.batch_folder)
             stdout, stderr = v.communicate()
 
-        self.pipe_client.send("True")
-
-    def callback(self, input):
-        self.run()
-
-if __name__ == "__main__":
-    q = QSARmod()
+        # not finished
+        if self.config['parse_results']:
+            if file_in:
+                epi_output = file_in
+            else:
+                epi_output = self.results_folder + '/EPI_results.txt'
+            chems = ParseEpi.parse(epi_output)
+            return chems
