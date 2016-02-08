@@ -26,7 +26,7 @@ class ExposureMod:
         self.kOctanolWater = inputs['kOctanolWater']
         self.kAirWater = inputs['kAirWater']
         self.kDegredationInSoil = inputs['kDegredationInSoil']
-        self.BAF_fish = 8.93E-01
+        self.BAF_fish = inputs['BCF']
         self.densityAir = 1.29
         self.densityWater = 1000
         # duration(days)
