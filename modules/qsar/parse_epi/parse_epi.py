@@ -16,7 +16,7 @@ wanted = {
     'kDegSed': None,
     'kDegSSed': None,
     'kDegAero': None,
-    'bioconcentration_factor': None,
+    'BCF': None,
 }
 # BAF_fish
 
@@ -28,7 +28,7 @@ search_for = {
     'Log Koa (K' : 'kAerAir',
     'VP (Pa' : 'vapor_pressure_at_25_C',
     'Water Solubility' : 'water_solubility_at_25_C',
-    '(BCF' : 'bioconcentration_factor',
+    '(BCF' : 'BCF',
 }
 
 search_fugacity = {
@@ -77,7 +77,10 @@ def parse(input_path):
         if any(x in line for x in ['=',':']):
             for key in dict.keys(search_for):
                 if key in line:
-                    current_chem[search_for[key]] = find_value(line)
+                    if key == "BCF":
+                        current_chem[search_for[key]] = find_value(line.split('(')[1])
+                    else:
+                        current_chem[search_for[key]] = find_value(line)
         else:
             for key in dict.keys(search_fugacity):
                 if key in line:
