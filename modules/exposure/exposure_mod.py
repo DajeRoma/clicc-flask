@@ -13,27 +13,32 @@ class ExposureMod:
         if not inputs:
             for key, value in default_inputs.items():
                 inputs[key] = value
-            # Concentrations - kg/m^3 Big Arrays
+
+        # Concentrations - kg/m^3 Big Arrays
         self.arrays['air'] = inputs['c_air']
         self.arrays['aerosol'] = inputs['c_aerosol']
         self.arrays['freshwater'] = inputs['c_freshwater']
         self.arrays['seawater'] = inputs['c_seawater']
         self.arrays['agricultural_soil'] = inputs['agricultural_soil']
         self.arrays['agricultural_soil_water'] = inputs['agricultural_soil_water']
-        # Densities - kg/m^3 Constants
 
+        # Densities - kg/m^3 Constants
         self.densitySoil2 = inputs['densitySoil2']
         self.kOctanolWater = inputs['kOctanolWater']
         self.kAirWater = inputs['kAirWater']
         self.kDegredationInSoil = inputs['kDegredationInSoil']
-        self.BAF_fish = inputs['BCF']
         self.densityAir = 1.29
         self.densityWater = 1000
+
+        # Various Others
+        self.BAF_fish = inputs['BCF']
+
         # duration(days)
         if(inputs['T']):
             self.T = inputs['T']
         else:
             self.T = 3653
+
         # population size(persons)
         if(inputs['p']):
             self.p = inputs['p']
@@ -43,10 +48,14 @@ class ExposureMod:
         if self.T == 1:
             self.time_to_equilibrium = 0
         else:
-            self.time_to_equilibrium = 365
+            if 'time_to_equilibrium' in inputs:
+                self.time_to_equilibrium = inputs['time_to_equilibrium']
+            else:
+                self.time_to_equilibrium = 365
 
         self.expand_variables()
 
+        # calculate intermediate values
         self.rDegradationInSoil = math.log(2)/(self.kDegredationInSoil)
         self.lambdat = 10*(self.rDegredationInSoil)
         self.RCF = min(200,0.82+0.0303*self.kOctanolWater**0.77)
@@ -54,7 +63,6 @@ class ExposureMod:
         self.BAF_airp_exp =	self.densityAir/self.densityPlant*(self.Vd/((self.MTC*2*self.LAI)/(0.3+0.65/self.kAirWater+0.015*self.kOctanolWater/self.kAirWater)+self.Vplant*(self.lambdag+self.lambdat)))
         self.BAF_airg_exp =	self.densityAir/self.densityPlant*((self.MTC*2*self.LAI)/((self.MTC*2*self.LAI)/(0.3+0.65/self.kAirWater+0.015*self.kOctanolWater/self.kAirWater)+self.Vplant*(self.lambdag+self.lambdat)))
         self.BAF_soil_unexp = self.densitySoil2/self.densityPlant*(self.RCF*0.8)
-
         if math.log10(self.kOctanolWater)>6.5:
             dairy_intermediary = 6.5-8.1
         else:
@@ -62,9 +70,7 @@ class ExposureMod:
                 dairy_intermediary = 3-8.1
             else:
                 dairy_intermediary = math.log10(self.kOctanolWater)-8.1
-
         self.BTF_dairy = 10.0**(dairy_intermediary)
-
         if math.log10(self.kOctanolWater)>6.5:
             meat_intermediary = 6.5-5.6+math.log10(self.meat_fat/self.meat_veg)
         else:
@@ -72,9 +78,9 @@ class ExposureMod:
                 meat_intermediary = 3-5.6+math.log10(self.meat_fat/self.meat_veg)
             else:
                 meat_intermediary = math.log10(self.kOctanolWater)-5.6+math.log10(self.meat_fat/self.meat_veg)
-
         self.BTF_meat =	10.0**(meat_intermediary)
 
+        # run cycles over the course of T
         results = {}
         for i in range(self.time_to_equilibrium, self.T):
             cycle_values = {}
@@ -98,6 +104,7 @@ class ExposureMod:
 
 
     def cycle(self, inputs):
+        # this method runs once per day over the course of the module time
         results = {}
         results['In_inh'] = inputs['air']*self.inhal_air*self.T*self.p
         results['In_wat'] = inputs['freshwater']*self.ing_water*self.T*self.p
@@ -112,8 +119,8 @@ class ExposureMod:
 
     def expand_variables(self):
         # expand variables from excel defined dicts to individual object attributes.
-        # the only purpose of this is to be able to copy in the excel formulas
-        # and references tables easily. does require appending self to each formula value.
+        # the only purpose of this is to be able to copy the excel version of formulas
+        # and reference tables into python easily. does require appending self to each formula value.
         for table in [ingestion_food, ingestion_water, inhalation]:
             for key, value in table.items():
                 setattr(self, key, value)

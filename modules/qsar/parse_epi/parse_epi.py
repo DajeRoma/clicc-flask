@@ -53,23 +53,15 @@ def find_fugacity_value(stringly):
     return stringly.split()[2]
 
 def parse(input_path):
-    print type(input_path)
-    if type(input_path) is str:
-        print "file name string"
-        lines = tuple(open(input_path, 'r'))
-    elif type(input_path) is unicode:
-        print "unicode"
-        lines = tuple(input_path.splitlines())
-    else:
-        print "other"
-        lines = tuple(input_path)
-
-
+    # Super ugly as EPI Suite results are a txt file amalgamation of many indoividual
+    # application outputs, all formatted differently
+    lines = tuple(open(input_path, 'r'))
 
     chemicals = []
     current_chem = dict.copy(wanted)
     for line in lines:
         if 'SMILES' in line:
+        #separates by chemical in case of batched input
             if current_chem['smiles'] != None:
                 chemicals.append(current_chem)
                 current_chem = dict.copy(wanted)

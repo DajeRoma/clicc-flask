@@ -20,21 +20,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-def send_async_email(app, msg):
-    with app.app_context():
-        mail.send(msg)
-
-def send_email(subject, sender, recipients, text_body, html_body):
-    msg = Message(subject, sender=sender, recipients=recipients)
-    msg.body = text_body
-    msg.html = html_body
-    thr = Thread(target=send_async_email, args=[app, msg])
-    thr.start()
-
-@app.route('/server_test')
-def index():
-    return 'Hello'
-
 @app.route('/run_job', methods=['POST'])
 def run_job():
     if request.method == 'POST':
@@ -54,23 +39,30 @@ def run_job():
             'fat': fat_results['fat_outputs'],
             'qsar': qsar_results
             }})
-# @app.route('/submit', methods=['POST'])
-# def run_job():
-#     query = request.form['query']
-#     chem = chem_spider.get_chem(query)
-#     if chem:
-#         results = modules.run(chem)[0]
-#         return jsonify(results)
-#     else:
-#         return 204
 
+# deprecated until basic functionality is more polished
+# @app.route('/upload_epi_result', methods=['POST'])
+# def upload_file():
+#     if request.method == 'POST':
+#         epi_file = request.files['file']
+#         if epi_file and allowed_file(epi_file.filename):
+#             filename = secure_filename(epi_file.filename)
+#             chems_array = qsar.run(epi_file)
+#             for chem in chems_array:
+#                 for module in [ft, exp]:
+#                     chem.update(module.run(chem))
+#             return jsonify({'parsed_results':chems_array})
 
+#chemspider interaction deprecated until smiles generation solved
 # @app.route('/search', methods=['POST'])
 # def search_cs():
 #     query = request.form['query']
-#     # hooks=dict(response=print_url)
 #     chem = chem_spider.get_chem(query)
 #     return jsonify(chem)
+
+@app.route('/server_test')
+def index():
+    return 'Hello'
 
 @app.route('/sikuli_test', methods=['GET'])
 def run_sikuli_test():
@@ -92,26 +84,11 @@ def run_lcia_default_values():
     result = lcia.predict()
     return jsonify({'parsed_results':result})
 
-@app.route('/upload_epi_result', methods=['POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            chems_array = qsar.run(file)
-            for chem in chems_array:
-                for module in [ft, exp]:
-                    chem.update(module.run(chem))
-
-            return jsonify({'parsed_results':chems_array})
-
 @app.route('/test_ft_exposure', methods=['GET'])
 def test_ft_exposure():
         fat_outs = fat.run({})
         exposure_results = exp.run(fat_outs['exposure_inputs'])
         return jsonify({'results': exposure_results})
-
-
 
 if __name__ == '__main__':
     app.run(debug = True)

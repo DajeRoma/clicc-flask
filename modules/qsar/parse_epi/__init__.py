@@ -1,1 +1,1 @@
-import parse_epi as ParseEpi
+from parse_epi import parse as epi_parse

@@ -1,3 +1,3 @@
 @echo off
-call C:\Users\Johanna\SikuliX\runsikulix.cmd -r C:\Users\Johanna\Documents\LawStuff\module_code\qsar\test_script.sikuli --args %%*%
+call C:\SikuliX\runsikulix.cmd -r C:\Users\Lawrence\Documents\Python_Projects\clicc-flask\modules\qsar\sikuli_scripts\test_script.sikuli--args %%*% >> log.txt
 exit
