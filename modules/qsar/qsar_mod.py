@@ -1,6 +1,5 @@
 import json
 import os.path
-# import subprocess
 from subprocess import Popen
 from chem_spider_api import ChemSpiderAPI
 from parse_epi import epi_parse
@@ -19,11 +18,10 @@ class QSARmod:
         self.batch_folder = os.path.join(self.directory, 'batch_files')
         self.results_folder = os.path.join(self.directory, 'results')
         self.sikuli_scripts = os.path.join(self.directory, 'sikuli_scripts')
-        self.default_inputs = os.path.join(self.directory, 'inputs.txt')
+        self.seed_folder = os.path.join(self.directory, 'test_seeds')
 
         # open config file and create dict from contents
-        config_file = open(os.path.join(self.directory, 'configuration.txt'),
-                           'r')
+        config_file = open(os.path.join(self.directory, 'configuration.txt'), 'r')
         self.config = json.loads(config_file.read())
         config_file.close()
 
@@ -50,9 +48,8 @@ class QSARmod:
         #allow varying input types for testing purposes by using an options hash
         if not input_hash:
             # no arguments = run with seed files
-            smiles_path = os.path.join(self.directory, 'test_seeds',
-                                       'smiles.txt')
-            results_folder = os.path.join(self.directory, 'test_seeds')
+            smiles_path = os.path.join(self.seed_folder, 'smiles.txt')
+            results_folder = self.seed_folder
         elif 'smiles_in' in input_hash:
             smiles_path = os.path.join(self.directory, 'smiles.txt')
             results_folder = self.results_folder
