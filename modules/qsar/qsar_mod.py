@@ -14,8 +14,7 @@ class QSARmod:
     def __init__(self):
         # define paths
         self.directory = class_directory
-        self.logging_file = os.path.join(self.directory, 'logging',
-                                         'logging.txt')
+        self.logging_file = os.path.join(self.directory, 'logging', 'logging.txt')
         self.smiles_path = os.path.join(self.directory, 'smiles.txt')
         self.batch_folder = os.path.join(self.directory, 'batch_files')
         self.results_folder = os.path.join(self.directory, 'results')
@@ -28,40 +27,24 @@ class QSARmod:
         self.config = json.loads(config_file.read())
         config_file.close()
 
-        # construct epi suite batch file based on paths from config.txt
-        epi_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd']
-            + " -r " + os.path.join(self.sikuli_scripts, 'epi_script.sikuli')
-            + '--args %%*% >> log.txt\nexit')
-    	try:
-    		epi_batch_file = open(os.path.join(self.batch_folder,
-                                            'run_epiweb_sikuli.cmd'),'w+')
-    		epi_batch_file.write(epi_batch_string)
-                epi_batch_file.close()
-        except IOError as (errno,strerror):
-    		print "I/O error({0}): {1}".format(errno, strerror)
-
-        # construct TEST batch file based on paths from config.txt
-        test_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd']
-            + " -r " + os.path.join(self.sikuli_scripts, 'test_script.sikuli')
-            + '--args %%*% >> log.txt\nexit')
-        test_batch_file = open(
-                            os.path.join(self.batch_folder,
-                                         'run_test_sikuli.cmd'),
-                            'w+')
-        test_batch_file.write(test_batch_string)
-        test_batch_file.close()
-
-        # construct VEGA batch file
-        vega_batch_string = ("@echo off\ncall " + self.config['sikuli_cmd']
-            + " -r " + os.path.join(self.batch_folder, 'vega_script.sikuli')
-            + '--args %%*% >> log.txt\nexit')
-        vega_batch_file = open(
-                            os.path.join(self.batch_folder,
-                                         'run_vega_sikuli.cmd'),
-                            'w+')
-
-        vega_batch_file.write(vega_batch_string)
-        vega_batch_file.close()
+        # construct batch files
+        script_list = ["epi_script", "test_script", "vega_script"]
+        strings = {}
+        for string in (script_list):
+            strings[string] = ("@echo off\ncall {0} -r {1} --args %%*%>>log.txt\nexit"
+                .format(self.config['sikuli_cmd'],os.path.join(
+                                                    self.sikuli_scripts,
+                                                    string + '.sikuli'
+                                                  )))
+        for name, value  in strings.iteritems():
+            try:
+        		batch_file = open(os.path.join(self.batch_folder,
+                                               'run_{0}.cmd'.format(name)),
+                                               'w+')
+        		batch_file.write(value)
+                        batch_file.close()
+            except IOError as (errno,strerror):
+        		print "I/O error({0}): {1}".format(errno, strerror)
 
     def run(self, input_hash={}):
         #allow varying input types for testing purposes by using an options hash

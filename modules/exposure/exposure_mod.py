@@ -75,9 +75,12 @@ class ExposureMod:
             meat_intermediary = 6.5-5.6+math.log10(self.meat_fat/self.meat_veg)
         else:
             if math.log10(self.kOctanolWater)<3:
-                meat_intermediary = 3-5.6+math.log10(self.meat_fat/self.meat_veg)
+                meat_intermediary = 3-5.6+math.log10(
+                                            self.meat_fat/self.meat_veg
+                                          )
             else:
-                meat_intermediary = math.log10(self.kOctanolWater)-5.6+math.log10(self.meat_fat/self.meat_veg)
+                meat_intermediary = (math.log10(self.kOctanolWater)
+                    - 5.6+math.log10(self.meat_fat/self.meat_veg))
         self.BTF_meat =	10.0**(meat_intermediary)
 
         # run cycles over the course of T

@@ -27,9 +27,10 @@ def run_job():
             chemical = request.files['file']
         else:
             chemical = request.form['file']
+
         qsar_results = qsar.run(chemical)[0]
         chem = copy.copy(qsar_results)
-        chem['MD'] = request.form['MD']
+        # chem['MD'] = request.form['MD']
         print chem
         fat_results = fat.run(chem)
         print 'fat complete'
@@ -39,6 +40,8 @@ def run_job():
             'fat': fat_results['fat_outputs'],
             'qsar': qsar_results
             }})
+        # do a full test run
+
 
 # deprecated until basic functionality is more polished
 # @app.route('/upload_epi_result', methods=['POST'])

@@ -7,12 +7,11 @@ switchApp("T.E.S.T (Toxicity Estimation Software Tool)")
 close_batch_button = exists("1444861040674.png")
 if close_batch_button:
     click(close_batch_button)
-    
+
 click("1444850471970.png")
 click("1444850488942.png")
 type(smiles_location)
 click("1444850546160.png")
-
 
 click("1444850586082.png")
 click("1444850597386.png")
@@ -25,7 +24,7 @@ click("1444850700783.png")
 endpoint_menu = find("1444851023626.png").right(100)
 endpoint_list = endpoint_menu.above(50)
 
-def close_result(): 
+def close_result():
     #I would kill for function hoisting
     wait("1445639543422.png", 3600)
     type('w',KEY_CTRL)
@@ -80,7 +79,7 @@ close_result()
 
 #water sol
 wheel(endpoint_list, WHEEL_DOWN, 4)
-click("1444854831199.png")        
+click("1444854831199.png")
 click("1444850761650.png")
 wait("1444853237918.png", 3600)
 type('w',KEY_CTRL)
