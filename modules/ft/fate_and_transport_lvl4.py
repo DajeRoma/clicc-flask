@@ -22,7 +22,7 @@ class FateAndTransport:
     def __init__(self):
         self.directory = class_directory
 
-    def run(self, inputs):
+    def run(self, inputs={}):
         time1 = datetime.datetime.now()
         print time1, "1"
         #DETERMINE COMPARTMENT EXISTENCE
@@ -144,6 +144,7 @@ class FateAndTransport:
                     molecular_mass = float(b)
                 if a == 'MD':
                     molecular_density = float(b)
+
         else:
             for a, b in chem_Prop:
                 if a == 'kOctWater':
@@ -185,7 +186,7 @@ class FateAndTransport:
         molecular_volume = np.true_divide(molecular_mass,molecular_density)
         molecular_mass = np.true_divide(molecular_mass,1000)
 
-        
+
 
         ##########CLIMATE PROPERTIES##########
         airTemp = climate_temp

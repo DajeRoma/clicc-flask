@@ -29,14 +29,14 @@ class QSARmod:
 
         # construct batch files
         script_list = ["epi_script", "test_script", "vega_script"]
-        strings = {}
-        for string in (script_list):
-            strings[string] = ("@echo off\ncall {0} -r {1} --args %%*%>>log.txt\nexit"
+        script_strings = {}
+        for name in script_list:
+            script_strings[name] = ("@echo off\ncall {0} -r {1} --args %%*%>>log.txt\nexit"
                 .format(self.config['sikuli_cmd'],os.path.join(
                                                     self.sikuli_scripts,
-                                                    string + '.sikuli'
+                                                    name + '.sikuli'
                                                   )))
-        for name, value  in strings.iteritems():
+        for name, value  in script_strings.iteritems():
             try:
         		batch_file = open(os.path.join(self.batch_folder,
                                                'run_{0}.cmd'.format(name)),
@@ -56,7 +56,6 @@ class QSARmod:
         elif 'smiles_in' in input_hash:
             smiles_path = os.path.join(self.directory, 'smiles.txt')
             results_folder = self.results_folder
-
             # EPI Suite is run in batch mode using a txt file as input, so
             # create a text file of smiles
             smiles_file = open(smiles_path, 'w+')
@@ -71,43 +70,60 @@ class QSARmod:
         # else:
         #     ChemSpiderAPI.update_smiles(self.default_inputs, smiles_path)
 
-        # execute batch file to run epi suite, but not if parsing results directly
+        # execute batch file to run epi suite, but not if parsing results file
+        # directly.
+
         if 'smiles_in' in input_hash:
-            if self.config['run_epi']:
-                epi_batch_path = os.path.join(self.batch_folder,
-                                              'run_epiweb_sikuli.cmd')
-                try:
-                    e = Popen(
-                        [epi_batch_path, smiles_path, self.results_folder,
-                            self.logging_file],
-                        cwd=self.batch_folder,
-                        shell=True
-                    )
-                    stdout, stderr = e.communicate()
-                except IOError as (errno,strerror):
-            		print "I/O error({0}): {1}".format(errno, strerror)
+            for script in script_list:
+                if self.config['run_{0}'.format(script)]:
+                    batch_path = os.path.join(self.batch_folder,
+                                              'run_{0}.cmd'.format(script))
+                    try:
+                        e = Popen(
+                            [batch_path, smiles_path, self.results_folder,
+                                self.logging_file],
+                            cwd=self.batch_folder,
+                            shell=True
+                        )
+                        stdout, stderr = e.communicate()
+                    except IOError as (errno,strerror):
+                		print "I/O error({0}): {1}".format(errno, strerror)
 
-            # execute batch file to run TEST
-            if self.config['run_test']:
-                test_batch_path = os.path.join(self.batch_folder,
-                                               'run_test_sikuli.cmd')
-                try:
-                    t = Popen([test_batch_path, smiles_path, self.results_folder],
-                              cwd=self.batch_folder)
-                    stdout, stderr = t.communicate()
-                except IOError as (errno,strerror):
-            		print "I/O error({0}): {1}".format(errno, strerror)
-
-            # execute batch file to run VEGA
-            if self.config['run_vega']:
-                vega_batch_path = os.path.join(self.batch_folder,
-                                               'run_vega_sikuli.cmd')
-                try:
-                    v = Popen([vega_batch_path, smiles_path, self.results_folder],
-                              cwd=self.batch_folder)
-                    stdout, stderr = v.communicate()
-                except IOError as (errno,strerror):
-            		print "I/O error({0}): {1}".format(errno, strerror)
+            # if self.config['run_epi']:
+            #     epi_batch_path = os.path.join(self.batch_folder,
+            #                                   'run_epiweb_sikuli.cmd')
+            #     try:
+            #         e = Popen(
+            #             [epi_batch_path, smiles_path, self.results_folder,
+            #                 self.logging_file],
+            #             cwd=self.batch_folder,
+            #             shell=True
+            #         )
+            #         stdout, stderr = e.communicate()
+            #     except IOError as (errno,strerror):
+            # 		print "I/O error({0}): {1}".format(errno, strerror)
+            #
+            # # execute batch file to run TEST
+            # if self.config['run_test']:
+            #     test_batch_path = os.path.join(self.batch_folder,
+            #                                    'run_test_sikuli.cmd')
+            #     try:
+            #         t = Popen([test_batch_path, smiles_path, self.results_folder],
+            #                   cwd=self.batch_folder)
+            #         stdout, stderr = t.communicate()
+            #     except IOError as (errno,strerror):
+            # 		print "I/O error({0}): {1}".format(errno, strerror)
+            #
+            # # execute batch file to run VEGA
+            # if self.config['run_vega']:
+            #     vega_batch_path = os.path.join(self.batch_folder,
+            #                                    'run_vega_sikuli.cmd')
+            #     try:
+            #         v = Popen([vega_batch_path, smiles_path, self.results_folder],
+            #                   cwd=self.batch_folder)
+            #         stdout, stderr = v.communicate()
+            #     except IOError as (errno,strerror):
+            # 		print "I/O error({0}): {1}".format(errno, strerror)
 
         # parse results from EPI Suite
         if self.config['parse_results']:

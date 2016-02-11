@@ -24,13 +24,13 @@ class ExposureMod:
 
         # Densities - kg/m^3 Constants
         self.densitySoil2 = inputs['densitySoil2']
-        self.kOctanolWater = inputs['kOctanolWater']
-        self.kAirWater = inputs['kAirWater']
-        self.kDegredationInSoil = inputs['kDegredationInSoil']
         self.densityAir = 1.29
         self.densityWater = 1000
 
         # Various Others
+        self.kOctanolWater = inputs['kOctanolWater']
+        self.kAirWater = inputs['kAirWater']
+        self.kDegredationInSoil = inputs['kDegredationInSoil']
         self.BAF_fish = inputs['BCF']
 
         # duration(days)
@@ -57,7 +57,7 @@ class ExposureMod:
 
         # calculate intermediate values
         self.rDegradationInSoil = math.log(2)/(self.kDegredationInSoil)
-        self.lambdat = 10*(self.rDegredationInSoil)
+        self.lambdat = 10*(self.rDegradationInSoil)
         self.RCF = min(200,0.82+0.0303*self.kOctanolWater**0.77)
         self.BAF_soil_exp =	self.densitySoil2/self.densityPlant*((0.784*math.exp(-(((math.log10(self.kOctanolWater))-1.78)**2.0)/2.44)*self.Qtrans)/((self.MTC*2*self.LAI)/(0.3+0.65/self.kAirWater+0.015*self.kOctanolWater/self.kAirWater)+self.Vplant*(self.lambdag+self.lambdat)))
         self.BAF_airp_exp =	self.densityAir/self.densityPlant*(self.Vd/((self.MTC*2*self.LAI)/(0.3+0.65/self.kAirWater+0.015*self.kOctanolWater/self.kAirWater)+self.Vplant*(self.lambdag+self.lambdat)))

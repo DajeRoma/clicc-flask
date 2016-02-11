@@ -70,13 +70,16 @@ def parse(input_path):
             for key in dict.keys(search_for):
                 if key in line:
                     if key == "BCF":
-                        current_chem[search_for[key]] = find_value(line.split('(')[1])
+                        current_chem[search_for[key]] = float(find_value(line.split('(')[1]))
                     else:
-                        current_chem[search_for[key]] = find_value(line)
+                        try:
+                            current_chem[search_for[key]] = float(find_value(line))
+                        except:
+                            current_chem[search_for[key]] = find_value(line)
         else:
             for key in dict.keys(search_fugacity):
                 if key in line:
-                    current_chem[search_fugacity[key]] = find_fugacity_value(line)
+                    current_chem[search_fugacity[key]] = float(find_fugacity_value(line))
 
 
     for log_value in ['kOctWater','kOrgWater','kAirWater','kAerAir']:

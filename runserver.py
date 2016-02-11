@@ -1,14 +1,15 @@
 from flask import Flask, request, redirect, jsonify, url_for
 from utils import *
+import copy
 from threading import Thread
 from werkzeug import secure_filename
-app = Flask(__name__)
+
 from modules.exposure.exposure_mod import ExposureMod as Exposure
 from modules.qsar.qsar_mod import QSARmod as QSAR
 from modules.lcia.net_prediction import NetPrediction as LCIA
 from modules.ft.fate_and_transport_lvl4 import FateAndTransport as FAT
-import copy
 
+app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = set(['txt'])
 exp = Exposure()
@@ -20,7 +21,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-@app.route('/run_job', methods=['POST'])
+@app.route('/run_job', methods=['POST','GET'])
 def run_job():
     if request.method == 'POST':
         if 'file' in request.files and allowed_file(request.files['file'].filename):
@@ -31,17 +32,26 @@ def run_job():
         qsar_results = qsar.run(chemical)[0]
         chem = copy.copy(qsar_results)
         # chem['MD'] = request.form['MD']
-        print chem
         fat_results = fat.run(chem)
-        print 'fat complete'
         exposure_results = exp.run(fat_results['exposure_inputs'])
         return jsonify({'results':  {
             'exposure': exposure_results,
             'fat': fat_results['fat_outputs'],
             'qsar': qsar_results
             }})
-        # do a full test run
-
+    else:
+        # do a full test run if method is GET
+        qsar_results = qsar.run()[0]
+        chem = copy.copy(qsar_results)
+        print(chem)
+        fat_results = fat.run()
+        chem.update(fat_results['exposure_inputs'])
+        exposure_results = exp.run(chem)
+        return jsonify({'results':  {
+            'exposure': exposure_results,
+            'fat': fat_results['fat_outputs'],
+            'qsar': qsar_results
+            }})
 
 # deprecated until basic functionality is more polished
 # @app.route('/upload_epi_result', methods=['POST'])
