@@ -1,7 +1,9 @@
 {
+"log_results": true,
 "sikuli_cmd": "C:\\SikuliX\\runsikulix.cmd",
 "run_epi_script": true,
 "run_test_script": false,
+"run_test_MD_script": true,
 "run_vega_script": false,
 "parse_results": true,
 "query_chemspider": false

@@ -1,7 +1,24 @@
+import os
 import sys
+import inspect
 print sys.argv
-smiles_location = sys.argv[1]
-destination_folder = sys.argv[2]
+
+script_dir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe()))
+)
+# import locater script
+path_array = script_dir.split(os.sep)
+del path_array[-1]
+base_script_dir = (os.sep).join(path_array)
+sys.path.insert(0, base_script_dir)
+from locater import get_locations
+sys.path.pop(0)
+
+locs = get_locations()
+
+smiles_location = locs['smiles']
+destination_folder = locs['results']
+log_file = locs['log']
 
 switchApp("T.E.S.T (Toxicity Estimation Software Tool)")
 close_batch_button = exists("1444861040674.png")
@@ -81,5 +98,5 @@ close_result()
 wheel(endpoint_list, WHEEL_DOWN, 4)
 click("1444854831199.png")
 click("1444850761650.png")
-wait("1444853237918.png", 3600)
+ wait("1445639543422.png", 3600)
 type('w',KEY_CTRL)

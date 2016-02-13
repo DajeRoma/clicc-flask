@@ -1,0 +1,62 @@
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ Java not found in standard places C:\Program Files or C:\Program Files (x86)
++++ JAVA_HOME not specified
++++ ended with some errors
++++ running this Java
++++ trying to run SikuliX
++++ using: -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dsikuli.FromCommandLine -jar C:\SikuliX\sikulix.jar -r C:\Users\Lawrence\Documents\Python_Projects\clicc-flask\modules\qsar\sikuli_scripts\epi_script.sikuli --args
+[log] App.focus:  [0:EPI]
+[error] script [ C:\Users\Lawrence\Documents\Python_Projects\clicc-flask\modules\qsar\sikuli_scripts\epi_script.sikuli ] stopped with error in line 31
+[error] FindFailed ( can not find 1454457927406.png in R[0,0 1920x1080]@S(0) )
++++ running this Java
++++ trying to run SikuliX
++++ using: -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dsikuli.FromCommandLine -jar C:\SikuliX\sikulix.jar -r C:\Users\Lawrence\Documents\Python_Projects\clicc-flask\modules\qsar\sikuli_scripts\test_MD_script.sikuli --args
+['C:/Users/Lawrence/Documents/Python_Projects/clicc-flask/modules/qsar/sikuli_scripts/test_MD_script.sikuli']
+[log] App.focus:  [7132:T.E.S.T]
+[log] CLICK on L(394,957)@S(0)[0,0 1920x1080]
+[log] CLICK on L(197,65)@S(0)[0,0 1920x1080]
+[log] CLICK on L(309,239)@S(0)[0,0 1920x1080]
+[log]  TYPE "C:\Users\Lawrence\Documents\Python_Projects\clicc-flask\modules\qsar\smiles.txt"
+[log] CLICK on L(1003,646)@S(0)[0,0 1920x1080]
+[log] CLICK on L(1413,958)@S(0)[0,0 1920x1080]
+[log] CLICK on L(934,569)@S(0)[0,0 1920x1080]
+[log] CLICK on L(1086,541)@S(0)[0,0 1920x1080]
+[log] ( Ctrl )  TYPE "a"
+[log]  TYPE "C:\Users\Lawrence\Documents\Python_Projects\clicc-flask\modules\qsar\results"
+[log] CLICK on L(1189,594)@S(0)[0,0 1920x1080]
+[log] CLICK on L(791,917)@S(0)[0,0 1920x1080]
+[log] CLICK on L(791,917)@S(0)[0,0 1920x1080]
+[log] CLICK on L(1533,958)@S(0)[0,0 1920x1080]
+[log] ( Ctrl )  TYPE "w"

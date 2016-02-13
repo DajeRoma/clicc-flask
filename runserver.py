@@ -3,7 +3,6 @@ from utils import *
 import copy
 from threading import Thread
 from werkzeug import secure_filename
-
 from modules.exposure.exposure_mod import ExposureMod as Exposure
 from modules.qsar.qsar_mod import QSARmod as QSAR
 from modules.lcia.net_prediction import NetPrediction as LCIA
@@ -25,22 +24,34 @@ def allowed_file(filename):
 def run_job():
     if request.method == 'POST':
         if 'file' in request.files and allowed_file(request.files['file'].filename):
-            chemical = request.files['file']
+            chemical = {'file_in': request.files['file']}
         else:
-            chemical = request.form['file']
+            chemical = {'smiles_in': request.form['smiles']}
 
-        qsar_results = qsar.run(chemical)[0]
-        chem = copy.copy(qsar_results)
-        # chem['MD'] = request.form['MD']
-        fat_results = fat.run(chem)
-        exposure_results = exp.run(fat_results['exposure_inputs'])
-        return jsonify({'results':  {
-            'exposure': exposure_results,
-            'fat': fat_results['fat_outputs'],
-            'qsar': qsar_results
-            }})
+        try:
+            qsar_results = qsar.run(chemical)
+            if not qsar_results:
+                raise ModuleError("Qsar Module Failed")
+            chem = copy.copy(qsar_results)
+            # chem['MD'] = request.form['MD']
+            fat_results = fat.run(chem)
+            if not fat_results:
+                raise ModuleError("FaT Module Failed")
+            exposure_results = exp.run(fat_results['exposure_inputs'])
+            if not exposure_results:
+                raise ModuleError("Exposure Module Failed")
+        except ModuleError:
+            return jsonify()
+
+        else:
+            return jsonify({'results':  {
+                'exposure': exposure_results,
+                'fat': fat_results['fat_outputs'],
+                'qsar': qsar_results
+                }})
     else:
-        # do a full test run if method is GET
+        # Do a test run if method is GET. This wont trigger sikuli scripts, but
+        # runs everything else as normal.
         qsar_results = qsar.run()[0]
         chem = copy.copy(qsar_results)
         print(chem)

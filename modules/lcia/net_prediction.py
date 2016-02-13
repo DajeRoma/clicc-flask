@@ -13,11 +13,12 @@ from ANN_Packages.regression import predicting as Predictor
 import inspect
 import os.path
 
-class_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+
 
 class NetPrediction:
 
     def __init__(self):
+        class_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
         self.directory = class_directory
         self.networks = self.directory + '/nets/CED_new.xml'
         self.trn = self.__readTrn(self.directory + '/descriptors/trn_data_30.csv')

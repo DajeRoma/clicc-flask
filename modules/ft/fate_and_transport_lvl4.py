@@ -16,10 +16,11 @@ import inspect
 import os.path
 import copy
 
-class_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+
 
 class FateAndTransport:
     def __init__(self):
+        class_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
         self.directory = class_directory
 
     def run(self, inputs={}):
@@ -101,7 +102,7 @@ class FateAndTransport:
 
         ##########CHEMICAL PROPERTIES##########
         if inputs:
-            for a, b in inputs.iteritems():
+            for a, b in inputs[0].iteritems():
                 if a == 'kOctWater':
                     kOctanolWater = float(b)
                 if a == 'kOrgWater':

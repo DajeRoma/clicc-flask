@@ -1,15 +1,24 @@
 import sys
 import datetime
 import os
+import inspect
 
-try:
-    smiles_location = sys.argv[1]
-    destination_folder = sys.argv[2]
-    log_file = sys.argv[3]
-except:
-    smiles_location = r"C:\inetpub\wwwroot\clicc-flask\modules\qsar\smiles.txt"
-    destination_folder = r"C:\inetpub\wwwroot\clicc-flask\modules\qsar\results"
-    log_file = r"C:\inetpub\wwwroot\clicc-flask\modules\qsar\logging\logging.txt"
+script_dir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe()))
+)
+# import locater script
+path_array = script_dir.split(os.sep)
+del path_array[-1]
+base_script_dir = (os.sep).join(path_array)
+sys.path.insert(0, base_script_dir)
+from locater import get_locations
+sys.path.pop(0)
+
+locs = get_locations()
+
+smiles_location = locs['smiles']
+destination_folder = locs['results']
+log_file = locs['log']
 
 if log_file:
     try: 

@@ -73,15 +73,24 @@
 <span class="kw">import</span> sys
 <span class="kw">import</span> datetime
 <span class="kw">import</span> os
+<span class="kw">import</span> inspect
 
-<span class="kw">try</span>:
-    smiles_location = sys.argv[<span class="dig">1</span>]
-    destination_folder = sys.argv[<span class="dig">2</span>]
-    log_file = sys.argv[<span class="dig">3</span>]
-<span class="kw">except</span>:
-    smiles_location = <span class="str">r"C:\inetpub\wwwroot\clicc-flask\modules\qsar\smiles.txt"</span>
-    destination_folder = <span class="str">r"C:\inetpub\wwwroot\clicc-flask\modules\qsar\results"</span>
-    log_file = <span class="str">r"C:\inetpub\wwwroot\clicc-flask\modules\qsar\logging\logging.txt"</span>
+script_dir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe()))
+)
+<span class="cmt"># import locater script</span>
+path_array = script_dir.split(os.sep)
+<span class="kw">del</span> path_array[-<span class="dig">1</span>]
+base_script_dir = (os.sep).join(path_array)
+sys.path.insert(<span class="dig">0</span>, base_script_dir)
+<span class="kw">from</span> locater <span class="kw">import</span> get_locations
+sys.path.pop(<span class="dig">0</span>)
+
+locs = get_locations()
+
+smiles_location = locs[<span class="str">'smiles'</span>]
+destination_folder = locs[<span class="str">'results'</span>]
+log_file = locs[<span class="str">'log'</span>]
 
 <span class="kw">if</span> log_file:
     <span class="kw">try</span>:
