@@ -1,0 +1,4 @@
+C(CL)CL
+C(C1C(C(C(C(O1)O)O)O)O)O
+O=C(C(=O)O)O
+C(C1C(C(C(O1)(CO)O)O)O)

@@ -25,8 +25,9 @@ search_for = {
     'Log Kow (E' : 'kOctWater',
     'Log Koc' : 'kOrgWater',
     'Log Kaw' : 'kAirWater',
-    'Log Koa (K' : 'kAerAir',
+    'Log Koa' : 'kAerAir',
     'VP (Pa' : 'vapor_pressure_at_25_C',
+    'VP  (exp': 'vapor_pressure_at_25_C',
     'Water Solubility' : 'water_solubility_at_25_C',
     '(BCF' : 'BCF',
 }
@@ -44,21 +45,22 @@ def find_value(stringly):
     value1 = re.search('(?<=:)\s{1,6}(\S*)', stringly)
     # regex- after an = this time. No group function for this :/
     value2 = re.search('(?<==)\s{1,6}(\S*)', stringly)
-
     valid_search = value1 or value2
     if valid_search:
         return valid_search.group(0).strip()
+    else:
+        return None
 
 def find_fugacity_value(stringly):
     return stringly.split()[2]
 
 def parse(input_path):
-    # Super ugly as EPI Suite results are a txt file amalgamation of many indoividual
+    # Super ugly as EPI Suite results are a txt file amalgamation of many individual
     # application outputs, all formatted differently
     lines = tuple(open(input_path, 'r'))
-
     chemicals = []
     current_chem = dict.copy(wanted)
+
     for line in lines:
         if 'SMILES' in line:
         #separates by chemical in case of batched input
@@ -66,6 +68,7 @@ def parse(input_path):
                 chemicals.append(current_chem)
                 current_chem = dict.copy(wanted)
             current_chem['smiles'] = find_value(line)
+
         if any(x in line for x in ['=',':']):
             for key in dict.keys(search_for):
                 if key in line:
@@ -73,19 +76,30 @@ def parse(input_path):
                         current_chem[search_for[key]] = float(find_value(line.split('(')[1]))
                     else:
                         try:
-                            current_chem[search_for[key]] = float(find_value(line))
+                            # experimental values come last and will overwrite
+                            # if they exist
+                            parsed_value = find_value(line)
+                            if parsed_value:
+                                current_chem[search_for[key]] = float(parsed_value)
                         except:
+                            # catches not integer values like SMILES value
                             current_chem[search_for[key]] = find_value(line)
         else:
             for key in dict.keys(search_fugacity):
                 if key in line:
                     current_chem[search_fugacity[key]] = float(find_fugacity_value(line))
 
-
-    for log_value in ['kOctWater','kOrgWater','kAirWater','kAerAir']:
-        if current_chem[log_value]:
-            current_chem[log_value] = 10.0**float(current_chem[log_value])
-
+    # append final chemical as it wont reach first loop
     chemicals.append(current_chem)
+
+    # deloggify values
+    for chem in chemicals:
+        for log_value in ['kOctWater','kOrgWater','kAirWater','kAerAir']:
+            if chem[log_value]:
+                print "{0} {1}: {2}".format(chem['smiles'],
+                    log_value, chem[log_value])
+                chem[log_value] = 10.0**chem[log_value]
+                print "{0} {1}: {2}".format(chem['smiles'],
+                    log_value, chem[log_value])
 
     return chemicals
