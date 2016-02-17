@@ -23,13 +23,14 @@ wanted = {
 search_for = {
     'MOL WT' : 'MW',
     'Log Kow (E' : 'kOctWater',
+    'Log Kow (K' : 'kOctWater',
     'Log Koc' : 'kOrgWater',
     'Log Kaw' : 'kAirWater',
     'Log Koa' : 'kAerAir',
     'VP (Pa' : 'vapor_pressure_at_25_C',
     'VP  (exp': 'vapor_pressure_at_25_C',
     'Water Solubility' : 'water_solubility_at_25_C',
-    '(BCF' : 'BCF',
+    '(BCF ' : 'BCF',
 }
 
 search_fugacity = {
@@ -72,18 +73,34 @@ def parse(input_path):
         if any(x in line for x in ['=',':']):
             for key in dict.keys(search_for):
                 if key in line:
-                    if key == "BCF":
-                        current_chem[search_for[key]] = float(find_value(line.split('(')[1]))
+                    if search_for[key] == "BCF":
+                        val = float(find_value(line.split('(')[1]))
+                        if current_chem[search_for[key]]:
+                            print "second val: {0}".format(val)
+                            current_chem[search_for[key]] = (current_chem[search_for[key]]
+                                    + val)/2.0
+                            print "avg: {0}".format(current_chem[search_for[key]])
+                        else:
+                            print "first val: {0}".format(val)
+                            current_chem[search_for[key]] = val
                     else:
+                        parsed_value = find_value(line)
                         try:
                             # experimental values come last and will overwrite
                             # if they exist
-                            parsed_value = find_value(line)
-                            if parsed_value:
-                                current_chem[search_for[key]] = float(parsed_value)
+
+                            value = float(parsed_value)
+                            if value:
+                                if search_for[key] == 'Log Koc':
+                                    print 'Doing Log Koc stuff'
+                                    print current_chem[search_for[key]]
+                                    if current_chem[search_for[key]]:
+                                        current_chem[search_for[key]] = (current_chem[search_for[key]] + value)/2.0
+                                else:
+                                    current_chem[search_for[key]] = value
                         except:
-                            # catches not integer values like SMILES value
-                            current_chem[search_for[key]] = find_value(line)
+                            # catches not integer/float values
+                            current_chem[search_for[key]] = 'Error'
         else:
             for key in dict.keys(search_fugacity):
                 if key in line:
@@ -95,11 +112,13 @@ def parse(input_path):
     # deloggify values
     for chem in chemicals:
         for log_value in ['kOctWater','kOrgWater','kAirWater','kAerAir']:
-            if chem[log_value]:
-                print "{0} {1}: {2}".format(chem['smiles'],
-                    log_value, chem[log_value])
-                chem[log_value] = 10.0**chem[log_value]
-                print "{0} {1}: {2}".format(chem['smiles'],
-                    log_value, chem[log_value])
-
+            if log_value != None:
+                try:
+                    print "{0} {1}: {2}".format(chem['smiles'],
+                        log_value, chem[log_value])
+                    chem[log_value] = 10.0**chem[log_value]
+                    print "{0} {1}: {2}".format(chem['smiles'],
+                        log_value, chem[log_value])
+                except:
+                    chem[log_value] = "Error"
     return chemicals

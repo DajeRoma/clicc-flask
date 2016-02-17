@@ -64,6 +64,9 @@ def run_job():
             'qsar': qsar_results
             }})
 
+@app.route('/qsar_batch', methods=['POST'])
+def qsar_batch():
+    # import pdb; pdb.set_trace()
 # deprecated until basic functionality is more polished
 # @app.route('/upload_epi_result', methods=['POST'])
 # def upload_file():
@@ -84,6 +87,11 @@ def run_job():
 #     chem = chem_spider.get_chem(query)
 #     return jsonify(chem)
 
+
+
+
+
+# Test routes using seed data
 @app.route('/server_test')
 def index():
     return 'Hello'
@@ -108,7 +116,7 @@ def run_lcia_default_values():
     result = lcia.predict()
     return jsonify({'parsed_results':result})
 
-@app.route('/test_ft_exposure', methods=['GET'])
+@app.route('/ft_exposure_test', methods=['GET'])
 def test_ft_exposure():
         fat_outs = fat.run({})
         exposure_results = exp.run(fat_outs['exposure_inputs'])

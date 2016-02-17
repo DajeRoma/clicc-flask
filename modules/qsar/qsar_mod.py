@@ -1,24 +1,28 @@
 import json
-import os
+import os, shutil
 import sys
 from subprocess import Popen
 from chem_spider_api import ChemSpiderAPI
-from parse_epi import epi_parse
+from parsing import parse_epi
+from parsing import parse_test_MD
 import inspect
 import csv
 import datetime
+
 class_directory = os.path.dirname(os.path.abspath(
     inspect.getfile(inspect.currentframe()))
 )
+
 # import custom exceptions from utils
-path_array = class_directory.split(os.sep)
-del path_array[-1]
-del path_array[-1]
-path_array.append("utils")
-util_dir = (os.sep).join(path_array)
-sys.path.insert(0, util_dir)
-from utils import ModuleError
-sys.path.pop(0)
+# path_array = class_directory.split(os.sep)
+# del path_array[-1]
+# del path_array[-1]
+# path_array.append("utils")
+# util_dir = (os.sep).join(path_array)
+# sys.path.insert(0, util_dir)
+# print util_dir
+# from utils import ModuleError
+# sys.path.pop(0)
 
 class QSARmod:
     def __init__(self):
@@ -37,13 +41,13 @@ class QSARmod:
         config_file.close()
 
         # construct batch files
-        self.script_list = ["epi_script", "test_script", "test_MD_script", "vega_script"]
+        self.script_list = ["epi", "test", "test_MD", "vega"]
         script_strings = {}
         for name in self.script_list:
             script_strings[name] = ("@echo off\ncall {0} -r {1} --args %%*%>>log.txt\nexit"
                 .format(self.config['sikuli_cmd'],os.path.join(
                                                     self.sikuli_scripts,
-                                                    name + '.sikuli'
+                                                    name + '_script.sikuli'
                                                   )))
         for name, value  in script_strings.iteritems():
             try:
@@ -56,6 +60,18 @@ class QSARmod:
         		print "I/O error({0}): {1}".format(errno, strerror)
 
     def run(self, input_hash={}):
+        # clear out old results. Disabling may cause parsing of old results in
+        # the case of script failure
+        if self.config['clear_results']:
+            for the_file in os.listdir(self.results_folder):
+                file_path = os.path.join(self.results_folder, the_file)
+                try:
+                    if os.path.isfile(file_path):
+                        os.unlink(file_path)
+                    elif os.path.isdir(file_path): shutil.rmtree(file_path)
+                except Exception, e:
+                    print e
+
         #allow varying input types for testing purposes by using an options hash
         #take {'smiles_in': smiles_value} or {'file_in': results_text_file}
         if not input_hash:
@@ -70,6 +86,10 @@ class QSARmod:
             smiles_file = open(smiles_path, 'w+')
             smiles_file.write(input_hash['smiles_in'])
             smiles_file.close()
+        elif 'file_in' in input_hash:
+            results_folder = self.results_folder
+            smiles_file = input_hash['file_in']
+
 
         #Chemspider queries disabled pending SMILES generation issues resolved.
         # if self.config['query_chemspider']:
@@ -82,29 +102,39 @@ class QSARmod:
         # execute batch file to run epi suite, but not if parsing results file
         # directly.
 
-        if 'smiles_in' in input_hash:
+        for script in self.script_list:
+            if (self.config['run_{0}'.format(script)]
+                    and self.config['enable_sikuli']):
+                batch_path = os.path.join(self.batch_folder,
+                                          'run_{0}.cmd'.format(script))
+                try:
+                    e = Popen(
+                        [batch_path],
+                        cwd=self.batch_folder,
+                        shell=True
+                    )
+                    stdout, stderr = e.communicate()
+                except IOError as (errno,strerror):
+            		print "I/O error({0}): {1}".format(errno, strerror)
+
+        # parse results
+        if self.config['parse_results']:
+            epi_output = os.path.join(results_folder, 'EPI_results.txt')
+            test_MD_output = os.path.join(results_folder, 'Batch_Density_all_methods_1.txt')
+
+            chems = []
             for script in self.script_list:
                 if self.config['run_{0}'.format(script)]:
-                    batch_path = os.path.join(self.batch_folder,
-                                              'run_{0}.cmd'.format(script))
                     try:
-                        print batch_path
-                        e = Popen(
-                            [batch_path],
-                            cwd=self.batch_folder,
-                            shell=True
-                        )
-                        stdout, stderr = e.communicate()
-                    except IOError as (errno,strerror):
-                		print "I/O error({0}): {1}".format(errno, strerror)
+                        parsed = eval('parse_{0}({0}_output)'.format(script))
+                        if not chems:
+                            chems = parsed
+                        else:
+                            for idx, chem in enumerate(chems):
+                                chem.update(parsed[idx])
+                    except:
+                        print "parse failed for {0}".format(script)
 
-        # parse results from EPI Suite
-        if self.config['parse_results']:
-            if 'file_in' in input_hash:
-                epi_output = input_hash['file_in']
-            else:
-                epi_output = os.path.join(results_folder, 'EPI_results.txt')
-            chems = epi_parse(epi_output)
             if self.config['log_results']:
                 lines = []
                 for chem in chems:
@@ -114,5 +144,10 @@ class QSARmod:
                 with open(os.path.join(self.directory, 'logging',
                         datetime.datetime.now().strftime("%b_%d_%y-%H_%M_%S") + '.txt'),
                         "w+") as f:
-                        f.write(lines)
-            return chems
+                    f.write(lines)
+        return chems
+
+
+if __name__ == '__main__':
+    q = QSARmod()
+    q.run({'file_in': q.smiles_path})

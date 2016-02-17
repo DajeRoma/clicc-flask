@@ -1,8 +1,8 @@
 
-SMILES : C(CL)CL
-CHEM   :
-MOL FOR: C1 H2 CL2
-MOL WT : 84.93
+SMILES : c52c3c4c(cc5ccc1c2c(cc3)ccc1)cccc4
+CHEM   : 
+MOL FOR: C20 H12 
+MOL WT : 252.32
 ------------------------------ EPI SUMMARY (v3.20) --------------------------
  Physical Property Inputs:
     Water Solubility (mg/L):   ------
@@ -13,138 +13,272 @@ MOL WT : 84.93
     Melting Point (deg C)  :   ------
 
  Log Octanol-Water Partition Coef (SRC):
-    Log Kow (KOWWIN v1.68 estimate) =  1.34
-    Log Kow (Exper. database match) =  1.25
-       Exper. Ref:  HANSCH,C ET AL. (1995)
+    Log Kow (KOWWIN v1.68 estimate) =  6.11
+    Log Kow (Exper. database match) =  6.13
+       Exper. Ref:  DE MAAGD,PG ET AL. (1998)
 
  Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
-    Boiling Pt (deg C):  80.42  (Adapted Stein & Brown method)
-    Melting Pt (deg C):  -89.50  (Mean or Weighted MP)
-    VP(mm Hg,25 deg C):  432  (Mean VP of Antoine & Grain methods)
-    VP (Pa, 25 deg C) :  5.75E+004  (Mean VP of Antoine & Grain methods)
-    MP  (exp database):  -95.1 deg C
-    BP  (exp database):  40 deg C
-    VP  (exp database):  4.35E+02 mm Hg (5.80E+004 Pa) at 25 deg C
+    Boiling Pt (deg C):  442.75  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  169.41  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  9.82E-010  (Modified Grain method)
+    VP (Pa, 25 deg C) :  1.31E-007  (Modified Grain method)
+    MP  (exp database):  176.5 deg C
+    BP  (exp database):  495 deg C
+    VP  (exp database):  5.49E-09 mm Hg (7.32E-007 Pa) at 25 deg C
+    Subcooled liquid VP: 1.73E-007 mm Hg (25 deg C, exp database VP )
+                       : 2.31E-005 Pa  (25 deg C, exp database VP )
 
  Water Solubility Estimate from Log Kow (WSKOW v1.42):
-    Water Solubility at 25 deg C (mg/L):  1.095e+004
-       log Kow used: 1.25 (expkow database)
+    Water Solubility at 25 deg C (mg/L):  0.01038
+       log Kow used: 6.13 (expkow database)
        no-melting pt equation used
-     Water Sol (Exper. database match) =  1.3e+004 mg/L (25 deg C)
-        Exper. Ref:  HORVATH,AL (1982)
+     Water Sol (Exper. database match) =  0.00162 mg/L (25 deg C)
+        Exper. Ref:  MAY,WE ET AL. (1983)
 
  Water Sol Estimate from Fragments:
-    Wat Sol (v1.01 est) =  11665 mg/L
+    Wat Sol (v1.01 est) =  0.0020006 mg/L
 
  ECOSAR Class Program (ECOSAR v1.11):
     Class(es) found:
        Neutral Organics
 
  Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
-   Bond Method :   9.14E-003  atm-m3/mole  (9.26E+002 Pa-m3/mole)
-   Group Method:   3.01E-003  atm-m3/mole  (3.05E+002 Pa-m3/mole)
-   Exper Database: 3.25E-03  atm-m3/mole  (3.29E+002 Pa-m3/mole)
+   Bond Method :   8.10E-007  atm-m3/mole  (8.21E-002 Pa-m3/mole)
+   Group Method:   2.03E-007  atm-m3/mole  (2.06E-002 Pa-m3/mole)
+   Exper Database: 4.57E-07  atm-m3/mole  (4.63E-002 Pa-m3/mole)
  For Henry LC Comparison Purposes:
    User-Entered Henry LC:  not entered
    Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
-      HLC:  4.409E-003 atm-m3/mole  (4.467E+002 Pa-m3/mole)
-      VP:   432 mm Hg (source: MPBPVP)
-      WS:   1.1E+004 mg/L (source: WSKOWWIN)
+      HLC:  3.141E-008 atm-m3/mole  (3.183E-003 Pa-m3/mole)
+      VP:   9.82E-010 mm Hg (source: MPBPVP)
+      WS:   0.0104 mg/L (source: WSKOWWIN)
 
  Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
-  Log Kow used:  1.25  (exp database)
-  Log Kaw used:  -0.877  (exp database)
-      Log Koa (KOAWIN v1.10 estimate):  2.127
-      Log Koa (experimental database):  2.270
+  Log Kow used:  6.13  (exp database)
+  Log Kaw used:  -4.729  (exp database)
+      Log Koa (KOAWIN v1.10 estimate):  10.859
+      Log Koa (experimental database):  None
 
  Probability of Rapid Biodegradation (BIOWIN v4.10):
-   Biowin1 (Linear Model)         :   0.4843
-   Biowin2 (Non-Linear Model)     :   0.1298
+   Biowin1 (Linear Model)         :  -0.0299
+   Biowin2 (Non-Linear Model)     :   0.0000
  Expert Survey Biodegradation Results:
-   Biowin3 (Ultimate Survey Model):   2.6651  (weeks-months)
-   Biowin4 (Primary Survey Model) :   3.5240  (days-weeks  )
+   Biowin3 (Ultimate Survey Model):   1.8422  (months      )
+   Biowin4 (Primary Survey Model) :   2.7815  (weeks       )
  MITI Biodegradation Probability:
-   Biowin5 (MITI Linear Model)    :   0.5111
-   Biowin6 (MITI Non-Linear Model):   0.3154
+   Biowin5 (MITI Linear Model)    :   0.0601
+   Biowin6 (MITI Non-Linear Model):   0.0350
  Anaerobic Biodegradation Probability:
-   Biowin7 (Anaerobic Linear Model):  0.8328
+   Biowin7 (Anaerobic Linear Model): -0.3091
+ Ready Biodegradability Prediction:   NO
+
+ Hydrocarbon Biodegradation (BioHCwin v1.01):
+     LOG BioHC Half-Life (days) :   2.6249
+     BioHC Half-Life (days)     : 421.6084
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  2.31E-005 Pa (1.73E-007 mm Hg)
+  Log Koa (Koawin est  ): 10.859
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  0.13 
+       Octanol/air (Koa) model:  0.0177 
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  0.824 
+       Mackay model           :  0.912 
+       Octanol/air (Koa) model:  0.587 
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant =  50.0000 E-12 cm3/molecule-sec
+      Half-Life =     0.214 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =     2.567 Hrs
+   Ozone Reaction:
+      No Ozone Reaction Estimation
+   Fraction sorbed to airborne particulates (phi):
+      0.868 (Junge-Pankow, Mackay avg)
+      0.587 (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+      Koc    :  5.874E+005  L/kg (MCI method)
+      Log Koc:  5.769       (MCI method)
+      Koc    :  2.088E+005  L/kg (Kow method)
+      Log Koc:  5.320       (Kow method)
+       Experimental Log Koc:  5.95  (database)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+    Rate constants can NOT be estimated for this structure!
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 3.712 (BCF = 5147 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -0.0440 days (HL = 0.9037 days)
+   Log BCF Arnot-Gobas method (upper trophic) = 2.561 (BCF = 364.2)
+   Log BAF Arnot-Gobas method (upper trophic) = 2.597 (BAF = 395.6)
+       log Kow used: 6.13 (expkow database)
+
+ Volatilization from Water:
+    Henry LC:  4.57E-007 atm-m3/mole  (Henry experimental database)
+    Half-Life from Model River:       2037  hours   (84.86 days)
+    Half-Life from Model Lake : 2.235E+004  hours   (931.3 days)
+
+ Removal In Wastewater Treatment:
+    Total removal:              92.64  percent
+    Total biodegradation:        0.77  percent
+    Total sludge adsorption:    91.86  percent
+    Total to Air:                0.00  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       0.0454          5.13         1000       
+   Water     2.47            1.44e+003    1000       
+   Soil      37.8            2.88e+003    1000       
+   Sediment  59.7            1.3e+004     0          
+     Persistence Time: 4.22e+003 hr
+
+
+
+========================
+
+
+SMILES : CC(C)(C)CC(C)(C)c1ccc(OCCOCCOCCOCCOCCO)cc1
+CHEM   : 
+MOL FOR: C24 H42 O6 
+MOL WT : 426.60
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    Log Kow (KOWWIN v1.68 estimate) =  3.77
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+    Boiling Pt (deg C):  475.90  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  191.94  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  1.79E-011  (Modified Grain method)
+    VP (Pa, 25 deg C) :  2.39E-009  (Modified Grain method)
+    Subcooled liquid VP: 1.01E-009 mm Hg (25 deg C, Mod-Grain method)
+                       : 1.35E-007 Pa (25 deg C, Mod-Grain method)
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    Water Solubility at 25 deg C (mg/L):  4.118
+       log Kow used: 3.77 (estimated)
+       no-melting pt equation used
+
+ Water Sol Estimate from Fragments:
+    Wat Sol (v1.01 est) =  116.56 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       Neutral Organics
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   Bond Method :   7.24E-015  atm-m3/mole  (7.33E-010 Pa-m3/mole)
+   Group Method:   1.47E-017  atm-m3/mole  (1.49E-012 Pa-m3/mole)
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  2.440E-012 atm-m3/mole  (2.472E-007 Pa-m3/mole)
+      VP:   1.79E-011 mm Hg (source: MPBPVP)
+      WS:   4.12 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+  Log Kow used:  3.77  (KowWin est)
+  Log Kaw used:  -12.529  (HenryWin est)
+      Log Koa (KOAWIN v1.10 estimate):  16.299
+      Log Koa (experimental database):  None
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+   Biowin1 (Linear Model)         :  -0.9222
+   Biowin2 (Non-Linear Model)     :   0.0000
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   1.8994  (months      )
+   Biowin4 (Primary Survey Model) :   3.0930  (weeks       )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.5190
+   Biowin6 (MITI Non-Linear Model):   0.1429
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model): -1.0443
  Ready Biodegradability Prediction:   NO
 
 Hydrocarbon Biodegradation (BioHCwin v1.01):
     Structure incompatible with current estimation method!
 
  Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
-  Vapor pressure (liquid/subcooled):  5.8E+004 Pa (435 mm Hg)
-  Log Koa (Exp database): 2.270
+  Vapor pressure (liquid/subcooled):  1.35E-007 Pa (1.01E-009 mm Hg)
+  Log Koa (Koawin est  ): 16.299
    Kp (particle/gas partition coef. (m3/ug)):
-       Mackay model           :  5.17E-011
-       Octanol/air (Koa) model:  4.57E-011
+       Mackay model           :  22.3 
+       Octanol/air (Koa) model:  4.89E+003 
    Fraction sorbed to airborne particulates (phi):
-       Junge-Pankow model     :  1.87E-009
-       Mackay model           :  4.14E-009
-       Octanol/air (Koa) model:  3.66E-009
+       Junge-Pankow model     :  0.999 
+       Mackay model           :  0.999 
+       Octanol/air (Koa) model:  1 
 
  Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
    Hydroxyl Radicals Reaction:
-      OVERALL OH Rate Constant =   0.1349 E-12 cm3/molecule-sec
-      Half-Life =    79.306 Days (12-hr day; 1.5E6 OH/cm3)
+      OVERALL OH Rate Constant =  95.2782 E-12 cm3/molecule-sec
+      Half-Life =     0.112 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =     1.347 Hrs
    Ozone Reaction:
       No Ozone Reaction Estimation
    Fraction sorbed to airborne particulates (phi):
-      3E-009 (Junge-Pankow, Mackay avg)
-      3.66E-009 (Koa method)
+      0.999 (Junge-Pankow, Mackay avg)
+      1 (Koa method)
     Note: the sorbed fraction may be resistant to atmospheric oxidation
 
  Soil Adsorption Coefficient (KOCWIN v2.00):
-      Koc    :  21.73  L/kg (MCI method)
-      Log Koc:  1.337       (MCI method)
-      Koc    :  12.15  L/kg (Kow method)
-      Log Koc:  1.084       (Kow method)
-       Experimental Log Koc:  1.44  (database)
+      Koc    :  348.2  L/kg (MCI method)
+      Log Koc:  2.542       (MCI method)
+      Koc    :  196.1  L/kg (Kow method)
+      Log Koc:  2.292       (Kow method)
 
  Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
-  Total Kb for pH > 8 at 25 deg C :  5.095E-009  L/mol-sec
-  Kb Half-Life at pH 8: 4.311E+006  years
-  Kb Half-Life at pH 7: 4.311E+007  years
-    (Total Kb applies only to esters, carbmates, alkyl halides)
+    Rate constants can NOT be estimated for this structure!
 
  Bioaccumulation Estimates (BCFBAF v3.01):
-   Log BCF from regression-based method = 0.492 (BCF = 3.103 L/kg wet-wt)
-   Log Biotransformation Half-life (HL) = -0.6250 days (HL = 0.2371 days)
-   Log BCF Arnot-Gobas method (upper trophic) = 0.420 (BCF = 2.63)
-   Log BAF Arnot-Gobas method (upper trophic) = 0.420 (BAF = 2.63)
-       log Kow used: 1.25 (expkow database)
+   Log BCF from regression-based method = 1.896 (BCF = 78.67 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -0.1187 days (HL = 0.7609 days)
+   Log BCF Arnot-Gobas method (upper trophic) = 2.324 (BCF = 210.8)
+   Log BAF Arnot-Gobas method (upper trophic) = 2.324 (BAF = 210.8)
+       log Kow used: 3.77 (estimated)
 
  Volatilization from Water:
-    Henry LC:  0.00325 atm-m3/mole  (Henry experimental database)
-    Half-Life from Model River:      1.106  hours
-    Half-Life from Model Lake :      89.34  hours   (3.723 days)
+    Henry LC:  1.47E-017 atm-m3/mole  (estimated by Group SAR Method)
+    Half-Life from Model River: 8.226E+013  hours   (3.428E+012 days)
+    Half-Life from Model Lake : 8.974E+014  hours   (3.739E+013 days)
 
  Removal In Wastewater Treatment:
-    Total removal:              56.91  percent
-    Total biodegradation:        0.05  percent
-    Total sludge adsorption:     0.96  percent
-    Total to Air:               55.90  percent
+    Total removal:              20.77  percent
+    Total biodegradation:        0.25  percent
+    Total sludge adsorption:    20.52  percent
+    Total to Air:                0.00  percent
       (using 10000 hr Bio P,A,S)
 
  Level III Fugacity Model:
            Mass Amount    Half-Life    Emissions
             (percent)        (hr)       (kg/hr)
-   Air       43.8            1.81e+003    1000
-   Water     45              900          1000
-   Soil      11              1.8e+003     1000
-   Sediment  0.132           8.1e+003     0
-     Persistence Time: 186 hr
+   Air       8.51e-008       2.7          1000       
+   Water     11.1            1.44e+003    1000       
+   Soil      88.7            2.88e+003    1000       
+   Sediment  0.235           1.3e+004     0          
+     Persistence Time: 2.65e+003 hr
 
 
 
 ========================
 
 
-SMILES : C(C1C(C(C(C(O1)O)O)O)O)O
-CHEM   :
-MOL FOR: C6 H12 O6
-MOL WT : 180.16
+SMILES : O=C(OCCOCCOC(=O)c(cccc1)c1)c(cccc2)c2
+CHEM   : 
+MOL FOR: C18 H18 O5 
+MOL WT : 314.34
 ------------------------------ EPI SUMMARY (v3.20) --------------------------
  Physical Property Inputs:
     Water Solubility (mg/L):   ------
@@ -155,26 +289,857 @@ MOL WT : 180.16
     Melting Point (deg C)  :   ------
 
  Log Octanol-Water Partition Coef (SRC):
-    Log Kow (KOWWIN v1.68 estimate) =  -2.89
-    Log Kow (Exper. database match) =  -3.24
-       Exper. Ref:  SANGSTER (1994)
+    Log Kow (KOWWIN v1.68 estimate) =  3.04
 
  Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
-    Boiling Pt (deg C):  380.68  (Adapted Stein & Brown method)
-    Melting Pt (deg C):  132.79  (Mean or Weighted MP)
-    VP(mm Hg,25 deg C):  1.33E-007  (Modified Grain method)
-    VP (Pa, 25 deg C) :  1.78E-005  (Modified Grain method)
-    MP  (exp database):  < 25 deg C
-    VP  (exp database):  8.02E-14 mm Hg (1.07E-011 Pa) at 25 deg C
+    Boiling Pt (deg C):  387.90  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  59.80  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  0.0796  (Modified Grain method)
+    VP (Pa, 25 deg C) :  10.6  (Modified Grain method)
+    MP  (exp database):  33.5 deg C
+    BP  (exp database):  225 deg C
+    Subcooled liquid VP: 0.0949 mm Hg (25 deg C, Mod-Grain method)
+                       : 12.7 Pa (25 deg C, Mod-Grain method)
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    Water Solubility at 25 deg C (mg/L):  25.61
+       log Kow used: 3.04 (estimated)
+       no-melting pt equation used
+
+ Water Sol Estimate from Fragments:
+    Wat Sol (v1.01 est) =  68.51 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       Esters
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   Bond Method :   3.38E-010  atm-m3/mole  (3.42E-005 Pa-m3/mole)
+   Group Method:   3.01E-012  atm-m3/mole  (3.05E-007 Pa-m3/mole)
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  1.286E-003 atm-m3/mole  (1.303E+002 Pa-m3/mole)
+      VP:   0.0796 mm Hg (source: MPBPVP)
+      WS:   25.6 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+  Log Kow used:  3.04  (KowWin est)
+  Log Kaw used:  -7.860  (HenryWin est)
+      Log Koa (KOAWIN v1.10 estimate):  10.900
+      Log Koa (experimental database):  None
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+   Biowin1 (Linear Model)         :   0.8551
+   Biowin2 (Non-Linear Model)     :   0.9990
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   2.8203  (weeks       )
+   Biowin4 (Primary Survey Model) :   3.8522  (days        )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.7458
+   Biowin6 (MITI Non-Linear Model):   0.7605
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model):  0.5086
+ Ready Biodegradability Prediction:   YES
+
+Hydrocarbon Biodegradation (BioHCwin v1.01):
+    Structure incompatible with current estimation method!
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  12.7 Pa (0.0949 mm Hg)
+  Log Koa (Koawin est  ): 10.900
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  2.37E-007 
+       Octanol/air (Koa) model:  0.0195 
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  8.56E-006 
+       Mackay model           :  1.9E-005 
+       Octanol/air (Koa) model:  0.609 
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant =  18.9525 E-12 cm3/molecule-sec
+      Half-Life =     0.564 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =     6.772 Hrs
+   Ozone Reaction:
+      No Ozone Reaction Estimation
+   Fraction sorbed to airborne particulates (phi):
+      1.38E-005 (Junge-Pankow, Mackay avg)
+      0.609 (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+      Koc    :  1023  L/kg (MCI method)
+      Log Koc:  3.010       (MCI method)
+      Koc    :  242.6  L/kg (Kow method)
+      Log Koc:  2.385       (Kow method)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+  Total Kb for pH > 8 at 25 deg C :  1.645E-001  L/mol-sec
+  Kb Half-Life at pH 8:      48.770  days   
+  Kb Half-Life at pH 7:       1.335  years  
+    (Total Kb applies only to esters, carbmates, alkyl halides)
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 1.673 (BCF = 47.12 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -2.2543 days (HL = 0.005569 days)
+   Log BCF Arnot-Gobas method (upper trophic) = 0.785 (BCF = 6.089)
+   Log BAF Arnot-Gobas method (upper trophic) = 0.785 (BAF = 6.089)
+       log Kow used: 3.04 (estimated)
+
+ Volatilization from Water:
+    Henry LC:  3.01E-012 atm-m3/mole  (estimated by Group SAR Method)
+    Half-Life from Model River: 3.449E+008  hours   (1.437E+007 days)
+    Half-Life from Model Lake : 3.762E+009  hours   (1.568E+008 days)
+
+ Removal In Wastewater Treatment:
+    Total removal:               6.04  percent
+    Total biodegradation:        0.13  percent
+    Total sludge adsorption:     5.92  percent
+    Total to Air:                0.00  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       5.24e-005       13.5         1000       
+   Water     16.3            360          1000       
+   Soil      83.2            720          1000       
+   Sediment  0.586           3.24e+003    0          
+     Persistence Time: 783 hr
+
+
+
+========================
+
+
+SMILES : O=C(c1ccccc1)OCC(OC(COC(=O)c2ccccc2)C)C
+CHEM   : 
+MOL FOR: C20 H22 O5 
+MOL WT : 342.39
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    Log Kow (KOWWIN v1.68 estimate) =  3.88
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+    Boiling Pt (deg C):  397.12  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  54.48  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  5.22E-006  (Modified Grain method)
+    VP (Pa, 25 deg C) :  0.000696  (Modified Grain method)
+    VP  (exp database):  4.60E-07 mm Hg (6.13E-005 Pa) at 25 deg C
+    Subcooled liquid VP: 9E-007 mm Hg (25 deg C, exp database VP )
+                       : 0.00012 Pa  (25 deg C, exp database VP )
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    Water Solubility at 25 deg C (mg/L):  3.373
+       log Kow used: 3.88 (estimated)
+       no-melting pt equation used
+     Water Sol (Exper. database match) =  15 mg/L (25 deg C)
+        Exper. Ref:  BUTZ,RG ET AL. (1982A)
+
+ Water Sol Estimate from Fragments:
+    Wat Sol (v1.01 est) =  17.674 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       Esters
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   Bond Method :   5.95E-010  atm-m3/mole  (6.03E-005 Pa-m3/mole)
+   Group Method:   1.65E-011  atm-m3/mole  (1.68E-006 Pa-m3/mole)
+   Exper Database: 1.38E-08  atm-m3/mole  (1.40E-003 Pa-m3/mole)
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  6.972E-007 atm-m3/mole  (7.064E-002 Pa-m3/mole)
+      VP:   5.22E-006 mm Hg (source: MPBPVP)
+      WS:   3.37 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+  Log Kow used:  3.88  (KowWin est)
+  Log Kaw used:  -6.249  (exp database)
+      Log Koa (KOAWIN v1.10 estimate):  10.129
+      Log Koa (experimental database):  None
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+   Biowin1 (Linear Model)         :   0.8417
+   Biowin2 (Non-Linear Model)     :   0.9985
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   2.7583  (weeks       )
+   Biowin4 (Primary Survey Model) :   3.8117  (days        )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.4629
+   Biowin6 (MITI Non-Linear Model):   0.3376
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model): -0.0343
+ Ready Biodegradability Prediction:   NO
+
+Hydrocarbon Biodegradation (BioHCwin v1.01):
+    Structure incompatible with current estimation method!
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  0.00012 Pa (9E-007 mm Hg)
+  Log Koa (Koawin est  ): 10.129
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  0.025 
+       Octanol/air (Koa) model:  0.0033 
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  0.475 
+       Mackay model           :  0.667 
+       Octanol/air (Koa) model:  0.209 
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant =  34.3831 E-12 cm3/molecule-sec
+      Half-Life =     0.311 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =     3.733 Hrs
+   Ozone Reaction:
+      No Ozone Reaction Estimation
+   Fraction sorbed to airborne particulates (phi):
+      0.571 (Junge-Pankow, Mackay avg)
+      0.209 (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+      Koc    :  2633  L/kg (MCI method)
+      Log Koc:  3.420       (MCI method)
+      Koc    :  707.1  L/kg (Kow method)
+      Log Koc:  2.849       (Kow method)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+  Total Kb for pH > 8 at 25 deg C :  1.028E-001  L/mol-sec
+  Kb Half-Life at pH 8:      78.015  days   
+  Kb Half-Life at pH 7:       2.136  years  
+    (Total Kb applies only to esters, carbmates, alkyl halides)
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 2.224 (BCF = 167.6 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -2.0101 days (HL = 0.009769 days)
+   Log BCF Arnot-Gobas method (upper trophic) = 0.826 (BCF = 6.696)
+   Log BAF Arnot-Gobas method (upper trophic) = 0.826 (BAF = 6.696)
+       log Kow used: 3.88 (estimated)
+
+ Volatilization from Water:
+    Henry LC:  1.38E-008 atm-m3/mole  (Henry experimental database)
+    Half-Life from Model River: 7.851E+004  hours   (3271 days)
+    Half-Life from Model Lake : 8.566E+005  hours   (3.569E+004 days)
+
+ Removal In Wastewater Treatment:
+    Total removal:              24.90  percent
+    Total biodegradation:        0.28  percent
+    Total sludge adsorption:    24.62  percent
+    Total to Air:                0.00  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       0.183           7.47         1000       
+   Water     18.1            360          1000       
+   Soil      80.2            720          1000       
+   Sediment  1.52            3.24e+003    0          
+     Persistence Time: 670 hr
+
+
+
+========================
+
+
+SMILES : n1(=O)c(S([Na]))cccc1
+CHEM   : 
+MOL FOR: C5 H4 N1 O1 S1 Na1 
+MOL WT : 149.14
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    Log Kow (KOWWIN v1.68 estimate) =  -3.98
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+    Boiling Pt (deg C):  518.52  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  221.25  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  7.42E-011  (Modified Grain method)
+    VP (Pa, 25 deg C) :  9.9E-009  (Modified Grain method)
+    Subcooled liquid VP: 9.31E-009 mm Hg (25 deg C, Mod-Grain method)
+                       : 1.24E-006 Pa (25 deg C, Mod-Grain method)
 
  Water Solubility Estimate from Log Kow (WSKOW v1.42):
     Water Solubility at 25 deg C (mg/L):  1e+006
-       log Kow used: -3.24 (expkow database)
+       log Kow used: -3.98 (estimated)
        no-melting pt equation used
-     Water Sol (Exper. database match) =  1.2e+006 mg/L (30 deg C)
-        Exper. Ref:  MULLIN,JW (1972)
-     Water Sol (Exper. database match) =  5e+005 mg/L (20 deg C)
-        Exper. Ref:  YALKOWSKY,SH & DANNENFELSER,RM (1992)
+
+ Water Sol Estimate from Fragments:
+    Wat Sol (v1.01 est) =  3.6932e+005 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       Thiols and Mercaptans
+       Omadines 
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   Bond Method :   Incomplete
+   Group Method:   Incomplete
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  1.456E-017 atm-m3/mole  (1.475E-012 Pa-m3/mole)
+      VP:   7.42E-011 mm Hg (source: MPBPVP)
+      WS:   1E+006 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+  Can Not Estimate (can not calculate HenryLC)
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+   Biowin1 (Linear Model)         :   0.6870
+   Biowin2 (Non-Linear Model)     :   0.7691
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   2.9182  (weeks       )
+   Biowin4 (Primary Survey Model) :   3.6643  (days-weeks  )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.3667
+   Biowin6 (MITI Non-Linear Model):   0.3397
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model):  0.4544
+ Ready Biodegradability Prediction:   NO
+
+Hydrocarbon Biodegradation (BioHCwin v1.01):
+    Structure incompatible with current estimation method!
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  1.24E-006 Pa (9.31E-009 mm Hg)
+  Log Koa (): not available
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  2.42 
+       Octanol/air (Koa) model:  not available
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  0.989 
+       Mackay model           :  0.995 
+       Octanol/air (Koa) model:  not available
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant =   2.3854 E-12 cm3/molecule-sec
+      Half-Life =     4.484 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =    53.807 Hrs
+   Ozone Reaction:
+      No Ozone Reaction Estimation
+   Fraction sorbed to airborne particulates (phi):
+      0.992 (Junge-Pankow, Mackay avg)
+      not available (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+      Koc    :  188.4  L/kg (MCI method)
+      Log Koc:  2.275       (MCI method)
+      Koc    :  0.07944  L/kg (Kow method)
+      Log Koc:  -1.100      (Kow method)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+    Rate constants can NOT be estimated for this structure!
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 0.500 (BCF = 3.162 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -1.0518 days (HL = 0.08876 days)
+   Log BCF Arnot-Gobas method (upper trophic) = -0.040 (BCF = 0.912)
+   Log BAF Arnot-Gobas method (upper trophic) = -0.040 (BAF = 0.912)
+       log Kow used: -0.64 (estimated)
+
+ Volatilization from Water:
+    Henry LC:  1.46E-017 atm-m3/mole  (calculated from VP/WS)
+    Half-Life from Model River: 4.911E+013  hours   (2.046E+012 days)
+    Half-Life from Model Lake : 5.357E+014  hours   (2.232E+013 days)
+
+ Removal In Wastewater Treatment:
+    Total removal:               1.85  percent
+    Total biodegradation:        0.09  percent
+    Total sludge adsorption:     1.75  percent
+    Total to Air:                0.00  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       3.65e-008       108          1000       
+   Water     17.9            360          1000       
+   Soil      81.9            720          1000       
+   Sediment  0.163           3.24e+003    0          
+     Persistence Time: 762 hr
+
+
+
+========================
+
+ 
+SMILES NOTATION PROBLEM: CCCCOC(=O)C=C.CC(=C)C(=O)OC,
+
+
+
+========================
+
+
+SMILES : O
+CHEM   : 
+MOL FOR: H2 O1 
+MOL WT : 18.02
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)
+    Log Kow (KOWWIN v1.68 estimate) =  -1.38
+    Log Kow (Exper. database match) =  -1.38
+       Exper. Ref:  HANSCH,C ET AL. (1995)
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+   *** WARNING: Inorganic Compound (Outside Estimate Domain) ***
+   *** WARNING: Estimations NOT VALID ***
+    Boiling Pt (deg C):  439.86  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  146.26  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  1.36E-007  (Modified Grain method)
+    VP (Pa, 25 deg C) :  1.82E-005  (Modified Grain method)
+    Subcooled liquid VP: 2.31E-006 mm Hg (25 deg C, Mod-Grain method)
+                       : 0.000308 Pa (25 deg C, Mod-Grain method)
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)**
+    Water Solubility at 25 deg C (mg/L):  1e+006
+       log Kow used: -1.38 (expkow database)
+       no-melting pt equation used
+
+ Water Sol Estimate from Fragments:
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)***
+    *** WARNING: Wat Sol Estimation NOT Valid ***
+    Wat Sol (v1.01 est) =  31979 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       Inorganic Compound
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   *** WARNING: Inorganic Compound (Outside Estimation Domain) **
+   *** WARNING: Estimation NOT VALID **
+   Bond Method :   8.41E-009  atm-m3/mole  (8.52E-004 Pa-m3/mole)
+   Group Method:   Incomplete
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  3.225E-015 atm-m3/mole  (3.267E-010 Pa-m3/mole)
+      VP:   1.36E-007 mm Hg (source: MPBPVP)
+      WS:   1E+006 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+   *** WARNING: Inorganic Compound (Outside Estimation Domain)**
+   *** WARNING: Estimation NOT VALID ***
+  Log Kow used:  -1.38  (exp database)
+  Log Kaw used:  -6.464  (HenryWin est)
+      Log Koa (KOAWIN v1.10 estimate):  5.084
+      Log Koa (experimental database):  None
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)**
+    *** WARNING: Estimation NOT VALID ***
+   Biowin1 (Linear Model)         :   0.7390
+   Biowin2 (Non-Linear Model)     :   0.9401
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   3.1594  (weeks       )
+   Biowin4 (Primary Survey Model) :   3.8217  (days        )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.6585
+   Biowin6 (MITI Non-Linear Model):   0.8814
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model):  0.8361
+ Ready Biodegradability Prediction:   YES
+
+Hydrocarbon Biodegradation (BioHCwin v1.01):
+    Structure incompatible with current estimation method!
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  0.000308 Pa (2.31E-006 mm Hg)
+  Log Koa (Koawin est  ): 5.084
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  0.00974 
+       Octanol/air (Koa) model:  2.98E-008 
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  0.26 
+       Mackay model           :  0.438 
+       Octanol/air (Koa) model:  2.38E-006 
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)***
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant =   0.0000 E-12 cm3/molecule-sec
+      Half-Life =   -------
+   Ozone Reaction:
+      No Ozone Reaction Estimation
+   Fraction sorbed to airborne particulates (phi):
+      0.349 (Junge-Pankow, Mackay avg)
+      2.38E-006 (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+   *** WARNING: Inorganic Coumpound (Outside Estimation Domain) **
+   *** WARNING: Estimation NOT VALID **
+      Koc    :  13.22  L/kg (MCI method)
+      Log Koc:  1.121       (MCI method)
+      Koc    :  0.06337  L/kg (Kow method)
+      Log Koc:  -1.198      (Kow method)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+    Rate constants can NOT be estimated for this structure!
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 0.500 (BCF = 3.162 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -2.0074 days (HL = 0.009831 days)
+   Log BCF Arnot-Gobas method (upper trophic) = -0.049 (BCF = 0.8943)
+   Log BAF Arnot-Gobas method (upper trophic) = -0.049 (BAF = 0.8943)
+       log Kow used: -1.38 (expkow database)
+
+ Volatilization from Water:
+    Henry LC:  8.41E-009 atm-m3/mole  (estimated by Bond SAR Method)
+    Half-Life from Model River: 6.722E+004  hours   (2801 days)
+    Half-Life from Model Lake : 6.722E+004  hours   (2801 days)
+
+ Removal In Wastewater Treatment:
+    Total removal:               1.85  percent
+    Total biodegradation:        0.09  percent
+    Total sludge adsorption:     1.75  percent
+    Total to Air:                0.00  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       0.233           1e+005       1000       
+   Water     29.2            360          1000       
+   Soil      70.5            720          1000       
+   Sediment  0.0697          3.24e+003    0          
+     Persistence Time: 643 hr
+
+
+
+========================
+
+
+SMILES : O([Na])C(=O)(O([Na]))
+CHEM   : 
+MOL FOR: C1 O3 Na2 
+MOL WT : 105.99
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    Log Kow (KOWWIN v1.68 estimate) =  -6.19
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+    Boiling Pt (deg C):  402.82  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  139.88  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  9.92E-017  (Modified Grain method)
+    VP (Pa, 25 deg C) :  1.32E-014  (Modified Grain method)
+    MP  (exp database):  851 deg C
+    Subcooled liquid VP: 7.1E-006 mm Hg (25 deg C, Mod-Grain method)
+                       : 0.000946 Pa (25 deg C, Mod-Grain method)
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    Water Solubility at 25 deg C (mg/L):  1e+006
+       log Kow used: -6.19 (estimated)
+       no-melting pt equation used
+
+ Water Sol Estimate from Fragments:
+    Wat Sol (v1.01 est) =  4.3901e+005 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       Neutral Organics
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   Bond Method :   6.10E-009  atm-m3/mole  (6.18E-004 Pa-m3/mole)
+   Group Method:   Incomplete
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  1.383E-023 atm-m3/mole  (1.402E-018 Pa-m3/mole)
+      VP:   9.92E-017 mm Hg (source: MPBPVP)
+      WS:   1E+006 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+  Log Kow used:  -6.19  (KowWin est)
+  Log Kaw used:  -6.603  (HenryWin est)
+      Log Koa (KOAWIN v1.10 estimate):  0.413
+      Log Koa (experimental database):  None
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+   Biowin1 (Linear Model)         :   0.7180
+   Biowin2 (Non-Linear Model)     :   0.8936
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   3.0621  (weeks       )
+   Biowin4 (Primary Survey Model) :   3.7582  (days        )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.5276
+   Biowin6 (MITI Non-Linear Model):   0.6759
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model):  0.8361
+ Ready Biodegradability Prediction:   YES
+
+Hydrocarbon Biodegradation (BioHCwin v1.01):
+    Structure incompatible with current estimation method!
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  0.000947 Pa (7.1E-006 mm Hg)
+  Log Koa (Koawin est  ): 0.413
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  0.00317 
+       Octanol/air (Koa) model:  6.35E-013 
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  0.103 
+       Mackay model           :  0.202 
+       Octanol/air (Koa) model:  5.08E-011 
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant =   0.0000 E-12 cm3/molecule-sec
+      Half-Life =   -------
+   Ozone Reaction:
+      No Ozone Reaction Estimation
+   Fraction sorbed to airborne particulates (phi):
+      0.152 (Junge-Pankow, Mackay avg)
+      5.08E-011 (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+      Koc    :  1  L/kg (MCI method)
+      Log Koc:  0.000       (MCI method)
+      Koc    :  0.0005393  L/kg (Kow method)
+      Log Koc:  -3.268      (Kow method)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+    Rate constants can NOT be estimated for this structure!
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 0.500 (BCF = 3.162 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -1.9504 days (HL = 0.01121 days)
+   Log BCF Arnot-Gobas method (upper trophic) = -0.044 (BCF = 0.9044)
+   Log BAF Arnot-Gobas method (upper trophic) = -0.044 (BAF = 0.9044)
+       log Kow used: -0.46 (estimated)
+
+ Volatilization from Water:
+    Henry LC:  6.1E-009 atm-m3/mole  (estimated by Bond SAR Method)
+    Half-Life from Model River: 9.881E+004  hours   (4117 days)
+    Half-Life from Model Lake : 1.078E+006  hours   (4.492E+004 days)
+
+ Removal In Wastewater Treatment:
+    Total removal:               1.85  percent
+    Total biodegradation:        0.09  percent
+    Total sludge adsorption:     1.75  percent
+    Total to Air:                0.00  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       1.58            1e+005       1000       
+   Water     38.6            360          1000       
+   Soil      59.8            720          1000       
+   Sediment  0.0722          3.24e+003    0          
+     Persistence Time: 537 hr
+
+
+
+========================
+
+
+SMILES : c1ccn(H)(cc1)CC2=C(N3C(C(C3(=O))NC(=O)Cc4cccs4)SC2)C(=O)O
+CHEM   : 
+MOL FOR: C19 H19 N3 O4 S2 
+MOL WT : 417.50
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    Log Kow (KOWWIN v1.68 estimate) =  -1.38
+    Log Kow (Exper. database match) =  -1.62
+       Exper. Ref:  HANSCH,C ET AL. (1995)
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+    Boiling Pt (deg C):  672.99  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  293.40  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  9.07E-016  (Modified Grain method)
+    VP (Pa, 25 deg C) :  1.21E-013  (Modified Grain method)
+    Subcooled liquid VP: 8.79E-013 mm Hg (25 deg C, Mod-Grain method)
+                       : 1.17E-010 Pa (25 deg C, Mod-Grain method)
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    Water Solubility at 25 deg C (mg/L):  2823
+       log Kow used: -1.62 (expkow database)
+       no-melting pt equation used
+
+ Water Sol Estimate from Fragments:
+    Wat Sol (v1.01 est) =  1438 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       Thiophenes-acid
+       Amides -acid
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   Bond Method :   1.49E-023  atm-m3/mole  (1.51E-018 Pa-m3/mole)
+   Group Method:   Incomplete
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  1.765E-019 atm-m3/mole  (1.788E-014 Pa-m3/mole)
+      VP:   9.07E-016 mm Hg (source: MPBPVP)
+      WS:   2.82E+003 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+  Log Kow used:  -1.62  (exp database)
+  Log Kaw used:  -21.215  (HenryWin est)
+      Log Koa (KOAWIN v1.10 estimate):  19.595
+      Log Koa (experimental database):  None
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+   Biowin1 (Linear Model)         :   1.0964
+   Biowin2 (Non-Linear Model)     :   0.9755
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   2.4579  (weeks-months)
+   Biowin4 (Primary Survey Model) :   3.9733  (days        )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.0086
+   Biowin6 (MITI Non-Linear Model):   0.0046
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model): -1.0132
+ Ready Biodegradability Prediction:   NO
+
+Hydrocarbon Biodegradation (BioHCwin v1.01):
+    Structure incompatible with current estimation method!
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  1.17E-010 Pa (8.79E-013 mm Hg)
+  Log Koa (Koawin est  ): 19.595
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  2.56E+004 
+       Octanol/air (Koa) model:  9.66E+006 
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  1 
+       Mackay model           :  1 
+       Octanol/air (Koa) model:  1 
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant = 149.5938 E-12 cm3/molecule-sec
+      Half-Life =     0.072 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =     0.858 Hrs
+   Ozone Reaction:
+      OVERALL Ozone Rate Constant =     7.393750 E-17 cm3/molecule-sec
+      Half-Life =     0.155 Days (at 7E11 mol/cm3)
+      Half-Life =      3.720 Hrs
+   Fraction sorbed to airborne particulates (phi):
+      1 (Junge-Pankow, Mackay avg)
+      1 (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+      Koc    :  1078  L/kg (MCI method)
+      Log Koc:  3.033       (MCI method)
+      Koc    :  0.2307  L/kg (Kow method)
+      Log Koc:  -0.637      (Kow method)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+    Rate constants can NOT be estimated for this structure!
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 0.500 (BCF = 3.162 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -1.5069 days (HL = 0.03113 days)
+   Log BCF Arnot-Gobas method (upper trophic) = -0.048 (BCF = 0.8944)
+   Log BAF Arnot-Gobas method (upper trophic) = -0.048 (BAF = 0.8944)
+       log Kow used: -1.62 (expkow database)
+
+ Volatilization from Water:
+    Henry LC:  1.49E-023 atm-m3/mole  (estimated by Bond SAR Method)
+    Half-Life from Model River: 8.029E+019  hours   (3.345E+018 days)
+    Half-Life from Model Lake : 8.759E+020  hours   (3.649E+019 days)
+
+ Removal In Wastewater Treatment:
+    Total removal:               1.85  percent
+    Total biodegradation:        0.09  percent
+    Total sludge adsorption:     1.75  percent
+    Total to Air:                0.00  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       2.44e-010       1.17         1000       
+   Water     11.7            900          1000       
+   Soil      87.6            1.8e+003     1000       
+   Sediment  0.704           8.1e+003     0          
+     Persistence Time: 1.83e+003 hr
+
+
+
+========================
+
+
+SMILES : [Si](C)(C)(C)O[Si](C)(C)O[Si](C)(C)O[Si](C)(C)O[Si](O)(O)O[Si](O)(O)O
+         [Si](O)(O)O[Si](O)(O)O
+CHEM   : 
+MOL FOR: C9 H36 O16 Si8 
+MOL WT : 625.06
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    Log Kow (KOWWIN v1.68 estimate) =  -3.22
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+    Boiling Pt (deg C):  644.90  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  280.28  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  3.83E-019  (Modified Grain method)
+    VP (Pa, 25 deg C) :  5.1E-017  (Modified Grain method)
+    Subcooled liquid VP: 2.54E-016 mm Hg (25 deg C, Mod-Grain method)
+                       : 3.38E-014 Pa (25 deg C, Mod-Grain method)
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    Water Solubility at 25 deg C (mg/L):  1.737e+005
+       log Kow used: -3.22 (estimated)
+       no-melting pt equation used
 
  Water Sol Estimate from Fragments:
     Wat Sol (v1.01 est) =  1e+006 mg/L
@@ -184,80 +1149,80 @@ MOL WT : 180.16
        Neutral Organics
 
  Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
-   Bond Method :   9.72E-015  atm-m3/mole  (9.85E-010 Pa-m3/mole)
-   Group Method:   1.62E-026  atm-m3/mole  (1.64E-021 Pa-m3/mole)
+   Bond Method :   3.50E-033  atm-m3/mole  (3.54E-028 Pa-m3/mole)
+   Group Method:   Incomplete
  For Henry LC Comparison Purposes:
    User-Entered Henry LC:  not entered
    Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
-      HLC:  3.153E-014 atm-m3/mole  (3.195E-009 Pa-m3/mole)
-      VP:   1.33E-007 mm Hg (source: MPBPVP)
-      WS:   1E+006 mg/L (source: WSKOWWIN)
+      HLC:  1.813E-024 atm-m3/mole  (1.837E-019 Pa-m3/mole)
+      VP:   3.83E-019 mm Hg (source: MPBPVP)
+      WS:   1.74E+005 mg/L (source: WSKOWWIN)
 
  Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
-  Log Kow used:  -3.24  (exp database)
-  Log Kaw used:  -12.401  (HenryWin est)
-      Log Koa (KOAWIN v1.10 estimate):  9.161
+  Log Kow used:  -3.22  (KowWin est)
+  Log Kaw used:  -30.844  (HenryWin est)
+      Log Koa (KOAWIN v1.10 estimate):  27.624
       Log Koa (experimental database):  None
 
  Probability of Rapid Biodegradation (BIOWIN v4.10):
-   Biowin1 (Linear Model)         :   1.1081
-   Biowin2 (Non-Linear Model)     :   0.9315
+   Biowin1 (Linear Model)         :   0.4500
+   Biowin2 (Non-Linear Model)     :   0.0028
  Expert Survey Biodegradation Results:
-   Biowin3 (Ultimate Survey Model):   3.5922  (days-weeks  )
-   Biowin4 (Primary Survey Model) :   4.2253  (days        )
+   Biowin3 (Ultimate Survey Model):   1.8179  (months      )
+   Biowin4 (Primary Survey Model) :   2.9459  (weeks       )
  MITI Biodegradation Probability:
-   Biowin5 (MITI Linear Model)    :   1.0950
-   Biowin6 (MITI Non-Linear Model):   0.8829
+   Biowin5 (MITI Linear Model)    :  -1.1437
+   Biowin6 (MITI Non-Linear Model):   0.0000
  Anaerobic Biodegradation Probability:
-   Biowin7 (Anaerobic Linear Model):  1.4659
- Ready Biodegradability Prediction:   YES
+   Biowin7 (Anaerobic Linear Model):  0.1199
+ Ready Biodegradability Prediction:   NO
 
 Hydrocarbon Biodegradation (BioHCwin v1.01):
     Structure incompatible with current estimation method!
 
  Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
-  Vapor pressure (liquid/subcooled):  1.07E-011 Pa (8.02E-014 mm Hg)
-  Log Koa (Koawin est  ): 9.161
+  Vapor pressure (liquid/subcooled):  3.39E-014 Pa (2.54E-016 mm Hg)
+  Log Koa (Koawin est  ): 27.624
    Kp (particle/gas partition coef. (m3/ug)):
-       Mackay model           :  2.81E+005
-       Octanol/air (Koa) model:  0.000356
+       Mackay model           :  8.86E+007 
+       Octanol/air (Koa) model:  1.03E+015 
    Fraction sorbed to airborne particulates (phi):
-       Junge-Pankow model     :  1
-       Mackay model           :  1
-       Octanol/air (Koa) model:  0.0277
+       Junge-Pankow model     :  1 
+       Mackay model           :  1 
+       Octanol/air (Koa) model:  1 
 
  Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
    Hydroxyl Radicals Reaction:
-      OVERALL OH Rate Constant = 104.3877 E-12 cm3/molecule-sec
-      Half-Life =     0.102 Days (12-hr day; 1.5E6 OH/cm3)
-      Half-Life =     1.230 Hrs
+      OVERALL OH Rate Constant =  32.3964 E-12 cm3/molecule-sec
+      Half-Life =     0.330 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =     3.962 Hrs
    Ozone Reaction:
       No Ozone Reaction Estimation
    Fraction sorbed to airborne particulates (phi):
       1 (Junge-Pankow, Mackay avg)
-      0.0277 (Koa method)
+      1 (Koa method)
     Note: the sorbed fraction may be resistant to atmospheric oxidation
 
  Soil Adsorption Coefficient (KOCWIN v2.00):
-      Koc    :  10  L/kg (MCI method)
-      Log Koc:  1.000       (MCI method)
-      Koc    :  0.01658  L/kg (Kow method)
-      Log Koc:  -1.781      (Kow method)
+      Koc    :  7.444E+007  L/kg (MCI method)
+      Log Koc:  7.872       (MCI method)
+      Koc    :  0.001603  L/kg (Kow method)
+      Log Koc:  -2.795      (Kow method)
 
  Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
     Rate constants can NOT be estimated for this structure!
 
  Bioaccumulation Estimates (BCFBAF v3.01):
    Log BCF from regression-based method = 0.500 (BCF = 3.162 L/kg wet-wt)
-   Log Biotransformation Half-life (HL) = -3.2387 days (HL = 0.0005772 days)
+   Log Biotransformation Half-life (HL) = -1.9231 days (HL = 0.01194 days)
    Log BCF Arnot-Gobas method (upper trophic) = -0.049 (BCF = 0.893)
    Log BAF Arnot-Gobas method (upper trophic) = -0.049 (BAF = 0.893)
-       log Kow used: -3.24 (expkow database)
+       log Kow used: -3.22 (estimated)
 
  Volatilization from Water:
-    Henry LC:  9.72E-015 atm-m3/mole  (estimated by Bond SAR Method)
-    Half-Life from Model River: 8.085E+010  hours   (3.369E+009 days)
-    Half-Life from Model Lake :  8.82E+011  hours   (3.675E+010 days)
+    Henry LC:  3.5E-033 atm-m3/mole  (estimated by Bond SAR Method)
+    Half-Life from Model River: 4.182E+029  hours   (1.743E+028 days)
+    Half-Life from Model Lake : 4.562E+030  hours   (1.901E+029 days)
 
  Removal In Wastewater Treatment:
     Total removal:               1.85  percent
@@ -269,21 +1234,21 @@ Hydrocarbon Biodegradation (BioHCwin v1.01):
  Level III Fugacity Model:
            Mass Amount    Half-Life    Emissions
             (percent)        (hr)       (kg/hr)
-   Air       5.06e-007       2.46         1000
-   Water     28.1            208          1000
-   Soil      71.8            416          1000
-   Sediment  0.0592          1.87e+003    0
-     Persistence Time: 414 hr
+   Air       5.31e-017       7.92         1000       
+   Water     1.08            1.44e+003    1000       
+   Soil      41.6            2.88e+003    1000       
+   Sediment  57.3            1.3e+004     0          
+     Persistence Time: 6.32e+003 hr
 
 
 
 ========================
 
 
-SMILES : O=C(C(=O)O)O
-CHEM   :
-MOL FOR: C2 H2 O4
-MOL WT : 90.04
+SMILES : O1C(=O)O[Ca]1
+CHEM   : 
+MOL FOR: C1 O3 Ca1 
+MOL WT : 100.09
 ------------------------------ EPI SUMMARY (v3.20) --------------------------
  Physical Property Inputs:
     Water Solubility (mg/L):   ------
@@ -294,109 +1259,100 @@ MOL WT : 90.04
     Melting Point (deg C)  :   ------
 
  Log Octanol-Water Partition Coef (SRC):
-    Log Kow (KOWWIN v1.68 estimate) =  -1.74
+    Log Kow (KOWWIN v1.68 estimate) =  -2.12
 
  Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
-    Boiling Pt (deg C):  246.91  (Adapted Stein & Brown method)
-    Melting Pt (deg C):  62.97  (Mean or Weighted MP)
-    VP(mm Hg,25 deg C):  0.0056  (Modified Grain method)
-    VP (Pa, 25 deg C) :  0.746  (Modified Grain method)
-    MP  (exp database):  101.5 deg C
-    VP  (exp database):  2.34E-04 mm Hg (3.12E-002 Pa) at 25 deg C
-    Subcooled liquid VP: 0.00134 mm Hg (25 deg C, exp database VP )
-                       : 0.178 Pa  (25 deg C, exp database VP )
+    Boiling Pt (deg C):  375.17  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  122.45  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  2.73E-015  (Modified Grain method)
+    VP (Pa, 25 deg C) :  3.63E-013  (Modified Grain method)
+    MP  (exp database):  800 dec deg C
+    Subcooled liquid VP: 3.31E-005 mm Hg (25 deg C, Mod-Grain method)
+                       : 0.00441 Pa (25 deg C, Mod-Grain method)
 
  Water Solubility Estimate from Log Kow (WSKOW v1.42):
     Water Solubility at 25 deg C (mg/L):  1e+006
-       log Kow used: -1.74 (estimated)
+       log Kow used: -2.12 (estimated)
        no-melting pt equation used
-     Water Sol (Exper. database match) =  2.2e+005 mg/L (25 deg C)
-        Exper. Ref:  YALKOWSKY,SH & DANNENFELSER,RM (1992)
-     Water Sol (Exper. database match) =  1350 mg/L (30 deg C)
-        Exper. Ref:  YALKOWSKY,SH & DANNENFELSER,RM (1992)
 
  Water Sol Estimate from Fragments:
     Wat Sol (v1.01 est) =  1e+006 mg/L
 
  ECOSAR Class Program (ECOSAR v1.11):
     Class(es) found:
-       Neutral Organics
+       SHOULD NOT BE PROFILED 
 
  Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
-   Bond Method :   2.41E-011  atm-m3/mole  (2.44E-006 Pa-m3/mole)
+   Bond Method :   Incomplete
    Group Method:   Incomplete
-   Exper Database: 1.43E-10  atm-m3/mole  (1.45E-005 Pa-m3/mole)
  For Henry LC Comparison Purposes:
    User-Entered Henry LC:  not entered
    Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
-      HLC:  6.635E-010 atm-m3/mole  (6.722E-005 Pa-m3/mole)
-      VP:   0.0056 mm Hg (source: MPBPVP)
+      HLC:  3.595E-022 atm-m3/mole  (3.643E-017 Pa-m3/mole)
+      VP:   2.73E-015 mm Hg (source: MPBPVP)
       WS:   1E+006 mg/L (source: WSKOWWIN)
 
  Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
-  Log Kow used:  -1.74  (KowWin est)
-  Log Kaw used:  -8.233  (exp database)
-      Log Koa (KOAWIN v1.10 estimate):  6.493
-      Log Koa (experimental database):  None
+  Can Not Estimate (can not calculate HenryLC)
 
  Probability of Rapid Biodegradation (BIOWIN v4.10):
-   Biowin1 (Linear Model)         :   0.8501
-   Biowin2 (Non-Linear Model)     :   0.9533
+   Biowin1 (Linear Model)         :   0.6999
+   Biowin2 (Non-Linear Model)     :   0.8303
  Expert Survey Biodegradation Results:
-   Biowin3 (Ultimate Survey Model):   3.7294  (days-weeks  )
-   Biowin4 (Primary Survey Model) :   4.4890  (hours-days  )
+   Biowin3 (Ultimate Survey Model):   2.9780  (weeks       )
+   Biowin4 (Primary Survey Model) :   3.7033  (days-weeks  )
  MITI Biodegradation Probability:
-   Biowin5 (MITI Linear Model)    :   0.8066
-   Biowin6 (MITI Non-Linear Model):   0.8999
+   Biowin5 (MITI Linear Model)    :   0.4144
+   Biowin6 (MITI Non-Linear Model):   0.4101
  Anaerobic Biodegradation Probability:
-   Biowin7 (Anaerobic Linear Model):  1.2096
- Ready Biodegradability Prediction:   YES
+   Biowin7 (Anaerobic Linear Model):  0.8361
+ Ready Biodegradability Prediction:   NO
 
 Hydrocarbon Biodegradation (BioHCwin v1.01):
     Structure incompatible with current estimation method!
 
  Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
-  Vapor pressure (liquid/subcooled):  0.179 Pa (0.00134 mm Hg)
-  Log Koa (Koawin est  ): 6.493
+  Vapor pressure (liquid/subcooled):  0.00441 Pa (3.31E-005 mm Hg)
+  Log Koa (): not available
    Kp (particle/gas partition coef. (m3/ug)):
-       Mackay model           :  1.68E-005
-       Octanol/air (Koa) model:  7.64E-007
+       Mackay model           :  0.00068 
+       Octanol/air (Koa) model:  not available
    Fraction sorbed to airborne particulates (phi):
-       Junge-Pankow model     :  0.000606
-       Mackay model           :  0.00134
-       Octanol/air (Koa) model:  6.11E-005
+       Junge-Pankow model     :  0.024 
+       Mackay model           :  0.0516 
+       Octanol/air (Koa) model:  not available
 
  Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
    Hydroxyl Radicals Reaction:
-      OVERALL OH Rate Constant =   1.0400 E-12 cm3/molecule-sec
-      Half-Life =    10.285 Days (12-hr day; 1.5E6 OH/cm3)
+      OVERALL OH Rate Constant =   0.0000 E-12 cm3/molecule-sec
+      Half-Life =   -------
    Ozone Reaction:
       No Ozone Reaction Estimation
    Fraction sorbed to airborne particulates (phi):
-      0.000974 (Junge-Pankow, Mackay avg)
-      6.11E-005 (Koa method)
+      0.0378 (Junge-Pankow, Mackay avg)
+      not available (Koa method)
     Note: the sorbed fraction may be resistant to atmospheric oxidation
 
  Soil Adsorption Coefficient (KOCWIN v2.00):
-      Koc    :  2.252  L/kg (MCI method)
-      Log Koc:  0.353       (MCI method)
-      Koc    :  0.1561  L/kg (Kow method)
-      Log Koc:  -0.807      (Kow method)
+      Koc    :  1.75  L/kg (MCI method)
+      Log Koc:  0.243       (MCI method)
+      Koc    :  0.3336  L/kg (Kow method)
+      Log Koc:  -0.477      (Kow method)
 
  Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
     Rate constants can NOT be estimated for this structure!
 
  Bioaccumulation Estimates (BCFBAF v3.01):
    Log BCF from regression-based method = 0.500 (BCF = 3.162 L/kg wet-wt)
-   Log Biotransformation Half-life (HL) = -1.5410 days (HL = 0.02877 days)
-   Log BCF Arnot-Gobas method (upper trophic) = -0.049 (BCF = 0.894)
-   Log BAF Arnot-Gobas method (upper trophic) = -0.049 (BAF = 0.894)
-       log Kow used: -1.74 (estimated)
+   Log Biotransformation Half-life (HL) = -2.4456 days (HL = 0.003584 days)
+   Log BCF Arnot-Gobas method (upper trophic) = -0.049 (BCF = 0.8931)
+   Log BAF Arnot-Gobas method (upper trophic) = -0.049 (BAF = 0.8931)
+       log Kow used: -2.12 (estimated)
 
  Volatilization from Water:
-    Henry LC:  1.43E-010 atm-m3/mole  (Henry experimental database)
-    Half-Life from Model River: 3.885E+006  hours   (1.619E+005 days)
-    Half-Life from Model Lake : 4.238E+007  hours   (1.766E+006 days)
+    Henry LC:  3.6E-022 atm-m3/mole  (calculated from VP/WS)
+    Half-Life from Model River: 1.629E+018  hours   (6.788E+016 days)
+    Half-Life from Model Lake : 1.777E+019  hours   (7.405E+017 days)
 
  Removal In Wastewater Treatment:
     Total removal:               1.85  percent
@@ -408,21 +1364,28 @@ Hydrocarbon Biodegradation (BioHCwin v1.01):
  Level III Fugacity Model:
            Mass Amount    Half-Life    Emissions
             (percent)        (hr)       (kg/hr)
-   Air       0.00493         247          1000
-   Water     32.4            208          1000
-   Soil      67.5            416          1000
-   Sediment  0.0589          1.87e+003    0
-     Persistence Time: 395 hr
+   Air       2.96e-007       1e+005       1000       
+   Water     36.9            360          1000       
+   Soil      63              720          1000       
+   Sediment  0.0702          3.24e+003    0          
+     Persistence Time: 593 hr
+
+
+
+========================
+
+ 
+SMILES NOTATION PROBLEM: CCCCOC(=O)C=C.C=CC1=CC=CC=C1,
 
 
 
 ========================
 
 
-SMILES : C(C1C(C(C(O1)(CO)O)O)O)
-CHEM   :
-MOL FOR: C6 H12 O5
-MOL WT : 164.16
+SMILES : O=[Ti]=O
+CHEM   : 
+MOL FOR: O2 Ti1 
+MOL WT : 79.87
 ------------------------------ EPI SUMMARY (v3.20) --------------------------
  Physical Property Inputs:
     Water Solubility (mg/L):   ------
@@ -433,19 +1396,430 @@ MOL WT : 164.16
     Melting Point (deg C)  :   ------
 
  Log Octanol-Water Partition Coef (SRC):
-    Log Kow (KOWWIN v1.68 estimate) =  -0.68
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)
+    Log Kow (KOWWIN v1.68 estimate) =  2.23
 
  Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
-    Boiling Pt (deg C):  331.09  (Adapted Stein & Brown method)
-    Melting Pt (deg C):  103.78  (Mean or Weighted MP)
-    VP(mm Hg,25 deg C):  7.78E-007  (Modified Grain method)
-    VP (Pa, 25 deg C) :  0.000104  (Modified Grain method)
-    Subcooled liquid VP: 4.58E-006 mm Hg (25 deg C, Mod-Grain method)
-                       : 0.00061 Pa (25 deg C, Mod-Grain method)
+   *** WARNING: Inorganic Compound (Outside Estimate Domain) ***
+   *** WARNING: Estimations NOT VALID ***
+    Boiling Pt (deg C):  564.42  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  242.69  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  2.45E+003  (Mean VP of Antoine & Grain methods)
+    VP (Pa, 25 deg C) :  3.27E+005  (Mean VP of Antoine & Grain methods)
+    MP  (exp database):  -72 deg C
+    BP  (exp database):  -10 deg C
+    VP  (exp database):  3.00E+03 mm Hg (4.00E+005 Pa) at 25 deg C
 
  Water Solubility Estimate from Log Kow (WSKOW v1.42):
-    Water Solubility at 25 deg C (mg/L):  2.505e+005
-       log Kow used: -0.68 (estimated)
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)**
+    Water Solubility at 25 deg C (mg/L):  1634
+       log Kow used: 2.23 (estimated)
+       no-melting pt equation used
+     Water Sol (Exper. database match) =  1.07e+005 mg/L (21 deg C)
+        Exper. Ref:  VENABLE,CS & FUWA,T (1922)
+
+ Water Sol Estimate from Fragments:
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)***
+    *** WARNING: Wat Sol Estimation NOT Valid ***
+    Wat Sol (v1.01 est) =  1.4177e+005 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       SHOULD NOT BE PROFILED 
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   *** WARNING: Inorganic Compound (Outside Estimation Domain) **
+   *** WARNING: Estimation NOT VALID **
+   Bond Method :   Incomplete
+   Group Method:   Incomplete
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  4.888E-002 atm-m3/mole  (4.953E+003 Pa-m3/mole)
+      VP:   2.45E+003 mm Hg (source: MPBPVP)
+      WS:   1.63E+003 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+  Can Not Estimate (can not calculate HenryLC)
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)**
+    *** WARNING: Estimation NOT VALID ***
+   Biowin1 (Linear Model)         :   0.7095
+   Biowin2 (Non-Linear Model)     :   0.8670
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   3.0227  (weeks       )
+   Biowin4 (Primary Survey Model) :   3.7325  (days-weeks  )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.4745
+   Biowin6 (MITI Non-Linear Model):   0.5548
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model):  0.8361
+ Ready Biodegradability Prediction:   NO
+
+Hydrocarbon Biodegradation (BioHCwin v1.01):
+    Structure incompatible with current estimation method!
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  4E+005 Pa (3E+003 mm Hg)
+  Log Koa (): not available
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  7.5E-012 
+       Octanol/air (Koa) model:  not available
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  2.71E-010 
+       Mackay model           :  6E-010 
+       Octanol/air (Koa) model:  not available
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+    *** WARNING: Inorganic Compound (Outside Estimation Domain)***
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant =   0.0000 E-12 cm3/molecule-sec
+      Half-Life =   -------
+   Ozone Reaction:
+      No Ozone Reaction Estimation
+   Fraction sorbed to airborne particulates (phi):
+      4.35E-010 (Junge-Pankow, Mackay avg)
+      not available (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+   *** WARNING: Inorganic Coumpound (Outside Estimation Domain) **
+   *** WARNING: Estimation NOT VALID **
+      Koc    :  21.73  L/kg (MCI method)
+      Log Koc:  1.337       (MCI method)
+      Koc    :  86.1  L/kg (Kow method)
+      Log Koc:  1.935       (Kow method)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+    Rate constants can NOT be estimated for this structure!
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 1.138 (BCF = 13.73 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -1.0568 days (HL = 0.08774 days)
+   Log BCF Arnot-Gobas method (upper trophic) = 1.047 (BCF = 11.14)
+   Log BAF Arnot-Gobas method (upper trophic) = 1.047 (BAF = 11.14)
+       log Kow used: 2.23 (estimated)
+
+ Volatilization from Water:
+    Henry LC:  0.0489 atm-m3/mole  (calculated from VP/WS)
+    Half-Life from Model River:     0.9227  hours   (55.36 min)
+    Half-Life from Model Lake :         85  hours   (3.542 days)
+
+ Removal In Wastewater Treatment (recommended maximum 95%):
+    Total removal:              98.39  percent
+    Total biodegradation:        0.02  percent
+    Total sludge adsorption:     0.67  percent
+    Total to Air:               97.70  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       56.6            1e+005       1000       
+   Water     42.5            360          1000       
+   Soil      0.758           720          1000       
+   Sediment  0.117           3.24e+003    0          
+     Persistence Time: 145 hr
+
+
+
+========================
+
+
+SMILES : CC1CC(CC)C(CCC(CC)C2)C2C1
+CHEM   : 
+MOL FOR: C15 H28 
+MOL WT : 208.39
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    Log Kow (KOWWIN v1.68 estimate) =  6.43
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+    Boiling Pt (deg C):  257.82  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  15.81  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  0.0296  (Mean VP of Antoine & Grain methods)
+    VP (Pa, 25 deg C) :  3.94  (Mean VP of Antoine & Grain methods)
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    Water Solubility at 25 deg C (mg/L):  0.03702
+       log Kow used: 6.43 (estimated)
+       no-melting pt equation used
+
+ Water Sol Estimate from Fragments:
+    Wat Sol (v1.01 est) =  0.0053972 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       Neutral Organics
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   Bond Method :   1.44E+000  atm-m3/mole  (1.46E+005 Pa-m3/mole)
+   Group Method:   1.25E+000  atm-m3/mole  (1.27E+005 Pa-m3/mole)
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  2.192E-001 atm-m3/mole  (2.221E+004 Pa-m3/mole)
+      VP:   0.0296 mm Hg (source: MPBPVP)
+      WS:   0.037 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+  Log Kow used:  6.43  (KowWin est)
+  Log Kaw used:  1.770  (HenryWin est)
+      Log Koa (KOAWIN v1.10 estimate):  4.660
+      Log Koa (experimental database):  None
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+   Biowin1 (Linear Model)         :   0.6483
+   Biowin2 (Non-Linear Model)     :   0.5124
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   2.7387  (weeks-months)
+   Biowin4 (Primary Survey Model) :   3.5471  (days-weeks  )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.3531
+   Biowin6 (MITI Non-Linear Model):   0.1153
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model):  0.2465
+ Ready Biodegradability Prediction:   NO
+
+ Hydrocarbon Biodegradation (BioHCwin v1.01):
+     LOG BioHC Half-Life (days) :   1.4935
+     BioHC Half-Life (days)     :  31.1556
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  3.92 Pa (0.0294 mm Hg)
+  Log Koa (Koawin est  ): 4.660
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  7.65E-007 
+       Octanol/air (Koa) model:  1.12E-008 
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  2.76E-005 
+       Mackay model           :  6.12E-005 
+       Octanol/air (Koa) model:  8.98E-007 
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant =  27.2401 E-12 cm3/molecule-sec
+      Half-Life =     0.393 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =     4.712 Hrs
+   Ozone Reaction:
+      No Ozone Reaction Estimation
+   Fraction sorbed to airborne particulates (phi):
+      4.44E-005 (Junge-Pankow, Mackay avg)
+      8.98E-007 (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+      Koc    :  2.368E+004  L/kg (MCI method)
+      Log Koc:  4.374       (MCI method)
+      Koc    :  3.804E+005  L/kg (Kow method)
+      Log Koc:  5.580       (Kow method)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+    Rate constants can NOT be estimated for this structure!
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 3.910 (BCF = 8137 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = 1.8808 days (HL = 76 days)
+   Log BCF Arnot-Gobas method (upper trophic) = 3.999 (BCF = 9980)
+   Log BAF Arnot-Gobas method (upper trophic) = 6.087 (BAF = 1.221e+006)
+       log Kow used: 6.43 (estimated)
+
+ Volatilization from Water:
+    Henry LC:  1.44 atm-m3/mole  (estimated by Bond SAR Method)
+    Half-Life from Model River:      1.474  hours
+    Half-Life from Model Lake :      137.1  hours   (5.713 days)
+
+ Removal In Wastewater Treatment (recommended maximum 95%):
+    Total removal:              99.38  percent
+    Total biodegradation:        0.23  percent
+    Total sludge adsorption:    62.43  percent
+    Total to Air:               36.72  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       4.45            9.42         1000       
+   Water     37              900          1000       
+   Soil      14.2            1.8e+003     1000       
+   Sediment  44.4            8.1e+003     0          
+     Persistence Time: 224 hr
+
+
+
+========================
+
+
+SMILES : O=C(NSc1cccc2)c12
+CHEM   : 
+MOL FOR: C7 H5 N1 O1 S1 
+MOL WT : 151.18
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    Log Kow (KOWWIN v1.68 estimate) =  0.64
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+    Boiling Pt (deg C):  339.46  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  121.60  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  2.57E-005  (Modified Grain method)
+    VP (Pa, 25 deg C) :  0.00343  (Modified Grain method)
+    Subcooled liquid VP: 0.000234 mm Hg (25 deg C, Mod-Grain method)
+                       : 0.0312 Pa (25 deg C, Mod-Grain method)
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    Water Solubility at 25 deg C (mg/L):  2.143e+004
+       log Kow used: 0.64 (estimated)
+       no-melting pt equation used
+
+ Water Sol Estimate from Fragments:
+    Wat Sol (v1.01 est) =  22204 mg/L
+
+ ECOSAR Class Program (ECOSAR v1.11):
+    Class(es) found:
+       Thiazolones (Iso-)
+       Amides 
+
+ Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
+   Bond Method :   6.92E-009  atm-m3/mole  (7.01E-004 Pa-m3/mole)
+   Group Method:   Incomplete
+ For Henry LC Comparison Purposes:
+   User-Entered Henry LC:  not entered
+   Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
+      HLC:  2.386E-010 atm-m3/mole  (2.417E-005 Pa-m3/mole)
+      VP:   2.57E-005 mm Hg (source: MPBPVP)
+      WS:   2.14E+004 mg/L (source: WSKOWWIN)
+
+ Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
+  Log Kow used:  0.64  (KowWin est)
+  Log Kaw used:  -6.548  (HenryWin est)
+      Log Koa (KOAWIN v1.10 estimate):  7.188
+      Log Koa (experimental database):  None
+
+ Probability of Rapid Biodegradation (BIOWIN v4.10):
+   Biowin1 (Linear Model)         :   0.6756
+   Biowin2 (Non-Linear Model)     :   0.7031
+ Expert Survey Biodegradation Results:
+   Biowin3 (Ultimate Survey Model):   2.8651  (weeks       )
+   Biowin4 (Primary Survey Model) :   3.6296  (days-weeks  )
+ MITI Biodegradation Probability:
+   Biowin5 (MITI Linear Model)    :   0.2952
+   Biowin6 (MITI Non-Linear Model):   0.2045
+ Anaerobic Biodegradation Probability:
+   Biowin7 (Anaerobic Linear Model):  0.4544
+ Ready Biodegradability Prediction:   NO
+
+Hydrocarbon Biodegradation (BioHCwin v1.01):
+    Structure incompatible with current estimation method!
+
+ Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
+  Vapor pressure (liquid/subcooled):  0.0312 Pa (0.000234 mm Hg)
+  Log Koa (Koawin est  ): 7.188
+   Kp (particle/gas partition coef. (m3/ug)):
+       Mackay model           :  9.62E-005 
+       Octanol/air (Koa) model:  3.78E-006 
+   Fraction sorbed to airborne particulates (phi):
+       Junge-Pankow model     :  0.00346 
+       Mackay model           :  0.00763 
+       Octanol/air (Koa) model:  0.000303 
+
+ Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
+   Hydroxyl Radicals Reaction:
+      OVERALL OH Rate Constant =  16.9594 E-12 cm3/molecule-sec
+      Half-Life =     0.631 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =     7.568 Hrs
+   Ozone Reaction:
+      No Ozone Reaction Estimation
+   Fraction sorbed to airborne particulates (phi):
+      0.00555 (Junge-Pankow, Mackay avg)
+      0.000303 (Koa method)
+    Note: the sorbed fraction may be resistant to atmospheric oxidation
+
+ Soil Adsorption Coefficient (KOCWIN v2.00):
+      Koc    :  34.48  L/kg (MCI method)
+      Log Koc:  1.538       (MCI method)
+      Koc    :  11.22  L/kg (Kow method)
+      Log Koc:  1.050       (Kow method)
+
+ Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
+    Rate constants can NOT be estimated for this structure!
+
+ Bioaccumulation Estimates (BCFBAF v3.01):
+   Log BCF from regression-based method = 0.500 (BCF = 3.162 L/kg wet-wt)
+   Log Biotransformation Half-life (HL) = -0.5937 days (HL = 0.2548 days)
+   Log BCF Arnot-Gobas method (upper trophic) = 0.118 (BCF = 1.313)
+   Log BAF Arnot-Gobas method (upper trophic) = 0.118 (BAF = 1.313)
+       log Kow used: 0.64 (estimated)
+
+ Volatilization from Water:
+    Henry LC:  6.92E-009 atm-m3/mole  (estimated by Bond SAR Method)
+    Half-Life from Model River:  1.04E+005  hours   (4335 days)
+    Half-Life from Model Lake : 1.135E+006  hours   (4.729E+004 days)
+
+ Removal In Wastewater Treatment:
+    Total removal:               1.86  percent
+    Total biodegradation:        0.09  percent
+    Total sludge adsorption:     1.77  percent
+    Total to Air:                0.00  percent
+      (using 10000 hr Bio P,A,S)
+
+ Level III Fugacity Model:
+           Mass Amount    Half-Life    Emissions
+            (percent)        (hr)       (kg/hr)
+   Air       0.123           15.1         1000       
+   Water     24.4            360          1000       
+   Soil      75.4            720          1000       
+   Sediment  0.0796          3.24e+003    0          
+     Persistence Time: 663 hr
+
+
+
+========================
+
+
+SMILES : OCCOCCOCCOCCOCCO
+CHEM   : 
+MOL FOR: C10 H22 O6 
+MOL WT : 238.28
+------------------------------ EPI SUMMARY (v3.20) --------------------------
+ Physical Property Inputs:
+    Water Solubility (mg/L):   ------
+    Vapor Pressure (mm Hg) :   ------
+    Henry LC (atm-m3/mole) :   ------
+    Log Kow (octanol-water):   ------
+    Boiling Point (deg C)  :   ------
+    Melting Point (deg C)  :   ------
+
+ Log Octanol-Water Partition Coef (SRC):
+    Log Kow (KOWWIN v1.68 estimate) =  -2.30
+
+ Boiling Pt, Melting Pt, Vapor Pressure Estimations (MPBPWIN v1.43):
+    Boiling Pt (deg C):  353.51  (Adapted Stein & Brown method)
+    Melting Pt (deg C):  108.45  (Mean or Weighted MP)
+    VP(mm Hg,25 deg C):  2.99E-007  (Modified Grain method)
+    VP (Pa, 25 deg C) :  3.98E-005  (Modified Grain method)
+    Subcooled liquid VP: 1.97E-006 mm Hg (25 deg C, Mod-Grain method)
+                       : 0.000262 Pa (25 deg C, Mod-Grain method)
+
+ Water Solubility Estimate from Log Kow (WSKOW v1.42):
+    Water Solubility at 25 deg C (mg/L):  1e+006
+       log Kow used: -2.30 (estimated)
        no-melting pt equation used
 
  Water Sol Estimate from Fragments:
@@ -456,97 +1830,98 @@ MOL WT : 164.16
        Neutral Organics
 
  Henrys Law Constant (25 deg C) [HENRYWIN v3.20]:
-   Bond Method :   2.66E-013  atm-m3/mole  (2.69E-008 Pa-m3/mole)
-   Group Method:   Incomplete
+   Bond Method :   7.62E-015  atm-m3/mole  (7.73E-010 Pa-m3/mole)
+   Group Method:   1.17E-021  atm-m3/mole  (1.19E-016 Pa-m3/mole)
  For Henry LC Comparison Purposes:
    User-Entered Henry LC:  not entered
    Henrys LC [via VP/WSol estimate using User-Entered or Estimated values]:
-      HLC:  6.709E-013 atm-m3/mole  (6.797E-008 Pa-m3/mole)
-      VP:   7.78E-007 mm Hg (source: MPBPVP)
-      WS:   2.51E+005 mg/L (source: WSKOWWIN)
+      HLC:  9.374E-014 atm-m3/mole  (9.499E-009 Pa-m3/mole)
+      VP:   2.99E-007 mm Hg (source: MPBPVP)
+      WS:   1E+006 mg/L (source: WSKOWWIN)
 
  Log Octanol-Air Partition Coefficient (25 deg C) [KOAWIN v1.10]:
-  Log Kow used:  -0.68  (KowWin est)
-  Log Kaw used:  -10.964  (HenryWin est)
-      Log Koa (KOAWIN v1.10 estimate):  10.284
+  Log Kow used:  -2.30  (KowWin est)
+  Log Kaw used:  -12.507  (HenryWin est)
+      Log Koa (KOAWIN v1.10 estimate):  10.207
       Log Koa (experimental database):  None
 
  Probability of Rapid Biodegradation (BIOWIN v4.10):
-   Biowin1 (Linear Model)         :   0.6143
-   Biowin2 (Non-Linear Model)     :   0.2457
+   Biowin1 (Linear Model)         :  -0.4379
+   Biowin2 (Non-Linear Model)     :   0.0000
  Expert Survey Biodegradation Results:
-   Biowin3 (Ultimate Survey Model):   3.0955  (weeks       )
-   Biowin4 (Primary Survey Model) :   3.8361  (days        )
+   Biowin3 (Ultimate Survey Model):   2.9579  (weeks       )
+   Biowin4 (Primary Survey Model) :   3.7239  (days-weeks  )
  MITI Biodegradation Probability:
-   Biowin5 (MITI Linear Model)    :   0.8634
-   Biowin6 (MITI Non-Linear Model):   0.7598
+   Biowin5 (MITI Linear Model)    :   0.8256
+   Biowin6 (MITI Non-Linear Model):   0.8207
  Anaerobic Biodegradation Probability:
-   Biowin7 (Anaerobic Linear Model):  0.7077
+   Biowin7 (Anaerobic Linear Model):  0.3325
  Ready Biodegradability Prediction:   YES
 
 Hydrocarbon Biodegradation (BioHCwin v1.01):
     Structure incompatible with current estimation method!
 
  Sorption to aerosols (25 Dec C)[AEROWIN v1.00]:
-  Vapor pressure (liquid/subcooled):  0.000611 Pa (4.58E-006 mm Hg)
-  Log Koa (Koawin est  ): 10.284
+  Vapor pressure (liquid/subcooled):  0.000263 Pa (1.97E-006 mm Hg)
+  Log Koa (Koawin est  ): 10.207
    Kp (particle/gas partition coef. (m3/ug)):
-       Mackay model           :  0.00491
-       Octanol/air (Koa) model:  0.00472
+       Mackay model           :  0.0114 
+       Octanol/air (Koa) model:  0.00395 
    Fraction sorbed to airborne particulates (phi):
-       Junge-Pankow model     :  0.151
-       Mackay model           :  0.282
-       Octanol/air (Koa) model:  0.274
+       Junge-Pankow model     :  0.292 
+       Mackay model           :  0.477 
+       Octanol/air (Koa) model:  0.24 
 
  Atmospheric Oxidation (25 deg C) [AopWin v1.92]:
    Hydroxyl Radicals Reaction:
-      OVERALL OH Rate Constant =  46.7668 E-12 cm3/molecule-sec
-      Half-Life =     0.229 Days (12-hr day; 1.5E6 OH/cm3)
-      Half-Life =     2.745 Hrs
+      OVERALL OH Rate Constant =  64.3842 E-12 cm3/molecule-sec
+      Half-Life =     0.166 Days (12-hr day; 1.5E6 OH/cm3)
+      Half-Life =     1.994 Hrs
    Ozone Reaction:
       No Ozone Reaction Estimation
    Fraction sorbed to airborne particulates (phi):
-      0.216 (Junge-Pankow, Mackay avg)
-      0.274 (Koa method)
+      0.385 (Junge-Pankow, Mackay avg)
+      0.24 (Koa method)
     Note: the sorbed fraction may be resistant to atmospheric oxidation
 
  Soil Adsorption Coefficient (KOCWIN v2.00):
       Koc    :  10  L/kg (MCI method)
       Log Koc:  1.000       (MCI method)
-      Koc    :  0.432  L/kg (Kow method)
-      Log Koc:  -0.365      (Kow method)
+      Koc    :  0.02935  L/kg (Kow method)
+      Log Koc:  -1.532      (Kow method)
 
  Aqueous Base/Acid-Catalyzed Hydrolysis (25 deg C) [HYDROWIN v2.00]:
     Rate constants can NOT be estimated for this structure!
 
  Bioaccumulation Estimates (BCFBAF v3.01):
    Log BCF from regression-based method = 0.500 (BCF = 3.162 L/kg wet-wt)
-   Log Biotransformation Half-life (HL) = -2.3669 days (HL = 0.004296 days)
-   Log BCF Arnot-Gobas method (upper trophic) = -0.047 (BCF = 0.897)
-   Log BAF Arnot-Gobas method (upper trophic) = -0.047 (BAF = 0.897)
-       log Kow used: -0.68 (estimated)
+   Log Biotransformation Half-life (HL) = -2.7819 days (HL = 0.001653 days)
+   Log BCF Arnot-Gobas method (upper trophic) = -0.049 (BCF = 0.8931)
+   Log BAF Arnot-Gobas method (upper trophic) = -0.049 (BAF = 0.8931)
+       log Kow used: -2.30 (estimated)
 
  Volatilization from Water:
-    Henry LC:  2.66E-013 atm-m3/mole  (estimated by Bond SAR Method)
-    Half-Life from Model River:  2.82E+009  hours   (1.175E+008 days)
-    Half-Life from Model Lake : 3.076E+010  hours   (1.282E+009 days)
+    Henry LC:  7.62E-015 atm-m3/mole  (estimated by Bond SAR Method)
+    Half-Life from Model River: 1.186E+011  hours   (4.942E+009 days)
+    Half-Life from Model Lake : 1.294E+012  hours   (5.391E+010 days)
 
  Removal In Wastewater Treatment:
     Total removal:               1.85  percent
     Total biodegradation:        0.09  percent
-    Total sludge adsorption:     1.76  percent
+    Total sludge adsorption:     1.75  percent
     Total to Air:                0.00  percent
       (using 10000 hr Bio P,A,S)
 
  Level III Fugacity Model:
            Mass Amount    Half-Life    Emissions
             (percent)        (hr)       (kg/hr)
-   Air       6.76e-006       5.49         1000
-   Water     30.6            360          1000
-   Soil      69.4            720          1000
-   Sediment  0.0688          3.24e+003    0
+   Air       2.35e-007       3.99         1000       
+   Water     30.6            360          1000       
+   Soil      69.4            720          1000       
+   Sediment  0.0688          3.24e+003    0          
      Persistence Time: 640 hr
 
 
 
 ========================
+

@@ -1,10 +1,12 @@
 {
-"log_results": true,
+"enable_sikuli": false,
 "sikuli_cmd": "C:\\SikuliX\\runsikulix.cmd",
-"run_epi_script": true,
-"run_test_script": false,
-"run_test_MD_script": true,
-"run_vega_script": false,
+"run_epi": true,
+"run_test": false,
+"run_test_MD": true,
+"run_vega": false,
 "parse_results": true,
+"log_results": true,
+"clear_results": false,
 "query_chemspider": false
 }
