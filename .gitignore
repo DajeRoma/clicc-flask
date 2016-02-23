@@ -1,6 +1,6 @@
 *.pyc
 *.cmd
 __pycache__
-./modules/qsar/results/**
-./modules/qsar/logging/**
-./modules/qsar/batch_files/log.txt
+modules/qsar/results/**
+modules/qsar/logging/**
+modules/qsar/batch_files/log.txt

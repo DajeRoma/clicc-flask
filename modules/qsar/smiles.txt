@@ -2,6 +2,7 @@ c52c3c4c(cc5ccc1c2c(cc3)ccc1)cccc4
 CC(C)(C)CC(C)(C)C1=CC=C(OCCOCCOCCOCCOCCO)C=C1
 O=C(OCCOCCOC(=O)c(cccc1)c1)c(cccc2)c2
 O=C(c1ccccc1)OCC(OC(COC(=O)c2ccccc2)C)C
+n1(=O)c([S-])cccc1.[Na+]
 O
 O([Na])C(=O)(O([Na]))
 c1cc[n+](cc1)CC2=C(N3[C@@H]([C@@H](C3=O)NC(=O)Cc4cccs4)SC2)C(=O)[O-]
