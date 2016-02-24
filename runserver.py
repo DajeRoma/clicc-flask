@@ -9,9 +9,13 @@ from modules.qsar.qsar_mod import QSARmod as QSAR
 from modules.lcia.net_prediction import NetPrediction as LCIA
 from modules.ft.fate_and_transport_lvl4 import FateAndTransport as FAT
 from celery import Celery
+from flask.ext.sendmail import Mail, Message
+
+
 
 
 app = Flask(__name__)
+mail = Mail(app)
 app.config.update(
     CELERY_BROKER_URL='amqp://guest:guest@localhost:5672//'
 )
@@ -164,37 +168,61 @@ def test_run():
         }}
 
 
+@celery.task(name='__main__.send_status_email')
+def send_status_email(ticket):
+    # send an email regarding ticket status
+    msg = Message("CLiCC Tool Result Status", sender=("no-reply","no-reply"))
+    msg.body = """Hello, the results of {0}, ticket {1}, have returned with a
+        status of {2}. Please submit your ticket number for more
+        information.""".format(ticket['smiles'], ticket['number'], ticket['status'])
+    msg.add_recipient(ticket['email'])
+    mail.send(msg)
+
 @celery.task(name='__main__.run_async_job')
-def run_async_job(smiles, ticket):
+def run_async_job(ticket_num):
+    # runs the clicc tool asyncronously
+    ticket = app.tickets[ticket_num]
+    ticket['status'] = 'In Progress'
     print "running celery task."
     chemicals = test_run()
     if chemicals:
-        app.tickets[ticket] = chemicals
+        ticket['status'] = 'Complete'
+        ticket['results'] = chemicals
+        if 'email' in ticket:
+            send_status_email.wait(ticket)
     else:
-        app.tickets[ticket] = 'Run Failed'
+        app.tickets[ticket]['status'] = 'Failed'
 
 @app.route('/get_ticket', methods=['POST'])
 def give_ticket():
+    # takes a smiles and optional email in form and returns a ticket number
     smiles = {'smiles_in': request.form['smiles']}
-    ticket = None
-    while not ticket or ticket in app.tickets:
-        ticket = str(randint(1, 9999))
-    app.tickets[ticket] = None
-    run_async_job.delay(smiles, ticket)
+    ticket_num = None
+    while not ticket_num or ticket_num in app.tickets:
+        ticket_num = str(randint(1, 9999))
+    app.tickets[ticket_num] = {'status': 'Queued',
+                               'smiles': smiles,
+                               'number': ticket_num}
+    try:
+        email = 'email': request.form['email']
+        app.tickets[ticket_num]['email'] = emailS
+    run_async_job.delay(ticket_num)
     return ticket
 
 
 @app.route('/check_ticket', methods=['POST'])
 def check_ticket():
-    ticket = str(request.form['ticket'])
+    # check status of a ticket.
+    ticket_num = str(request.form['ticket'])
     print ticket
     print app.tickets
     try:
-        if app.tickets[ticket]:
+        ticket = app.tickets[ticket_num]
+        if ticket['status'] == 'Complete':
             result = app.tickets.pop(ticket, None)
-            return result
-        elif ticket in app.tickets:
-            return "Not finished."
+            return jsonify(result)
+        elif ticket:
+            return ticket['status']
     except:
         return "Ticket not found."
 
