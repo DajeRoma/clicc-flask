@@ -21,13 +21,17 @@ time1 = datetime.datetime.now()
 
 class FateAndTransport:
     def __init__(self):
-        class_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+        class_directory = os.path.dirname(os.path.abspath(
+            inspect.getfile(inspect.currentframe())))
         self.directory = class_directory
         self.workbooks = os.path.join(class_directory, "workbooks")
 
     def load_environment(self, title):
         self.env_name = title
+        # try:
         main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, (title + ".xlsx")))
+        # except:
+        #     main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, (title + ".xls")))
         environment_worksheet = main_workbook.sheet_by_name('ENV_final')
         env_codes = environment_worksheet.col_values(1, start_rowx=1,end_rowx=None)
         env_values = environment_worksheet.col_values(2, start_rowx=1,end_rowx=None)
@@ -118,11 +122,11 @@ class FateAndTransport:
 
         for imported in [self.release, self.climate, self.env,
                 self.bg, self.comp, self.visc]:
-            for prop in imported:
-                try:
-                    map(attempt_float, prop)
-                except:
-                    attempt_float(prop)
+            for prop, val in imported.iteritems():
+                if isinstance(val, list):
+                    imported[prop] = map(attempt_float, val)
+                else:
+                    imported[prop] = attempt_float(val)
 
     def load_default_chem(self):
         main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, ("SF_glycerin_beta.xlsx")))
@@ -143,15 +147,15 @@ class FateAndTransport:
             self.chem_prop = inputs
         else:
             self.chem_prop = self.load_default_chem()
-            
+
         ##########CHEMICAL PROPERTIES##########
         for prop in ['kDegAir', 'kDegWater', 'kDegSoil', 'kDegSed', 'kDegAero',
                 'kDegSSed']:
             self.chem_prop[prop] = np.multiply(np.true_divide(1,
                                     (self.chem_prop[prop] / .693)), 24)
 
-        molecular_volume = np.true_divide(self.chem_prop['MW'],self.chem_prop['MD'])
-        self.chem_prop['MW'] = np.true_divide(self.chem_prop['MW'],1000)
+        molecular_volume = np.true_divide(self.chem_prop['MW'], self.chem_prop['MD'])
+        molecular_mass = np.true_divide(self.chem_prop['MW'], 1000)
 
         ##########CLIMATE PROPERTIES##########
         airTemp = self.climate['temp']
@@ -287,30 +291,30 @@ class FateAndTransport:
         ##########PERCENT SOLIDS IN SEDIMENT##########
 
 
-        waterA = np.add(self.env['freshwA'],self.env['seawA'])
+        waterA = np.add(self.env['freshwA'], self.env['seawA'])
 
-        soilA = np.subtract(self.env['area'],waterA)
+        soilA = np.subtract(self.env['area'], waterA)
 
-        airV = np.multiply(self.env['area'],self.env['airH'])
-        freshwV = np.multiply(self.env['freshwA'],self.env['freshwD'])
-        seawV = np.multiply(self.env['seawA'],self.env['seawD'])
+        airV = np.multiply(self.env['area'], self.env['airH'])
+        freshwV = np.multiply(self.env['freshwA'], self.env['freshwD'])
+        seawV = np.multiply(self.env['seawA'], self.env['seawD'])
 
         sedFWV = np.multiply(sedFWA,self.env['sedFWD'])
         sedSWV = np.multiply(sedSWA,self.env['sedSWD'])
 
-        soilV1 = np.multiply(self.env['soilA1'],self.env['soilD1'])
-        soilV2 = np.multiply(self.env['soilA2'],self.env['soilD2'])
-        soilV3 = np.multiply(self.env['soilA3'],self.env['soilD3'])
+        soilV1 = np.multiply(self.env['soilA1'], self.env['soilD1'])
+        soilV2 = np.multiply(self.env['soilA2'], self.env['soilD2'])
+        soilV3 = np.multiply(self.env['soilA3'], self.env['soilD3'])
 
-        deepsV1 = np.multiply(dsoilA1,self.env['deepsD1'])
-        deepsV2 = np.multiply(dsoilA2,self.env['deepsD2'])
-        deepsV3 = np.multiply(dsoilA3,self.env['deepsD3'])
+        deepsV1 = np.multiply(dsoilA1, self.env['deepsD1'])
+        deepsV2 = np.multiply(dsoilA2, self.env['deepsD2'])
+        deepsV3 = np.multiply(dsoilA3, self.env['deepsD3'])
 
-        factor = np.multiply(self.env['aerC'],airV)
-        aerV = np.true_divide(factor,self.env['aerP'])
+        factor = np.multiply(self.env['aerC'], airV)
+        aerV = np.true_divide(factor, self.env['aerP'])
 
         factor = np.multiply(self.env['seassC'],seawV)
-        swSSedV = np.true_divide(factor,self.env['seassP'])
+        swSSedV = np.true_divide(factor, self.env['seassP'])
 
         factor = np.multiply(self.env['freshssC'],freshwV)
         fwSSedV = np.true_divide(factor,self.env['freshssP'])
@@ -492,17 +496,17 @@ class FateAndTransport:
         airFlow = np.multiply(factor2,self.env['airH'])
 
         ##########LOAD RELEASES##########
-        Arelease = np.true_divide(self.release['air'], self.chem_prop['MW'])
-        SWrelease = np.true_divide(self.release['seawater'], self.chem_prop['MW'])
-        FWrelease = np.true_divide(self.release['freshwater'], self.chem_prop['MW'])
-        S1release = np.true_divide(self.release['soil1'], self.chem_prop['MW'])
-        S2release = np.true_divide(self.release['soil2'], self.chem_prop['MW'])
-        S3release = np.true_divide(self.release['soil3'], self.chem_prop['MW'])
-        FSedrelease = np.true_divide(self.release['fwsediment'], self.chem_prop['MW'])
-        SSedrelease = np.true_divide(self.release['swsediment'], self.chem_prop['MW'])
-        DS1release = np.true_divide(self.release['dsoil1'], self.chem_prop['MW'])
-        DS2release = np.true_divide(self.release['dsoil2'], self.chem_prop['MW'])
-        DS3release = np.true_divide(self.release['dsoil3'], self.chem_prop['MW'])
+        Arelease = np.true_divide(self.release['air'], molecular_mass)
+        SWrelease = np.true_divide(self.release['seawater'], molecular_mass)
+        FWrelease = np.true_divide(self.release['freshwater'], molecular_mass)
+        S1release = np.true_divide(self.release['soil1'], molecular_mass)
+        S2release = np.true_divide(self.release['soil2'], molecular_mass)
+        S3release = np.true_divide(self.release['soil3'], molecular_mass)
+        FSedrelease = np.true_divide(self.release['fwsediment'], molecular_mass)
+        SSedrelease = np.true_divide(self.release['swsediment'], molecular_mass)
+        DS1release = np.true_divide(self.release['dsoil1'], molecular_mass)
+        DS2release = np.true_divide(self.release['dsoil2'], molecular_mass)
+        DS3release = np.true_divide(self.release['dsoil3'], molecular_mass)
 
 
         ##########CONSTANTS##########
@@ -1597,8 +1601,9 @@ class FateAndTransport:
 
         indices = []
 
-        for val in self.comp.values():
-            indices.append(val)
+        for comp_val in ['A', 'fW', 'sW', 'S1', 'S2', 'S3',
+                'fwSed', 'swSed', 'dS1', 'dS2', 'dS3']:
+            indices.append(self.comp[comp_val])
 
         indices = np.array(indices)
         matrix_index = np.where(indices > 0)
@@ -2438,10 +2443,10 @@ class FateAndTransport:
 
             # Bulks #
             factor = np.multiply(air_fugacity,zAirSub)
-            air_conc = np.multiply(factor,self.chem_prop['MW'])
+            air_conc = np.multiply(factor,molecular_mass)
 
             factor = np.multiply(aerosol_fugacity,zAerosolSub)
-            aerosol_conc = np.multiply(factor,self.chem_prop['MW'])
+            aerosol_conc = np.multiply(factor,molecular_mass)
 
             factor = np.add(airV,aerV)
             air_factor = np.true_divide(airV,factor)
@@ -2463,16 +2468,16 @@ class FateAndTransport:
             fw_sed_solid_fugacity = fw_sed_fugacity
 
             factor = np.multiply(fw_fugacity, zWaterSub)
-            fw_conc = np.multiply(factor, self.chem_prop['MW'])
+            fw_conc = np.multiply(factor, molecular_mass)
 
             factor = np.multiply(fwSusSed_fugacity, zSuspendedFreshSub)
-            fw_sus_sed_conc = np.multiply(factor, self.chem_prop['MW'])
+            fw_sus_sed_conc = np.multiply(factor, molecular_mass)
 
             factor = np.multiply(fw_sed_water_fugacity, zSedimentFreshSubWater)
-            fw_sed_water = np.multiply(factor, self.chem_prop['MW'])
+            fw_sed_water = np.multiply(factor, molecular_mass)
 
             factor = np.multiply(fw_sed_solid_fugacity, zSedimentFreshSubSolid)
-            fw_sed_solid = np.multiply(factor, self.chem_prop['MW'])
+            fw_sed_solid = np.multiply(factor, molecular_mass)
 
             column_factor = freshwV + fwSSedV
             col_water_factor = np.true_divide(freshwV, column_factor)
@@ -2506,16 +2511,16 @@ class FateAndTransport:
 
             # Bulks Seawater #
             factor = np.multiply(sw_fugacity,zWaterSub)
-            sw_conc = np.multiply(factor,self.chem_prop['MW'])
+            sw_conc = np.multiply(factor,molecular_mass)
 
             factor = np.multiply(swSusSed_fugacity,zSuspendedSeaSub)
-            sw_sus_sed_conc = np.multiply(factor,self.chem_prop['MW'])
+            sw_sus_sed_conc = np.multiply(factor,molecular_mass)
 
             factor = np.multiply(sw_sed_water_fugacity,zSedimentSeaSubWater)
-            sw_sed_water = np.multiply(factor,self.chem_prop['MW'])
+            sw_sed_water = np.multiply(factor,molecular_mass)
 
             factor = np.multiply(sw_sed_solid_fugacity,zSedimentSeaSubSolid)
-            sw_sed_solid = np.multiply(factor,self.chem_prop['MW'])
+            sw_sed_solid = np.multiply(factor,molecular_mass)
 
             factor = seawV + sedSWV + swSSedV
             sea_factor = np.true_divide(seawV,factor)
@@ -2559,16 +2564,16 @@ class FateAndTransport:
             ############################################
 
             factor = np.multiply(soil1_air_fugacity, zAirSub)
-            urban_soil_air = np.multiply(factor, self.chem_prop['MW'])
+            urban_soil_air = np.multiply(factor, molecular_mass)
 
             factor = np.multiply(soil1_water_fugacity, zWaterSub)
-            urban_soil_water = np.multiply(factor, self.chem_prop['MW'])
+            urban_soil_water = np.multiply(factor, molecular_mass)
 
             factor = np.multiply(soil1_solid_fugacity, zSoilSubSolid1)
-            urban_soil_solid = np.multiply(factor, self.chem_prop['MW'])
+            urban_soil_solid = np.multiply(factor, molecular_mass)
 
             factor = np.multiply(deep_soil1_fugacity, zDeepSoil1)
-            deep_urban_soil = np.multiply(factor, self.chem_prop['MW'])
+            deep_urban_soil = np.multiply(factor, molecular_mass)
 
             ############################################
 
@@ -2616,16 +2621,16 @@ class FateAndTransport:
             ############################################
 
             factor = np.multiply(soil2_air_fugacity,zAirSub)
-            natural_soil_air = np.multiply(factor,self.chem_prop['MW'])
+            natural_soil_air = np.multiply(factor,molecular_mass)
 
             factor = np.multiply(soil2_water_fugacity,zWaterSub)
-            natural_soil_water = np.multiply(factor,self.chem_prop['MW'])
+            natural_soil_water = np.multiply(factor,molecular_mass)
 
             factor = np.multiply(soil2_solid_fugacity,zSoilSubSolid2)
-            natural_soil_solid = np.multiply(factor,self.chem_prop['MW'])
+            natural_soil_solid = np.multiply(factor,molecular_mass)
 
             factor = np.multiply(deep_soil2_fugacity,zDeepSoil2)
-            deep_natural_soil = np.multiply(factor,self.chem_prop['MW'])
+            deep_natural_soil = np.multiply(factor,molecular_mass)
 
             ############################################
 
@@ -2672,16 +2677,16 @@ class FateAndTransport:
             ############################################
 
             factor = np.multiply(soil3_air_fugacity,zAirSub)
-            agricultural_soil_air = np.multiply(factor, self.chem_prop['MW'])
+            agricultural_soil_air = np.multiply(factor, molecular_mass)
 
             factor = np.multiply(soil3_water_fugacity,zWaterSub)
-            agricultural_soil_water = np.multiply(factor, self.chem_prop['MW'])
+            agricultural_soil_water = np.multiply(factor, molecular_mass)
 
             factor = np.multiply(soil3_solid_fugacity,zSoilSubSolid3)
-            agricultural_soil_solid = np.multiply(factor, self.chem_prop['MW'])
+            agricultural_soil_solid = np.multiply(factor, molecular_mass)
 
             factor = np.multiply(deep_soil3_fugacity,zDeepSoil3)
-            deep_agricultural_soil = np.multiply(factor, self.chem_prop['MW'])
+            deep_agricultural_soil = np.multiply(factor, molecular_mass)
 
             ############################################
 
@@ -2720,9 +2725,18 @@ class FateAndTransport:
             vals['avg'] = np.mean(time_at_equil)
             vals['values'] = list(vals['values'])
 
-        return output
+        # add required environment variable for exposure
+        for env_var in ['soilP2']:
+            self.chem_prop[env_var] = self.env[env_var]
 
-    def write_output(self, output):
+        ft_out = {
+            'results': output,
+            'chem_prop': self.chem_prop
+        }
+
+        return ft_out
+
+    def write_output(self, ft_out):
         chem_book = xlwt.Workbook()
 
         output_name = ("%s_output_" % (self.env_name) +
@@ -2732,16 +2746,17 @@ class FateAndTransport:
         average_output = chem_book.add_sheet('Average_output')
 
         i = 0
-        for prop, vals in output.iteritems():
+        for prop, vals in ft_out['results'].iteritems():
             average_output.write(i, 0, prop)
-            average_output.write(i, 1, vals['avg'])
+            if 'avg' in vals.keys():
+                average_output.write(i, 1, vals['avg'])
             raw_output.write(0, i, prop)
             for idx, v in enumerate(vals['values']):
                 raw_output.write(idx + 1, i, v)
             i += 1
 
         i = 0
-        for prop, val in self.chem_prop.iteritems():
+        for prop, val in ft_out['chem_prop'].iteritems():
             chem_parameters.write(i, 0, prop)
             chem_parameters.write(i, 1, val)
             i += 1

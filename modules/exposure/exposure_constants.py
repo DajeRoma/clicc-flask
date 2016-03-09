@@ -33,6 +33,7 @@ inhalation = {
     'inhal_air': 16
 }
 
+# seed data for testing
 default_inputs = {
     'c_air':	[5.27E-11],
     'c_aerosol':	[3.51E+00],

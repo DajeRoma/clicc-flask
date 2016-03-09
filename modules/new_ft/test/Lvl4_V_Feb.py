@@ -15,10 +15,10 @@ import itertools
 from itertools import tee, islice, chain, izip
 
 time1 = datetime.datetime.now()
-print time1, "1"
+# print time1, "1"
 
 # ENVIRONMENTAL PARAMETER LOADING #
-workbook_names = "DM_glycerin_beta"
+workbook_names = "SF_glycerin_beta"
 print workbook_names
 
 workbook_title = "%s.xlsx" %(workbook_names)
@@ -117,8 +117,8 @@ for a, b in chem_Prop:
         kDegredationInWater = np.multiply(kDegredationInWater,24)
     if a == 'kDegSoil':
         kDegredationInSoil = float(b)/.693
-        kDegredationInSoil = np.true_divide(1,kDegredationInSoil)  
-        kDegredationInSoil = np.multiply(kDegredationInSoil,24)         
+        kDegredationInSoil = np.true_divide(1,kDegredationInSoil)
+        kDegredationInSoil = np.multiply(kDegredationInSoil,24)
     if a == 'kDegSed':
         kDegredationInSediment = float(b)/.693
         kDegredationInSediment = np.true_divide(1,kDegredationInSediment)
@@ -135,8 +135,8 @@ for a, b in chem_Prop:
         molecular_mass = float(b)
     if a == 'MD':
         molecular_density = float(b)
-molecular_volume = np.true_divide(molecular_mass,molecular_density)
-molecular_mass = np.true_divide(molecular_mass,1000)
+molecular_volume = np.true_divide(molecular_mass, molecular_density)
+molecular_mass = np.true_divide(molecular_mass, 1000)
 
 
 
@@ -177,7 +177,7 @@ R_precip = [x for x in climate_precip]
 #for i, val in enumerate(date_store):
 #    if val <= new_datetime[-1]:
 #        bound = val + year
-#        if bound.day == val.day:   
+#        if bound.day == val.day:
 #            date_store.append(bound)
 #        else:
 #            bound = val + year_l
@@ -313,8 +313,8 @@ for a, b in environment:
     if a == 'slope3':
         slope3 = float(b)
 
-slopes = np.array([0.2, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 12.0, 
-           14.0, 16.0, 20.0, 25.0, 30.0, 40.0, 50.0, 60.0])     
+slopes = np.array([0.2, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 12.0,
+           14.0, 16.0, 20.0, 25.0, 30.0, 40.0, 50.0, 60.0])
 
 lengths = np.array([0.06, 0.1, 0.2, 0.47, 0.8, 1.19, 1.63, 2.11, 3.15, 4.56, 6.28, 8.11, 10.02, 13.99, 19.13, 24.31, 34.48, 44.02, 52.7])
 
@@ -407,7 +407,7 @@ RUSLE_agricultural = np.multiply(907.185,RUSLE_agricultural)
 #            CN_ag = 52.5
 #        if ag_hydgrp == 1.0:
 #            CN_ag = 40
-        
+
             #factor = np.true_divide(CN,CN_urban)
 
 # New CN calculation #
@@ -463,7 +463,7 @@ for a, b in environment:
 #                yield b
 #natural_landuse = np.fromiter(natural_landuse_func(1),dtype=float)
 #CN_natural = np.mean(natural_landuse)
-        
+
 #forest_prop = np.true_divide(Forest_Area,statsgo_area)
 #big_ag_prop = np.true_divide(Big_Ag,statsgo_area)
 #pasture_ag_prop = np.true_divide(Pasture_Ag,statsgo_area)
@@ -675,7 +675,7 @@ for a, b in environment:
         soilA2 = float(b)
     if a == 'soilA3':
         soilA3 = float(b)
-    
+
 dsoilA1 = soilA1
 dsoilA2 = soilA2
 dsoilA3 = soilA3
@@ -900,7 +900,7 @@ asMTC3 = asMTC1
 
 factor = np.multiply(airMD,0.36)
 airMD = np.multiply(factor,24)
-    
+
 factor = np.multiply(waterMD,0.36)
 waterMD = np.multiply(factor,24)
 
@@ -913,7 +913,7 @@ sedfwMTC = np.multiply(sedfwMTC,24)
 
 sedswMTC = np.multiply(sedswMTC,24)
 
-print "yes"
+# print "yes"
 for a, b in environment:
     if a == 'soilpathlen':
         soilpathlen = float(b)
@@ -993,7 +993,7 @@ for a, b, c in background:
         bgConcDSoil2 = float(c)
     if b == 'dS3':
         bgConcDSoil3 = float(c)
-        
+
 ##########LOAD RELEASES##########
 Arelease = np.true_divide(release_air,molecular_mass)
 SWrelease = np.true_divide(release_seawater,molecular_mass)
@@ -1661,7 +1661,7 @@ dSFWleach3 = np.multiply(factor,zWaterSub)
 #DSEDFWDIFFUSION# - MATLAB AND PYTHON ROUND THE VISCOSITIES OFF TO A DIFFERRENT NUMBER OF
                    #SIGNIFICANT DIGITS, THUS THE MASS TRANSFER COEFFICIENTS ARE SLIGHTLY
                    #DIFFERENT IN BOTH MODELS.  THIS CHANGES THE D VALUES IN BOTH MODELS SLIGHTLY
-                   #AS WELL 
+                   #AS WELL
 factor = np.multiply(freshwA,sedfwMTC)
 dSedFWdiffusion = np.multiply(factor,zWaterSub)
 
@@ -2198,7 +2198,7 @@ if airchoice == 1:
             new_r_one.append(val)
 dAremoval = np.sum(new_r_one, axis=0)
 dAremoval = np.multiply(-1,dAremoval)
-print dAremoval[0], "dAremoval"
+# print dAremoval[0], "dAremoval"
 
 r_two = np.vstack((dFWtoA,dFWremoval,dFWtoSW,dFWtoS1,dFWtoS2,dFWtoS3,dFWtoFSed,dFWtoSSed,dFWtoDeepS1,dFWtoDeepS2,dFWtoDeepS3))
 new_r_two = []
@@ -2213,7 +2213,7 @@ if fwchoice == 1:
         new_r_two.append(dSedFWdep)
 dFWremoval = np.sum(new_r_two, axis=0)
 dFWremoval = np.multiply(-1,dFWremoval)
-print dFWremoval[0], "dFWremoval"
+# print dFWremoval[0], "dFWremoval"
 
 r_three = np.vstack((dSWtoA,dSWtoFW,dSWremoval,dSWtoS1,dSWtoS2,dSWtoS3,dSWtoFSed,dSWtoSSed,dSWtoDeepS1,dSWtoDeepS2,dSWtoDeepS3))
 new_r_three = []
@@ -2232,7 +2232,7 @@ if swchoice == 1:
         new_r_three.append(dSedSWdep)
 dSWremoval = np.sum(new_r_three, axis=0)
 dSWremoval = np.multiply(-1,dSWremoval)
-print "dSWremoval"
+# print "dSWremoval"
 
 r_four = np.vstack((dS1toA,dS1toFW,dS1toSW,dS1removal,dS1toS2,dS1toS3,dS1toFSed,dS1toSSed,dS1toDeepS1,dS1toDeepS2,dS1toDeepS3))
 new_r_four = []
@@ -2245,7 +2245,7 @@ if s1choice == 1:
         new_r_four.append(dS1toFW)
 dS1removal = np.sum(new_r_four, axis=0)
 dS1removal = np.multiply(-1,dS1removal)
-print dS1removal[0], "dS1removal"
+# print dS1removal[0], "dS1removal"
 
 r_five = np.vstack((dS2toA,dS2toFW,dS2toSW,dS2toS1,dS2removal,dS2toS3,dS2toFSed,dS2toSSed,dS2toDeepS1,dS2toDeepS2,dS2toDeepS3))
 new_r_five = []
@@ -2258,7 +2258,7 @@ if s2choice == 1:
         new_r_five.append(dS2toFW)
 dS2removal = np.sum(new_r_five, axis=0)
 dS2removal = np.multiply(-1,dS2removal)
-print dS2removal[0], "dS2removal"
+# print dS2removal[0], "dS2removal"
 
 r_six = np.vstack((dS3toA,dS3toFW,dS3toSW,dS3toS1,dS3toS2,dS3removal,dS3toFSed,dS3toSSed,dS3toDeepS1,dS3toDeepS2,dS3toDeepS3))
 new_r_six = []
@@ -2271,7 +2271,7 @@ if s3choice == 1:
         new_r_six.append(dS3toFW)
 dS3removal = np.sum(new_r_six, axis=0)
 dS3removal = np.multiply(-1,dS3removal)
-print dS3removal[0], "dS3removal"
+# print dS3removal[0], "dS3removal"
 
 r_seven = np.vstack((dFSedtoA,dFSedtoFW,dFSedtoSW,dFSedtoS1,dFSedtoS2,dFSedtoS3,dFSedremoval,dFSedtoSSed,dFSedtoDeepS1,dFSedtoDeepS2,dFSedtoDeepS3))
 new_r_seven = []
@@ -2284,7 +2284,7 @@ if fwsedchoice == 1:
         new_r_seven.append(dSedFWsus)
 dFSedremoval = np.sum(new_r_seven, axis=0)
 dFSedremoval = np.multiply(-1,dFSedremoval)
-print dFSedremoval[0], "dFSedremoval"
+# print dFSedremoval[0], "dFSedremoval"
 
 r_eight = np.vstack((dSSedtoA,dSSedtoFW,dSSedtoSW,dSSedtoS1,dSSedtoS2,dSSedtoS3,dSSedtoFSed,dSSedremoval,dSSedtoDeepS1,dSSedtoDeepS2,dSSedtoDeepS3))
 new_r_eight = []
@@ -2297,7 +2297,7 @@ if swsedchoice == 1:
         new_r_eight.append(dSedSWsus)
 dSSedremoval = np.sum(new_r_eight, axis=0)
 dSSedremoval = np.multiply(-1,dSSedremoval)
-print "dSSedremoval"
+# print "dSSedremoval"
 
 r_nine =  np.vstack((dDeepS1toA,dDeepS1toFW,dDeepS1toSW,dDeepS1toS1,dDeepS1toS2,dDeepS1toS3,dDeepS1toFSed,dDeepS1toSSed,dDeepS1removal,dDeepS1toDeepS2,dDeepS1toDeepS3))
 new_r_nine = []
@@ -2308,7 +2308,7 @@ if ds1choice == 1:
             new_r_nine.append(val)
 dDeepS1removal = np.sum(new_r_nine, axis=0)
 dDeepS1removal = np.multiply(-1,dDeepS1removal)
-print dDeepS1removal[0], "dDeepS1removal"
+# print dDeepS1removal[0], "dDeepS1removal"
 
 r_ten = np.vstack((dDeepS2toA,dDeepS2toFW,dDeepS2toSW,dDeepS2toS1,dDeepS2toS2,dDeepS2toS3,dDeepS2toFSed,dDeepS2toSSed,dDeepS2toDeepS1,dDeepS2removal,dDeepS2toDeepS3))
 new_r_ten = []
@@ -2319,7 +2319,7 @@ if ds2choice == 1:
             new_r_ten.append(val)
 dDeepS2removal = np.sum(new_r_ten, axis=0)
 dDeepS2removal = np.multiply(-1,dDeepS2removal)
-print dDeepS2removal[0], "dDeepS2removal"
+# print dDeepS2removal[0], "dDeepS2removal"
 
 r_eleven = np.vstack((dDeepS3toA,dDeepS3toFW,dDeepS3toSW,dDeepS3toS1,dDeepS3toS2,dDeepS3toS3,dDeepS3toFSed,dDeepS3toSSed,dDeepS3toDeepS1,dDeepS3toDeepS2,dDeepS3removal))
 new_r_eleven = []
@@ -2330,7 +2330,7 @@ if ds3choice == 1:
             new_r_eleven.append(val)
 dDeepS3removal = np.sum(new_r_eleven, axis=0)
 dDeepS3removal = np.multiply(-1,dDeepS3removal)
-print dDeepS3removal[0], "dDeepS3removal"
+# print dDeepS3removal[0], "dDeepS3removal"
 
 
 
@@ -2604,10 +2604,10 @@ factor10 = np.add(factor6,factor9)
 
 
 
-print "#############################"
+# print "#############################"
 
 days = len(new_datetime)
-print days, "days"
+# print days, "days"
 
 bg0 = np.array([bgConcAir, bgConcFW, bgConcSW, bgConcSoil1, bgConcSoil2, bgConcSoil3, bgConcFWsed, bgConcSWsed, bgConcSoil1, bgConcSoil2, bgConcSoil3])
 
@@ -2661,7 +2661,7 @@ ds3choice = compValues[10]
 indices.append(ds3choice)
 
 time1 = datetime.datetime.now()
-print time1, "1"
+# print time1, "1"
 
 indices = np.array(indices)
 matrix_index = np.where(indices > 0)
@@ -2675,9 +2675,9 @@ f_calcs = []
 fresults.append(bg0)
 for i in range(days):
     index = i
-    print index
+    # print index
 
-    print "####### d1 #######"
+    # print "####### d1 #######"
 
     dAremoval_val = [dAremoval[index]]
     dFWtoA_val = [dFWtoA[index]]
@@ -2699,9 +2699,9 @@ for i in range(days):
                 yield i
     dm1 = np.fromiter(d1_func(1), dtype=float)
     d1 = dm1[matrix_index]
-    
 
-    print "####### d2 #######"    
+
+    # print "####### d2 #######"
 
     dAtoFW_val = [dAtoFW[index]]
     dFWremoval_val = [dFWremoval[index]]
@@ -2724,7 +2724,7 @@ for i in range(days):
     dm2 = np.fromiter(d2_func(1), dtype=float)
     d2 = dm2[matrix_index]
 
-    print "####### d3 #######"
+    # print "####### d3 #######"
 
     dAtoSW_val = [dAtoSW[index]]
     dFWtoSW_val = [dFWtoSW[index]]
@@ -2746,8 +2746,8 @@ for i in range(days):
     dm3 = np.fromiter(d3_func(1), dtype=float)
     d3 = dm3[matrix_index]
 
-    print "####### d4 #######"
-    
+    # print "####### d4 #######"
+
     dAtoS1_val = [dAtoS1[index]]
     dFWtoS1_val = [x[index] for x in dFWtoS1]
     dSWtoS1_val = [x[index] for x in dSWtoS1]
@@ -2769,7 +2769,7 @@ for i in range(days):
     dm4 = np.fromiter(d4_func(1), dtype=float)
     d4 = dm4[matrix_index]
 
-    print "####### d5 #######"
+    # print "####### d5 #######"
 
     dAtoS2_val = [dAtoS2[index]]
     dFWtoS2_val = [x[index] for x in dFWtoS2]
@@ -2782,7 +2782,7 @@ for i in range(days):
     dDeepS1toS2_val = [x[index] for x in dDeepS1toS2]
     dDeepS2toS2_val = [x[index] for x in dDeepS2toS2]
     dDeepS3toS2_val = [x[index] for x in dDeepS3toS2]
-    
+
 
     def d5_func(n):
         d5_matrix = [dAtoS2_val, dFWtoS2_val, dSWtoS2_val, dS1toS2_val, dS2removal_val, dS3toS2_val, dFSedtoS2_val, dSSedtoS2_val, dDeepS1toS2_val, dDeepS2toS2_val, dDeepS3toS2_val]
@@ -2792,7 +2792,7 @@ for i in range(days):
     dm5 = np.fromiter(d5_func(1), dtype=float)
     d5 = dm5[matrix_index]
 
-    print "####### d6 #######"
+    # print "####### d6 #######"
 
     dAtoS3_val = [dAtoS3[index]]
     dFWtoS3_val = [x[index] for x in dFWtoS3]
@@ -2814,8 +2814,8 @@ for i in range(days):
     dm6 = np.fromiter(d6_func(1), dtype=float)
     d6 = dm6[matrix_index]
 
-    print "####### d7 #######"
-    
+    # print "####### d7 #######"
+
     dAtoFSed_val = [x[index] for x in dAtoFSed]
     dFWtoFSed_val =  [dFWtoFSed[index]]
     dSWtoFSed_val = [x[index] for x in dSWtoFSed]
@@ -2836,8 +2836,8 @@ for i in range(days):
     dm7 = np.fromiter(d7_func(1), dtype=float)
     d7 = dm7[matrix_index]
 
-    print "####### d8 #######"
-    
+    # print "####### d8 #######"
+
     dAtoSSed_val = [x[index] for x in dAtoSSed]
     dFWtoSSed_val = [x[index] for x in dFWtoSSed]
     dSWtoSSed_val = [dSWtoSSed[index]]
@@ -2858,7 +2858,7 @@ for i in range(days):
     dm8 = np.fromiter(d8_func(1), dtype=float)
     d8 = dm8[matrix_index]
 
-    print "####### d9 #######"
+    # print "####### d9 #######"
 
     dAtoDeepS1_val = [x[index] for x in dAtoDeepS1]
     dFWtoDeepS1_val = [x[index] for x in dFWtoDeepS1]
@@ -2881,7 +2881,7 @@ for i in range(days):
     dm9 = np.fromiter(d9_func(1), dtype=float)
     d9 = dm9[matrix_index]
 
-    print "####### d10 #######"
+    # print "####### d10 #######"
 
     dAtoDeepS2_val = [x[index] for x in dAtoDeepS2]
     dFWtoDeepS2_val = [x[index] for x in dFWtoDeepS2]
@@ -2893,7 +2893,7 @@ for i in range(days):
     dSSedtoDeepS2_val = [x[index] for x in dSSedtoDeepS2]
     dDeepS1toDeepS2_val = [x[index] for x in dDeepS1toDeepS2]
     dDeepS2removal_val = [dDeepS2removal[index]]
-    dDeepS3toDeepS2_val = [x[index] for x in dDeepS3toDeepS2]  
+    dDeepS3toDeepS2_val = [x[index] for x in dDeepS3toDeepS2]
 
     def d10_func(n):
         d10_matrix = [dAtoDeepS2_val, dFWtoDeepS2_val, dSWtoDeepS2_val, dS1toDeepS2_val, dS2toDeepS2_val, dS3toDeepS2_val, dFSedtoDeepS2_val, dSSedtoDeepS2_val, dDeepS1toDeepS2_val, dDeepS2removal_val, dDeepS3toDeepS2_val]
@@ -2903,7 +2903,7 @@ for i in range(days):
     dm10 = np.fromiter(d10_func(1), dtype=float)
     d10 = dm10[matrix_index]
 
-    print "####### d10 #######"
+    # print "####### d10 #######"
 
     dAtoDeepS3_val = [x[index] for x in dAtoDeepS3]
     dFWtoDeepS3_val = [x[index] for x in dFWtoDeepS3]
@@ -2925,7 +2925,7 @@ for i in range(days):
     dm11 = np.fromiter(d11_func(1), dtype=float)
     d11 = dm11[matrix_index]
 
-    print "####### d11 #######"
+    # print "####### d11 #######"
 
     ######## SELECT COMPARTMENTS #######
 
@@ -2953,20 +2953,20 @@ for i in range(days):
         dmatrix.append(d11)
     dmatrix2 = np.array(dmatrix)
     dmatrix = []
-    
-    
-    
 
-    print "####### ODE SOLVER #######"
+
+
+
+    # print "####### ODE SOLVER #######"
 
 
     def ode_solv(t, bg, dmat, releasevec):
-        yyy = dmat.dot(bg) 
+        yyy = dmat.dot(bg)
         return yyy + releasevec
 
     def jac(t, bg, dmat, releasevec):
         return dmat + releasevec
-    
+
     dmat = np.array([dm1, dm2, dm3, dm4, dm5, dm6, dm7, dm8, dm9, dm10, dm11])
 
     releasevec = np.array([Arelease[index], FWrelease[index], SWrelease[index], S1release[index], S2release[index], S3release[index],
@@ -2982,7 +2982,7 @@ for i in range(days):
     soln.set_initial_value(last, t0)
     soln.set_f_params(dmatrix2, releasevec).set_jac_params(dmatrix2, releasevec)
     bg = soln.integrate(t1)
-    print index, index, index, index
+    # print index, index, index, index
     fresults.append(bg)
     f_calcs.append(bg)
 
@@ -3076,7 +3076,7 @@ print "Run time", total_time
 ############################################## NEW OUTPUTS ##############################################
 
 time10 = datetime.datetime.now()
-print time10, "10"
+# print time10, "10"
 
 chem_book = xlwt.Workbook()
 output_name = "%s_output_new" % (workbook_names)
@@ -3130,13 +3130,13 @@ if len(air_fugacity) !=0:
     # Bulks #
     factor = np.multiply(air_fugacity,zAirSub)
     air_conc = np.multiply(factor,molecular_mass)
-    
+
     factor = np.multiply(aerosol_fugacity,zAerosolSub)
     aerosol_conc = np.multiply(factor,molecular_mass)
 
     factor = np.add(airV,aerV)
     air_factor = np.true_divide(airV,factor)
-    
+
     factor = np.add(airV,aerV)
     aer_factor = np.true_divide(aerV,factor)
 
@@ -3147,10 +3147,10 @@ if len(air_fugacity) !=0:
     air_conc_avg = air_conc[-index:]
     air_conc_avg = np.mean(air_conc_avg)
 
-    aerosol_conc_avg = aerosol_conc[-index]
+    aerosol_conc_avg = aerosol_conc[-index:]
     aerosol_conc_avg = np.mean(aerosol_conc_avg)
 
-    bulk_air_conc_avg = bulk_air_conc[-index]
+    bulk_air_conc_avg = bulk_air_conc[-index:]
     bulk_air_conc_avg = np.mean(bulk_air_conc_avg)
 
     raw_output.write(0, 1, "bulk_air_conc")
@@ -3184,7 +3184,7 @@ if len(fw_sed_fugacity) !=0:
 
     fw_sed_solid_fugacity = fw_sed_fugacity
 
-    
+
     factor = np.multiply(fw_fugacity,zWaterSub)
     fw_conc = np.multiply(factor,molecular_mass)
 
@@ -3204,7 +3204,7 @@ if len(fw_sed_fugacity) !=0:
 
     #fw_sus_sed_factor = np.true_divide(fwSSedV,factor)
 
-    #bulk_freshwater = (fw_conc * fresh_factor) + (fw_sed_water * fw_sed_factor) + (fw_sed_solid * fw_sed_factor) + (fw_sus_sed_conc * fw_sus_sed_factor) 
+    #bulk_freshwater = (fw_conc * fresh_factor) + (fw_sed_water * fw_sed_factor) + (fw_sed_solid * fw_sed_factor) + (fw_sus_sed_conc * fw_sus_sed_factor)
 
 #################### NEW WATER BULKS ####################
 
@@ -3233,7 +3233,7 @@ if len(fw_sed_fugacity) !=0:
     for i, val in enumerate(bulk_freshwater_column):
         raw_output.write(i+1, 4, val)
     for i, val in enumerate(fw_conc):
-        raw_output.write(i+1, 5, val)   
+        raw_output.write(i+1, 5, val)
     for i, val in enumerate(fw_sus_sed_conc):
         raw_output.write(i+1, 6, val)
     for i, val in enumerate(bulk_freshwater_sediment):
@@ -3246,19 +3246,19 @@ if len(fw_sed_fugacity) !=0:
     fw_conc_avg = fw_conc[-index:]
     fw_conc_avg = np.mean(fw_conc_avg)
 
-    fw_sus_sed_conc_avg = fw_sus_sed_conc[-index]
+    fw_sus_sed_conc_avg = fw_sus_sed_conc[-index:]
     fw_sus_sed_conc_avg = np.mean(fw_sus_sed_conc_avg)
 
-    bulk_freshwater_column_avg = bulk_freshwater_column[-index]
+    bulk_freshwater_column_avg = bulk_freshwater_column[-index:]
     bulk_freshwater_column_avg = np.mean(bulk_freshwater_column_avg)
 
-    fw_sed_water_avg = fw_sed_water[-index]
+    fw_sed_water_avg = fw_sed_water[-index:]
     fw_sed_water_avg = np.mean(fw_sed_water_avg)
 
-    fw_sed_solid_avg = fw_sed_solid[-index]
+    fw_sed_solid_avg = fw_sed_solid[-index:]
     fw_sed_solid_avg = np.mean(fw_sed_solid_avg)
 
-    bulk_freshwater_sediment_avg = bulk_freshwater_sediment[-index]
+    bulk_freshwater_sediment_avg = bulk_freshwater_sediment[-index:]
     bulk_freshwater_sediment_avg = np.mean(bulk_freshwater_sediment_avg)
 
     average_output.write(3,0,"bulk_freshwater_column_avg")
@@ -3276,7 +3276,7 @@ if len(fw_sed_fugacity) !=0:
     average_output.write(8,1,fw_sed_solid_avg)
 
 
-        
+
 
 if len(sw_sed_fugacity) !=0:
 
@@ -3286,7 +3286,7 @@ if len(sw_sed_fugacity) !=0:
 
     sw_sed_solid_fugacity = sw_sed_fugacity
 
-    # Bulks Seawater # 
+    # Bulks Seawater #
     factor = np.multiply(sw_fugacity,zWaterSub)
     sw_conc = np.multiply(factor,molecular_mass)
 
@@ -3312,7 +3312,7 @@ if len(sw_sed_fugacity) !=0:
 #################### NEW WATER BULKS ####################
 
 # Seawater #
-    
+
     column_factor = seawV + swSSedV
     col_water_factor = np.true_divide(seawV,column_factor)
     col_SusSed_factor = np.true_divide(swSSedV,column_factor)
@@ -3332,7 +3332,7 @@ if len(sw_sed_fugacity) !=0:
     for i, val in enumerate(bulk_seawater_column):
         raw_output.write(i+1, 10, val)
     for i, val in enumerate(sw_conc):
-        raw_output.write(i+1, 11, val)   
+        raw_output.write(i+1, 11, val)
     for i, val in enumerate(sw_sus_sed_conc):
         raw_output.write(i+1, 12, val)
     for i, val in enumerate(bulk_seawater_sediment):
@@ -3346,19 +3346,19 @@ if len(sw_sed_fugacity) !=0:
     sw_conc_avg = sw_conc[-index:]
     sw_conc_avg = np.mean(sw_conc_avg)
 
-    sw_sus_sed_conc_avg = sw_sus_sed_conc[-index]
+    sw_sus_sed_conc_avg = sw_sus_sed_conc[-index:]
     sw_sus_sed_conc_avg = np.mean(sw_sus_sed_conc_avg)
 
-    bulk_seawater_column_avg = bulk_seawater_column[-index]
+    bulk_seawater_column_avg = bulk_seawater_column[-index:]
     bulk_seawater_column_avg = np.mean(bulk_seawater_column_avg)
 
-    sw_sed_water_avg = sw_sed_water[-index]
+    sw_sed_water_avg = sw_sed_water[-index:]
     sw_sed_water_avg = np.mean(sw_sed_water_avg)
 
-    sw_sed_solid_avg = sw_sed_solid[-index]
+    sw_sed_solid_avg = sw_sed_solid[-index:]
     sw_sed_solid_avg = np.mean(sw_sed_solid_avg)
 
-    bulk_seawater_sediment_avg = bulk_seawater_sediment[-index]
+    bulk_seawater_sediment_avg = bulk_seawater_sediment[-index:]
     bulk_seawater_sediment_avg = np.mean(bulk_seawater_sediment_avg)
 
     average_output.write(9,0,"bulk_seawater_column_avg")
@@ -3452,7 +3452,7 @@ if len(deep_soil1_fugacity) !=0:
     for i, val in enumerate(bulk_total_urban_soil):
         raw_output.write(i+1, 16, val)
     for i, val in enumerate(bulk_urban_surface_soil):
-        raw_output.write(i+1, 17, val)   
+        raw_output.write(i+1, 17, val)
     for i, val in enumerate(urban_soil_air):
         raw_output.write(i+1, 18, val)
     for i, val in enumerate(urban_soil_water):
@@ -3465,19 +3465,19 @@ if len(deep_soil1_fugacity) !=0:
     urban_soil_air_avg = urban_soil_air[-index:]
     urban_soil_air_avg = np.mean(urban_soil_air_avg)
 
-    urban_soil_water_avg = urban_soil_water[-index]
+    urban_soil_water_avg = urban_soil_water[-index:]
     urban_soil_water_avg = np.mean(urban_soil_water_avg)
 
-    urban_soil_solid_avg = urban_soil_solid[-index]
+    urban_soil_solid_avg = urban_soil_solid[-index:]
     urban_soil_solid_avg = np.mean(urban_soil_solid_avg)
 
-    deep_urban_soil_avg = deep_urban_soil[-index]
+    deep_urban_soil_avg = deep_urban_soil[-index:]
     deep_urban_soil_avg = np.mean(deep_urban_soil_avg)
 
-    bulk_total_urban_soil_avg = bulk_total_urban_soil[-index]
+    bulk_total_urban_soil_avg = bulk_total_urban_soil[-index:]
     bulk_total_urban_soil_avg = np.mean(bulk_total_urban_soil_avg)
 
-    bulk_urban_surface_soil_avg = bulk_urban_surface_soil[-index]
+    bulk_urban_surface_soil_avg = bulk_urban_surface_soil[-index:]
     bulk_urban_surface_soil_avg = np.mean(bulk_urban_surface_soil_avg)
 
     average_output.write(15,0,"bulk_total_urban_soil_avg")
@@ -3571,7 +3571,7 @@ if len(deep_soil2_fugacity) !=0:
     for i, val in enumerate(bulk_total_natural_soil):
         raw_output.write(i+1, 22, val)
     for i, val in enumerate(bulk_natural_surface_soil):
-        raw_output.write(i+1, 23, val)   
+        raw_output.write(i+1, 23, val)
     for i, val in enumerate(natural_soil_air):
         raw_output.write(i+1, 24, val)
     for i, val in enumerate(natural_soil_water):
@@ -3584,19 +3584,19 @@ if len(deep_soil2_fugacity) !=0:
     natural_soil_air_avg = natural_soil_air[-index:]
     natural_soil_air_avg = np.mean(natural_soil_air_avg)
 
-    natural_soil_water_avg = natural_soil_water[-index]
+    natural_soil_water_avg = natural_soil_water[-index:]
     natural_soil_water_avg = np.mean(natural_soil_water_avg)
 
-    natural_soil_solid_avg = natural_soil_solid[-index]
+    natural_soil_solid_avg = natural_soil_solid[-index:]
     natural_soil_solid_avg = np.mean(natural_soil_solid_avg)
 
-    deep_natural_soil_avg = deep_natural_soil[-index]
+    deep_natural_soil_avg = deep_natural_soil[-index:]
     deep_natural_soil_avg = np.mean(deep_natural_soil_avg)
 
-    bulk_total_natural_soil_avg = bulk_total_natural_soil[-index]
+    bulk_total_natural_soil_avg = bulk_total_natural_soil[-index:]
     bulk_total_natural_soil_avg = np.mean(bulk_total_natural_soil_avg)
 
-    bulk_natural_surface_soil_avg = bulk_natural_surface_soil[-index]
+    bulk_natural_surface_soil_avg = bulk_natural_surface_soil[-index:]
     bulk_natural_surface_soil_avg = np.mean(bulk_natural_surface_soil_avg)
 
     average_output.write(21,0,"bulk_total_natural_soil_avg")
@@ -3689,7 +3689,7 @@ if len(deep_soil3_fugacity) !=0:
     for i, val in enumerate(bulk_total_agricultural_soil):
         raw_output.write(i+1, 28, val)
     for i, val in enumerate(bulk_agricultural_surface_soil):
-        raw_output.write(i+1, 29, val)   
+        raw_output.write(i+1, 29, val)
     for i, val in enumerate(agricultural_soil_air):
         raw_output.write(i+1, 30, val)
     for i, val in enumerate(agricultural_soil_water):
@@ -3702,19 +3702,19 @@ if len(deep_soil3_fugacity) !=0:
     agricultural_soil_air_avg = agricultural_soil_air[-index:]
     agricultural_soil_air_avg = np.mean(agricultural_soil_air_avg)
 
-    agricultural_soil_water_avg = agricultural_soil_water[-index]
+    agricultural_soil_water_avg = agricultural_soil_water[-index:]
     agricultural_soil_water_avg = np.mean(agricultural_soil_water_avg)
 
-    agricultural_soil_solid_avg = agricultural_soil_solid[-index]
+    agricultural_soil_solid_avg = agricultural_soil_solid[-index:]
     agricultural_soil_solid_avg = np.mean(agricultural_soil_solid_avg)
 
-    deep_agricultural_soil_avg = deep_agricultural_soil[-index]
+    deep_agricultural_soil_avg = deep_agricultural_soil[-index:]
     deep_agricultural_soil_avg = np.mean(deep_agricultural_soil_avg)
 
-    bulk_total_agricultural_soil_avg = bulk_total_agricultural_soil[-index]
+    bulk_total_agricultural_soil_avg = bulk_total_agricultural_soil[-index:]
     bulk_total_agricultural_soil_avg = np.mean(bulk_total_agricultural_soil_avg)
 
-    bulk_agricultural_surface_soil_avg = bulk_agricultural_surface_soil[-index]
+    bulk_agricultural_surface_soil_avg = bulk_agricultural_surface_soil[-index:]
     bulk_agricultural_surface_soil_avg = np.mean(bulk_agricultural_surface_soil_avg)
 
     average_output.write(27,0,"bulk_total_agricultural_soil_avg")
