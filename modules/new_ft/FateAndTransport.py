@@ -195,23 +195,38 @@ class FateAndTransport:
             new_datetime.append(dt)
         climate = zip(new_datetime, climate_precip, climate_windspeed, climate_flow, climate_temp)
 
+        # self.release = {
+        #     'date': new_datetime,
+        #     'air': release_worksheet.col_values(3, start_rowx=1,end_rowx=None),
+        #     'freshwater': release_worksheet.col_values(4, start_rowx=1,end_rowx=None),
+        #     'seawater': release_worksheet.col_values(5, start_rowx=1,end_rowx=None),
+        #     'soil1': release_worksheet.col_values(6, start_rowx=1,end_rowx=None),
+        #     'soil2': release_worksheet.col_values(7, start_rowx=1,end_rowx=None),
+        #     'soil3': release_worksheet.col_values(8, start_rowx=1,end_rowx=None),
+        #     'fwsediment': release_worksheet.col_values(9, start_rowx=1,end_rowx=None),
+        #     'swsediment': release_worksheet.col_values(10, start_rowx=1,end_rowx=None),
+        #     'dsoil1': release_worksheet.col_values(11, start_rowx=1,end_rowx=None),
+        #     'dsoil2': release_worksheet.col_values(12, start_rowx=1,end_rowx=None),
+        #     'dsoil3': release_worksheet.col_values(13, start_rowx=1,end_rowx=None)
+        # }
+
         # RELEASE PARAMETER LOADING #
-        release_worksheet = main_workbook.sheet_by_name('Releases')
-        release_month = release_worksheet.col_values(0, start_rowx=1,end_rowx=None)
-        release_day = release_worksheet.col_values(1, start_rowx=1,end_rowx=None)
-        release_year = release_worksheet.col_values(2, start_rowx=1,end_rowx=None)
-        release_air = release_worksheet.col_values(3, start_rowx=1,end_rowx=None)
-        release_freshwater = release_worksheet.col_values(4, start_rowx=1,end_rowx=None)
-        release_seawater = release_worksheet.col_values(5, start_rowx=1,end_rowx=None)
-        release_soil1 = release_worksheet.col_values(6, start_rowx=1,end_rowx=None)
-        release_soil2 = release_worksheet.col_values(7, start_rowx=1,end_rowx=None)
-        release_soil3 = release_worksheet.col_values(8, start_rowx=1,end_rowx=None)
-        release_fwsediment = release_worksheet.col_values(9, start_rowx=1,end_rowx=None)
-        release_swsediment = release_worksheet.col_values(10, start_rowx=1,end_rowx=None)
-        release_dsoil1 = release_worksheet.col_values(11, start_rowx=1,end_rowx=None)
-        release_dsoil2 = release_worksheet.col_values(12, start_rowx=1,end_rowx=None)
-        release_dsoil3 = release_worksheet.col_values(13, start_rowx=1,end_rowx=None)
-        release = zip(new_datetime, release_air, release_freshwater, release_seawater, release_soil1, release_soil2,  release_soil3, release_fwsediment, release_swsediment, release_dsoil1, release_dsoil2, release_dsoil3)
+        # release_worksheet = main_workbook.sheet_by_name('Releases')
+        # release_month = release_worksheet.col_values(0, start_rowx=1,end_rowx=None)
+        # release_day = release_worksheet.col_values(1, start_rowx=1,end_rowx=None)
+        # release_year = release_worksheet.col_values(2, start_rowx=1,end_rowx=None)
+        # self.release['air'] = release_worksheet.col_values(3, start_rowx=1,end_rowx=None)
+        # self.release['freshwater'] = release_worksheet.col_values(4, start_rowx=1,end_rowx=None)
+        # release_seawater = release_worksheet.col_values(5, start_rowx=1,end_rowx=None)
+        # release_soil1 = release_worksheet.col_values(6, start_rowx=1,end_rowx=None)
+        # release_soil2 = release_worksheet.col_values(7, start_rowx=1,end_rowx=None)
+        # release_soil3 = release_worksheet.col_values(8, start_rowx=1,end_rowx=None)
+        # release_fwsediment = release_worksheet.col_values(9, start_rowx=1,end_rowx=None)
+        # release_swsediment = release_worksheet.col_values(10, start_rowx=1,end_rowx=None)
+        # release_dsoil1 = release_worksheet.col_values(11, start_rowx=1,end_rowx=None)
+        # release_dsoil2 = release_worksheet.col_values(12, start_rowx=1,end_rowx=None)
+        # release_dsoil3 = release_worksheet.col_values(13, start_rowx=1,end_rowx=None)
+        # release = zip(new_datetime, self.release['air'], self.release['freshwater'], release_seawater, release_soil1, release_soil2,  release_soil3, release_fwsediment, self.release['swsediment'], release_dsoil1, release_dsoil2, release_dsoil3)
 
         # # BACKGROUND CONCENTRATION LOADING #
         # background_worksheet = main_workbook.sheet_by_name('bgConc')
@@ -1097,17 +1112,17 @@ class FateAndTransport:
 
         ##########LOAD RELEASES##########
 
-        Arelease = np.true_divide(release_air,molecular_mass)
-        SWrelease = np.true_divide(release_seawater,molecular_mass)
-        FWrelease = np.true_divide(release_freshwater,molecular_mass)
-        S1release = np.true_divide(release_soil1,molecular_mass)
-        S2release = np.true_divide(release_soil2,molecular_mass)
-        S3release = np.true_divide(release_soil3,molecular_mass)
-        FSedrelease = np.true_divide(release_fwsediment,molecular_mass)
-        SSedrelease = np.true_divide(release_swsediment,molecular_mass)
-        DS1release = np.true_divide(release_dsoil1,molecular_mass)
-        DS2release = np.true_divide(release_dsoil2,molecular_mass)
-        DS3release = np.true_divide(release_dsoil3,molecular_mass)
+        Arelease = np.true_divide(self.release['air'],molecular_mass)
+        SWrelease = np.true_divide(self.release['seawater'],molecular_mass)
+        FWrelease = np.true_divide(self.release['freshwater'],molecular_mass)
+        S1release = np.true_divide(self.release['soil1'],molecular_mass)
+        S2release = np.true_divide(self.release['soil2'],molecular_mass)
+        S3release = np.true_divide(self.release['soil3'],molecular_mass)
+        FSedrelease = np.true_divide(self.release['fwsediment'],molecular_mass)
+        SSedrelease = np.true_divide(self.release['swsediment'],molecular_mass)
+        DS1release = np.true_divide(self.release['dsoil1'],molecular_mass)
+        DS2release = np.true_divide(self.release['dsoil2'],molecular_mass)
+        DS3release = np.true_divide(self.release['dsoil3'],molecular_mass)
 
         ##########CHANGE RELEASES TO CONCENTRATION VALUES##########
         #Arelease = [x / airV for x in Arelease]
