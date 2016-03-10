@@ -125,32 +125,40 @@ class FateAndTransport:
                 else:
                     imported[prop] = attempt_float(val)
 
-    def load_default_chem(self):
-        main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, ("SF_glycerin_beta.xlsx")))
+    def load_chem(self, workbook):
+        main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, workbook))
         chemProp_worksheet = main_workbook.sheet_by_name('chemProp')
         prop_names = chemProp_worksheet.col_values(1, start_rowx=2,end_rowx=None)
         prop_values = chemProp_worksheet.col_values(2, start_rowx=2,end_rowx=None)
         chem_prop = {}
         for idx, name in enumerate(prop_names):
-            try:
-                chem_prop[name] = float(prop_values[idx])
-            except:
-                chem_prop[name] = prop_values[idx]
+            chem_prop[name] = float(prop_values[idx])
 
+        self.chem_prop = chem_prop
+        print self.chem_prop
         return chem_prop
 
     def run(self, workbook):
 
-        self.chem_prop = self.load_default_chem()
+        # for a, b in chem_Prop:
+        #     if a == 'kOctWater':
+        kOctanolWater = self.chem_prop['kOctWater']
+        #     if a == 'kOrgWater':
+        kOrganicWater = self.chem_prop['kOrgWater']
+        #     if a == 'kAirWater':
+        kAirWater = self.chem_prop['kAirWater']
+        #     if a == 'kAerAir':
+        kAerosolAir = self.chem_prop['kAerAir']
 
-        ##########CHEMICAL PROPERTIES##########
-        # for prop in ['kDegAir', 'kDegWater', 'kDegSoil', 'kDegSed', 'kDegAero',
-        #         'kDegSSed']:
-        #     self.chem_prop[prop] = np.multiply(np.true_divide(1,
-        #                             (self.chem_prop[prop] / .693)), 24)
-        #
-        # molecular_volume = np.true_divide(self.chem_prop['MW'], self.chem_prop['MD'])
-        # molecular_mass = np.true_divide(self.chem_prop['MW'], 1000)
+        kDegredationInAir = np.multiply(np.true_divide(1, (self.chem_prop['kDegAir'] / .693)), 24)
+        kDegredationInWater = np.multiply(np.true_divide(1, (self.chem_prop['kDegWater'] / .693)), 24)
+        kDegredationInSoil = np.multiply(np.true_divide(1, (self.chem_prop['kDegSoil'] / .693)), 24)
+        kDegredationInSediment = np.multiply(np.true_divide(1, (self.chem_prop['kDegSed'] / .693)), 24)
+        kDegredationInAerosol = np.multiply(np.true_divide(1, (self.chem_prop['kDegAero'] / .693)), 24)
+        kDegredationInSSediment = np.multiply(np.true_divide(1, (self.chem_prop['kDegSSed'] / .693)), 24)
+
+        molecular_volume = np.true_divide(self.chem_prop['MW'], self.chem_prop['MD'])
+        molecular_mass = np.true_divide(self.chem_prop['MW'], 1000)
 
         time1 = datetime.datetime.now()
         #print time1, "1"
@@ -232,49 +240,6 @@ class FateAndTransport:
         visc_vals_air = visc_worksheet.col_values(3, start_rowx=1,end_rowx=None)
         viscosities = zip(visc_temp, visc_vals)
         viscosities_air = zip(visc_temp, visc_vals_air)
-
-
-        ##########CHEMICAL PROPERTIES##########
-        for a, b in chem_Prop:
-            if a == 'kOctWater':
-                kOctanolWater = float(b)
-            if a == 'kOrgWater':
-                kOrganicWater = float(b)
-            if a == 'kAirWater':
-                kAirWater = float(b)
-            if a == 'kAerAir':
-                kAerosolAir = float(b)
-            if a == 'kDegAir':
-                kDegredationInAir = float(b)/.693
-                kDegredationInAir = np.true_divide(1,kDegredationInAir)
-                kDegredationInAir = np.multiply(kDegredationInAir,24)
-            if a == 'kDegWater':
-                kDegredationInWater = float(b)/.693
-                kDegredationInWater = np.true_divide(1,kDegredationInWater)
-                kDegredationInWater = np.multiply(kDegredationInWater,24)
-            if a == 'kDegSoil':
-                kDegredationInSoil = float(b)/.693
-                kDegredationInSoil = np.true_divide(1,kDegredationInSoil)
-                kDegredationInSoil = np.multiply(kDegredationInSoil,24)
-            if a == 'kDegSed':
-                kDegredationInSediment = float(b)/.693
-                kDegredationInSediment = np.true_divide(1,kDegredationInSediment)
-                kDegredationInSediment = np.multiply(kDegredationInSediment,24)
-            if a == 'kDegAero':
-                kDegredationInAerosol = float(b)/.693
-                kDegredationInAerosol = np.true_divide(1,kDegredationInAerosol)
-                kDegredationInAerosol = np.multiply(kDegredationInAerosol,24)
-            if a == 'kDegSSed':
-                kDegredationInSSediment = float(b)/.693
-                kDegredationInSSediment = np.true_divide(1,kDegredationInSSediment)
-                kDegredationInSSediment = np.multiply(kDegredationInSSediment,24)
-            if a == 'MW':
-                molecular_mass = float(b)
-            if a == 'MD':
-                molecular_density = float(b)
-        molecular_volume = np.true_divide(molecular_mass,molecular_density)
-        molecular_mass = np.true_divide(molecular_mass,1000)
-
 
 
         ##########CLIMATE PROPERTIES##########
@@ -1533,7 +1498,7 @@ class FateAndTransport:
         dWaterFreshReact = np.multiply(factor,zWaterFresh)
 
         #DFRESHSSEDREACT#
-        factor = np.multiply(fwSSedV,kDegredationInSSediment)
+        factor = np.multiply(fwSSedV, kDegredationInSSediment)
         dFreshSSedReact = np.multiply(factor,zSuspendedFreshSub)
 
         #DWATERSEAREACT#
@@ -1541,7 +1506,7 @@ class FateAndTransport:
         dWaterSeaReact = np.multiply(factor,zWaterSea)
 
         #DSEASSEDREACT#
-        factor = np.multiply(swSSedV,kDegredationInSSediment)
+        factor = np.multiply(swSSedV, kDegredationInSSediment)
         dSeaSSedReact = np.multiply(factor,zSuspendedSeaSub)
 
         #DSOILREACT1#
