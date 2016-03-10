@@ -24,15 +24,14 @@ class FT_Old:
         self.workbooks = os.path.join(class_directory, "workbooks")
 
 
-    def run(self):
+    def run(self, workbook):
         time1 = datetime.datetime.now()
         #print time1, "1"
 
         # ENVIRONMENTAL PARAMETER LOADING #
-        workbook_names = os.path.join(self.workbooks, "Oregon_Org_Mod_Polyethylene Glycol_25322-68-3")
+        workbook_title = os.path.join(self.workbooks, workbook)
         #print workbook_names
 
-        workbook_title = "%s.xls" %(workbook_names)
         #print workbook_title
         main_workbook = xlrd.open_workbook(workbook_title)
         environment_worksheet = main_workbook.sheet_by_name('Environment')

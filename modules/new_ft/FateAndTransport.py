@@ -23,15 +23,142 @@ class FateAndTransport:
         self.directory = class_directory
         self.workbooks = os.path.join(class_directory, "workbooks")
 
-    def run(self):
+    def load_environment(self, title):
+        self.env_name = title
+        # try:
+        main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, (title + ".xlsx")))
+        # except:
+        #     main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, (title + ".xls")))
+        environment_worksheet = main_workbook.sheet_by_name('ENV_final')
+        env_codes = environment_worksheet.col_values(1, start_rowx=1,end_rowx=None)
+        env_values = environment_worksheet.col_values(2, start_rowx=1,end_rowx=None)
+        # environment
+        self.env = {}
+        for idx, code in enumerate(env_codes):
+            self.env[code] = env_values[idx]
+
+        climate_worksheet = main_workbook.sheet_by_name('Climate')
+        new_datetime = []
+        climate_month = climate_worksheet.col_values(0, start_rowx=1,end_rowx=None)
+        climate_day = climate_worksheet.col_values(1, start_rowx=1,end_rowx=None)
+        climate_year = climate_worksheet.col_values(2, start_rowx=1,end_rowx=None)
+        new_month = [int(i) for i in climate_month]
+        new_day = [int(i) for i in climate_day]
+        new_year = [int(i) for i in climate_year]
+        dt = zip(new_year, new_month, new_day)
+        for val in dt:
+            mystring = ' '.join(map(str, val))
+            dt = datetime.datetime.strptime(mystring, "%Y %m %d")
+            new_datetime.append(dt)
+
+        # CLIMATE PARAMETER LOADING #
+        self.climate = {
+            'date': new_datetime,
+            'precip': climate_worksheet.col_values(3, start_rowx=1,end_rowx=None),
+            'windspeed': climate_worksheet.col_values(4, start_rowx=1,end_rowx=None),
+            'flow': climate_worksheet.col_values(5, start_rowx=1,end_rowx=None),
+            'temp': climate_worksheet.col_values(6, start_rowx=1,end_rowx=None)
+        }
+
+        # RELEASE PARAMETER LOADING #
+        release_worksheet = main_workbook.sheet_by_name('Releases')
+        self.release = {
+            'date': new_datetime,
+            'air': release_worksheet.col_values(3, start_rowx=1,end_rowx=None),
+            'freshwater': release_worksheet.col_values(4, start_rowx=1,end_rowx=None),
+            'seawater': release_worksheet.col_values(5, start_rowx=1,end_rowx=None),
+            'soil1': release_worksheet.col_values(6, start_rowx=1,end_rowx=None),
+            'soil2': release_worksheet.col_values(7, start_rowx=1,end_rowx=None),
+            'soil3': release_worksheet.col_values(8, start_rowx=1,end_rowx=None),
+            'fwsediment': release_worksheet.col_values(9, start_rowx=1,end_rowx=None),
+            'swsediment': release_worksheet.col_values(10, start_rowx=1,end_rowx=None),
+            'dsoil1': release_worksheet.col_values(11, start_rowx=1,end_rowx=None),
+            'dsoil2': release_worksheet.col_values(12, start_rowx=1,end_rowx=None),
+            'dsoil3': release_worksheet.col_values(13, start_rowx=1,end_rowx=None)
+        }
+
+
+        # BACKGROUND CONCENTRATION LOADING #
+        background_worksheet = main_workbook.sheet_by_name('bgConc')
+        # compartment_names = background_worksheet.col_values(1, start_rowx=2,end_rowx=None)
+        bg_codes = background_worksheet.col_values(2, start_rowx=2,end_rowx=None)
+        bg_values = background_worksheet.col_values(3, start_rowx=2,end_rowx=None)
+        self.bg = {}
+        for idx, code in enumerate(bg_codes):
+            self.bg[code] = bg_values[idx]
+
+        # CHEMICAL PROPERTY PARAMETER LOADING #
+        # chemProp_worksheet = main_workbook.sheet_by_name('chemProp')
+        # propCodes = chemProp_worksheet.col_values(1, start_rowx=2,end_rowx=None)
+        # propValues = chemProp_worksheet.col_values(2, start_rowx=2,end_rowx=None)
+        # chem_Prop = zip(propCodes, propValues)
+
+        # DETERMINE COMPARTMENT EXISTENCE #
+        self.comp = {}
+        comp_worksheet = main_workbook.sheet_by_name('Compartments')
+        comp_codes = comp_worksheet.col_values(1, start_rowx=1,end_rowx=None)
+        comp_values = comp_worksheet.col_values(2, start_rowx=1,end_rowx=None)
+        self.comp = {}
+        for idx, code in enumerate(comp_codes):
+            self.comp[code] = comp_values[idx]
+
+
+        # VISCOSITY LOADING #
+        visc_worksheet = main_workbook.sheet_by_name('Viscosities')
+        self.visc = {
+            'temp': visc_worksheet.col_values(0, start_rowx=1,end_rowx=None),
+            'vals': visc_worksheet.col_values(1, start_rowx=1,end_rowx=None),
+            'vals_air': visc_worksheet.col_values(3, start_rowx=1,end_rowx=None)
+        }
+
+        def attempt_float(value):
+            try:
+                return float(value)
+            except:
+                return value
+
+        for imported in [self.release, self.climate, self.env,
+                self.bg, self.comp, self.visc]:
+            for prop, val in imported.iteritems():
+                if isinstance(val, list):
+                    imported[prop] = map(attempt_float, val)
+                else:
+                    imported[prop] = attempt_float(val)
+
+    def load_default_chem(self):
+        main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, ("SF_glycerin_beta.xlsx")))
+        chemProp_worksheet = main_workbook.sheet_by_name('chemProp')
+        prop_names = chemProp_worksheet.col_values(1, start_rowx=2,end_rowx=None)
+        prop_values = chemProp_worksheet.col_values(2, start_rowx=2,end_rowx=None)
+        chem_prop = {}
+        for idx, name in enumerate(prop_names):
+            try:
+                chem_prop[name] = float(prop_values[idx])
+            except:
+                chem_prop[name] = prop_values[idx]
+
+        return chem_prop
+
+    def run(self, workbook):
+
+        self.chem_prop = self.load_default_chem()
+
+        ##########CHEMICAL PROPERTIES##########
+        # for prop in ['kDegAir', 'kDegWater', 'kDegSoil', 'kDegSed', 'kDegAero',
+        #         'kDegSSed']:
+        #     self.chem_prop[prop] = np.multiply(np.true_divide(1,
+        #                             (self.chem_prop[prop] / .693)), 24)
+        #
+        # molecular_volume = np.true_divide(self.chem_prop['MW'], self.chem_prop['MD'])
+        # molecular_mass = np.true_divide(self.chem_prop['MW'], 1000)
+
         time1 = datetime.datetime.now()
         #print time1, "1"
 
         # ENVIRONMENTAL PARAMETER LOADING #
-        workbook_names = os.path.join(self.workbooks, "Oregon_Org_Mod_Polyethylene Glycol_25322-68-3")
+        workbook_title = os.path.join(self.workbooks, workbook)
         #print workbook_names
 
-        workbook_title = "%s.xls" %(workbook_names)
         #print workbook_title
         main_workbook = xlrd.open_workbook(workbook_title)
         environment_worksheet = main_workbook.sheet_by_name('Environment')
@@ -3080,59 +3207,7 @@ class FateAndTransport:
         total_time = time2 - time1
         #print "Run time", total_time
 
-
-
-
         ############################################## NEW OUTPUTS ##############################################
-
-        time10 = datetime.datetime.now()
-        #print time10, "10"
-
-        chem_book = xlwt.Workbook()
-        ext = '.xls'
-        output_name = "new_output"
-        chem_parameters = chem_book.add_sheet('Chem_Parameters')
-
-        chem_parameters.write(0,0,"Octanol/Water Partition Coefficient")
-        chem_parameters.write(1,0,"Organic/Water Partition Coefficient")
-        chem_parameters.write(2,0,"Air/Water Partition Coefficient")
-        chem_parameters.write(3,0,"Aerosol/Air Partition Coefficient")
-        chem_parameters.write(4,0,"Degredation Rate in Air")
-        chem_parameters.write(5,0,"Degredation Rate in Water")
-        chem_parameters.write(6,0,"Degredation Rate in Soil")
-        chem_parameters.write(7,0,"Degredation Rate in Sediment")
-        chem_parameters.write(8,0,"Degredation Rate in Aerosls")
-        chem_parameters.write(9,0,"Degredation Rate in Suspended Sediment")
-        chem_parameters.write(10,0,"Molecular Mass")
-        chem_parameters.write(11,0,"Molecular Density")
-
-        chem_parameters.write(0,3,"Unitless")
-        chem_parameters.write(1,3,"Unitless")
-        chem_parameters.write(2,3,"Unitless")
-        chem_parameters.write(3,3,"Unitless")
-        chem_parameters.write(4,3,"Hours")
-        chem_parameters.write(5,3,"Hours")
-        chem_parameters.write(6,3,"Hours")
-        chem_parameters.write(7,3,"Hours")
-        chem_parameters.write(8,3,"Hours")
-        chem_parameters.write(9,3,"Hours")
-        chem_parameters.write(10,3,"g/mole")
-        chem_parameters.write(11,3,"g/cm3")
-
-
-        for i, val in enumerate(propCodes):
-            chem_parameters.write(i, 1, val)
-        for i, val in enumerate(propValues):
-            chem_parameters.write(i, 2, val)
-
-        raw_output = chem_book.add_sheet('Raw_output')
-
-        average_output = chem_book.add_sheet('Average_output')
-
-        raw_output.write(0,0,"Date_Times")
-        for i, val in enumerate(new_datetime):
-            raw_output.write(i+1, 0, str(val))
-
 
         if len(air_fugacity) !=0:
 
@@ -3152,37 +3227,6 @@ class FateAndTransport:
             aer_factor = np.true_divide(aerV,factor)
 
             bulk_air_conc = (air_conc * air_factor) + (aerosol_conc * aer_factor)
-
-            index = np.subtract(len(air_conc),365)
-
-            air_conc_avg = air_conc[-index:]
-            air_conc_avg = np.mean(air_conc_avg)
-
-            aerosol_conc_avg = aerosol_conc[-index:]
-            aerosol_conc_avg = np.mean(aerosol_conc_avg)
-
-            bulk_air_conc_avg = bulk_air_conc[-index:]
-            bulk_air_conc_avg = np.mean(bulk_air_conc_avg)
-
-            raw_output.write(0, 1, "bulk_air_conc")
-            raw_output.write(0, 2, "air_conc")
-            raw_output.write(0, 3, "aerosol_conc")
-
-            for i, val in enumerate(bulk_air_conc):
-                raw_output.write(i+1, 1, val)
-            for i, val in enumerate(air_conc):
-                raw_output.write(i+1, 2, val)
-            for i, val in enumerate(aerosol_conc):
-                raw_output.write(i+1, 3, val)
-
-            average_output.write(0,0,"bulk_air_conc_avg")
-            average_output.write(1,0,"air_conc_avg")
-            average_output.write(2,0,"aerosol_conc_avg")
-
-            average_output.write(0,1,bulk_air_conc_avg)
-            average_output.write(1,1,air_conc_avg)
-            average_output.write(2,1,aerosol_conc_avg)
-
 
 
         if len(fw_sed_fugacity) !=0:
@@ -3208,15 +3252,6 @@ class FateAndTransport:
             factor = np.multiply(fw_sed_solid_fugacity,zSedimentFreshSubSolid)
             fw_sed_solid = np.multiply(factor,molecular_mass)
 
-            #factor = freshwV + sedFWV + fwSSedV
-            #fresh_factor = np.true_divide(freshwV,factor)
-
-            #fw_sed_factor = np.true_divide(sedFWV,factor)
-
-            #fw_sus_sed_factor = np.true_divide(fwSSedV,factor)
-
-            #bulk_freshwater = (fw_conc * fresh_factor) + (fw_sed_water * fw_sed_factor) + (fw_sed_solid * fw_sed_factor) + (fw_sus_sed_conc * fw_sus_sed_factor)
-
         #################### NEW WATER BULKS ####################
 
         # Freshwater #
@@ -3224,7 +3259,8 @@ class FateAndTransport:
             column_factor = freshwV + fwSSedV
             col_water_factor = np.true_divide(freshwV,column_factor)
             col_SusSed_factor = np.true_divide(fwSSedV,column_factor)
-            bulk_freshwater_column = (fw_conc * col_water_factor) + (fw_sus_sed_conc * col_SusSed_factor)
+            bulk_freshwater_column = ((fw_conc * col_water_factor)
+                + (fw_sus_sed_conc * col_SusSed_factor))
 
             fsedpercWater = 1 - fsedpercSolid
             sedFWVsolid = np.multiply(sedFWV,fsedpercSolid)
@@ -3232,61 +3268,8 @@ class FateAndTransport:
 
             sed_solid_factor = np.true_divide(sedFWVsolid,sedFWV)
             sed_water_factor = np.true_divide(sedFWVwater,sedFWV)
-            bulk_freshwater_sediment = (fw_sed_solid * sed_solid_factor) + (fw_sed_water * sed_water_factor)
-
-            raw_output.write(0, 4, "bulk_freshwater_column")
-            raw_output.write(0, 5, "fw_conc")
-            raw_output.write(0, 6, "fw_sus_sed_conc")
-            raw_output.write(0, 7, "bulk_freshwater_sediment")
-            raw_output.write(0, 8, "fw_sed_water")
-            raw_output.write(0, 9, "fw_sed_solid")
-
-            for i, val in enumerate(bulk_freshwater_column):
-                raw_output.write(i+1, 4, val)
-            for i, val in enumerate(fw_conc):
-                raw_output.write(i+1, 5, val)
-            for i, val in enumerate(fw_sus_sed_conc):
-                raw_output.write(i+1, 6, val)
-            for i, val in enumerate(bulk_freshwater_sediment):
-                raw_output.write(i+1, 7, val)
-            for i, val in enumerate(fw_sed_water):
-                raw_output.write(i+1, 8, val)
-            for i, val in enumerate(fw_sed_solid):
-                raw_output.write(i+1, 9, val)
-
-            fw_conc_avg = fw_conc[-index:]
-            fw_conc_avg = np.mean(fw_conc_avg)
-
-            fw_sus_sed_conc_avg = fw_sus_sed_conc[-index:]
-            fw_sus_sed_conc_avg = np.mean(fw_sus_sed_conc_avg)
-
-            bulk_freshwater_column_avg = bulk_freshwater_column[-index:]
-            bulk_freshwater_column_avg = np.mean(bulk_freshwater_column_avg)
-
-            fw_sed_water_avg = fw_sed_water[-index:]
-            fw_sed_water_avg = np.mean(fw_sed_water_avg)
-
-            fw_sed_solid_avg = fw_sed_solid[-index:]
-            fw_sed_solid_avg = np.mean(fw_sed_solid_avg)
-
-            bulk_freshwater_sediment_avg = bulk_freshwater_sediment[-index:]
-            bulk_freshwater_sediment_avg = np.mean(bulk_freshwater_sediment_avg)
-
-            average_output.write(3,0,"bulk_freshwater_column_avg")
-            average_output.write(4,0,"fw_conc_avg")
-            average_output.write(5,0,"fw_sus_sed_conc_avg")
-            average_output.write(6,0,"bulk_freshwater_sediment_avg")
-            average_output.write(7,0,"fw_sed_water_avg")
-            average_output.write(8,0,"fw_sed_solid_avg")
-
-            average_output.write(3,1,bulk_freshwater_column_avg)
-            average_output.write(4,1,fw_conc_avg)
-            average_output.write(5,1,fw_sus_sed_conc_avg)
-            average_output.write(6,1,bulk_freshwater_sediment_avg)
-            average_output.write(7,1,fw_sed_water_avg)
-            average_output.write(8,1,fw_sed_solid_avg)
-
-
+            bulk_freshwater_sediment = ((fw_sed_solid * sed_solid_factor)
+                + (fw_sed_water * sed_water_factor))
 
 
         if len(sw_sed_fugacity) !=0:
@@ -3317,8 +3300,9 @@ class FateAndTransport:
 
             sw_sus_sed_factor = np.true_divide(swSSedV,factor)
 
-            bulk_seawater = (sw_conc * sea_factor) + (sw_sed_water * sw_sed_factor) + (sw_sed_solid * sw_sed_factor) + (sw_sus_sed_conc * sw_sus_sed_factor)
-
+            bulk_seawater = ((sw_conc * sea_factor) + (sw_sed_water * sw_sed_factor)
+                + (sw_sed_solid * sw_sed_factor)
+                + (sw_sus_sed_conc * sw_sus_sed_factor))
 
         #################### NEW WATER BULKS ####################
 
@@ -3327,64 +3311,12 @@ class FateAndTransport:
             column_factor = seawV + swSSedV
             col_water_factor = np.true_divide(seawV,column_factor)
             col_SusSed_factor = np.true_divide(swSSedV,column_factor)
-            bulk_seawater_column = (sw_conc * col_water_factor) + (sw_sus_sed_conc * col_SusSed_factor)
+            bulk_seawater_column = ((sw_conc * col_water_factor)
+                + (sw_sus_sed_conc * col_SusSed_factor))
 
             ssedpercWater = 1 - ssedpercSolid
-            bulk_seawater_sediment = (sw_sed_solid * ssedpercSolid) + (sw_sed_water * ssedpercWater)
-
-
-            raw_output.write(0, 10, "bulk_seawater_column")
-            raw_output.write(0, 11, "sw_conc")
-            raw_output.write(0, 12, "sw_sus_sed_conc")
-            raw_output.write(0, 13, "bulk_seawater_sediment")
-            raw_output.write(0, 14, "sw_sed_water")
-            raw_output.write(0, 15, "sw_sed_solid")
-
-            for i, val in enumerate(bulk_seawater_column):
-                raw_output.write(i+1, 10, val)
-            for i, val in enumerate(sw_conc):
-                raw_output.write(i+1, 11, val)
-            for i, val in enumerate(sw_sus_sed_conc):
-                raw_output.write(i+1, 12, val)
-            for i, val in enumerate(bulk_seawater_sediment):
-                raw_output.write(i+1, 13, val)
-            for i, val in enumerate(sw_sed_water):
-                raw_output.write(i+1, 14, val)
-            for i, val in enumerate(sw_sed_solid):
-                raw_output.write(i+1, 15, val)
-
-
-            sw_conc_avg = sw_conc[-index:]
-            sw_conc_avg = np.mean(sw_conc_avg)
-
-            sw_sus_sed_conc_avg = sw_sus_sed_conc[-index:]
-            sw_sus_sed_conc_avg = np.mean(sw_sus_sed_conc_avg)
-
-            bulk_seawater_column_avg = bulk_seawater_column[-index:]
-            bulk_seawater_column_avg = np.mean(bulk_seawater_column_avg)
-
-            sw_sed_water_avg = sw_sed_water[-index:]
-            sw_sed_water_avg = np.mean(sw_sed_water_avg)
-
-            sw_sed_solid_avg = sw_sed_solid[-index:]
-            sw_sed_solid_avg = np.mean(sw_sed_solid_avg)
-
-            bulk_seawater_sediment_avg = bulk_seawater_sediment[-index:]
-            bulk_seawater_sediment_avg = np.mean(bulk_seawater_sediment_avg)
-
-            average_output.write(9,0,"bulk_seawater_column_avg")
-            average_output.write(10,0,"sw_conc_avg")
-            average_output.write(11,0,"sw_sus_sed_conc_avg")
-            average_output.write(12,0,"bulk_seawater_sediment_avg")
-            average_output.write(13,0,"sw_sed_water_avg")
-            average_output.write(14,0,"sw_sed_solid_avg")
-
-            average_output.write(9,1,bulk_seawater_column_avg)
-            average_output.write(10,1,sw_conc_avg)
-            average_output.write(11,1,sw_sus_sed_conc_avg)
-            average_output.write(12,1,bulk_seawater_sediment_avg)
-            average_output.write(13,1,sw_sed_water_avg)
-            average_output.write(14,1,sw_sed_solid_avg)
+            bulk_seawater_sediment = ((sw_sed_solid * ssedpercSolid)
+                + (sw_sed_water * ssedpercWater))
 
 
         if len(deep_soil1_fugacity) !=0:
@@ -3424,7 +3356,10 @@ class FateAndTransport:
             solid_factor = np.true_divide(solid_vol,s1_total)
             deep1_factor = np.true_divide(deepsV1,s1_total)
 
-            bulk_total_urban_soil = (urban_soil_air * air_factor) + (urban_soil_water * water_factor) + (urban_soil_solid * solid_factor) + (deep_urban_soil * deep1_factor)
+            bulk_total_urban_soil = ((urban_soil_air * air_factor)
+                + (urban_soil_water * water_factor)
+                + (urban_soil_solid * solid_factor)
+                + (deep_urban_soil * deep1_factor))
 
             # Urban Surface Soil Calculations #
 
@@ -3434,80 +3369,9 @@ class FateAndTransport:
             sur_water_factor = np.true_divide(water_vol,factor)
             sur_solid_factor = np.true_divide(solid_vol,factor)
 
-            bulk_urban_surface_soil = (urban_soil_air * sur_air_factor) + (urban_soil_water * sur_water_factor) + (urban_soil_solid * sur_solid_factor)
-
-            index = np.subtract(len(urban_soil_air),365)
-
-            urban_air_avg = urban_soil_air[-index:]
-            urban_air_avg = np.mean(urban_air_avg)
-
-            urban_water_avg = urban_soil_water[-index:]
-            urban_water_avg = np.mean(urban_water_avg)
-
-            urban_solid_avg = urban_soil_solid[-index:]
-            urban_solid_avg = np.mean(urban_solid_avg)
-
-            deep_urban_avg = deep_urban_soil[-index:]
-            deep_urban_avg = np.mean(deep_urban_avg)
-
-            bulk_urban_avg = bulk_total_urban_soil[-index:]
-            bulk_urban_avg = np.mean(bulk_urban_avg)
-
-            raw_output.write(0, 16, "bulk_total_urban_soil")
-            raw_output.write(0, 17, "bulk_urban_surface_soil")
-            raw_output.write(0, 18, "urban_soil_air")
-            raw_output.write(0, 19, "urban_soil_water")
-            raw_output.write(0, 20, "urban_soil_solid")
-            raw_output.write(0, 21, "deep_urban_soil")
-
-            for i, val in enumerate(bulk_total_urban_soil):
-                raw_output.write(i+1, 16, val)
-            for i, val in enumerate(bulk_urban_surface_soil):
-                raw_output.write(i+1, 17, val)
-            for i, val in enumerate(urban_soil_air):
-                raw_output.write(i+1, 18, val)
-            for i, val in enumerate(urban_soil_water):
-                raw_output.write(i+1, 19, val)
-            for i, val in enumerate(urban_soil_solid):
-                raw_output.write(i+1, 20, val)
-            for i, val in enumerate(deep_urban_soil):
-                raw_output.write(i+1, 21, val)
-
-            urban_soil_air_avg = urban_soil_air[-index:]
-            urban_soil_air_avg = np.mean(urban_soil_air_avg)
-
-            urban_soil_water_avg = urban_soil_water[-index:]
-            urban_soil_water_avg = np.mean(urban_soil_water_avg)
-
-            urban_soil_solid_avg = urban_soil_solid[-index:]
-            urban_soil_solid_avg = np.mean(urban_soil_solid_avg)
-
-            deep_urban_soil_avg = deep_urban_soil[-index:]
-            deep_urban_soil_avg = np.mean(deep_urban_soil_avg)
-
-            bulk_total_urban_soil_avg = bulk_total_urban_soil[-index:]
-            bulk_total_urban_soil_avg = np.mean(bulk_total_urban_soil_avg)
-
-            bulk_urban_surface_soil_avg = bulk_urban_surface_soil[-index:]
-            bulk_urban_surface_soil_avg = np.mean(bulk_urban_surface_soil_avg)
-
-            average_output.write(15,0,"bulk_total_urban_soil_avg")
-            average_output.write(16,0,"bulk_urban_surface_soil_avg")
-            average_output.write(17,0,"urban_soil_air_avg")
-            average_output.write(18,0,"urban_soil_water_avg")
-            average_output.write(19,0,"urban_soil_solid_avg")
-            average_output.write(20,0,"deep_urban_soil_avg")
-
-            average_output.write(15,1,bulk_total_urban_soil_avg)
-            average_output.write(16,1,bulk_urban_surface_soil_avg)
-            average_output.write(17,1,urban_soil_air_avg)
-            average_output.write(18,1,urban_soil_water_avg)
-            average_output.write(19,1,urban_soil_solid_avg)
-            average_output.write(20,1,deep_urban_soil_avg)
-
-
-
-        if len(deep_soil2_fugacity) !=0:
+            bulk_urban_surface_soil = ((urban_soil_air * sur_air_factor)
+                + (urban_soil_water * sur_water_factor)
+                + (urban_soil_solid * sur_solid_factor))
 
             # Total Natural Soil Calculations #
 
@@ -3544,7 +3408,10 @@ class FateAndTransport:
             solid_factor = np.true_divide(solid_vol,s2_total)
             deep2_factor = np.true_divide(deepsV2,s2_total)
 
-            bulk_total_natural_soil = (natural_soil_air * air_factor) + (natural_soil_water * water_factor) + (natural_soil_solid * solid_factor) + (deep_natural_soil * deep2_factor)
+            bulk_total_natural_soil = ((natural_soil_air * air_factor)
+                + (natural_soil_water * water_factor)
+                + (natural_soil_solid * solid_factor)
+                + (deep_natural_soil * deep2_factor))
 
             # Natural Surface Soil Calculations #
 
@@ -3554,75 +3421,9 @@ class FateAndTransport:
             sur_water_factor = np.true_divide(water_vol,factor)
             sur_solid_factor = np.true_divide(solid_vol,factor)
 
-            bulk_natural_surface_soil = (natural_soil_air * sur_air_factor) + (natural_soil_water * sur_water_factor) + (natural_soil_solid * sur_solid_factor)
-
-
-            natural_air_avg = natural_soil_air[-index:]
-            natural_air_avg = np.mean(natural_air_avg)
-
-            natural_water_avg = natural_soil_water[-index:]
-            natural_water_avg = np.mean(natural_water_avg)
-
-            natural_solid_avg = natural_soil_solid[-index:]
-            natural_solid_avg = np.mean(natural_solid_avg)
-
-            deep_natural_avg = deep_natural_soil[-index:]
-            deep_natural_avg = np.mean(deep_natural_avg)
-
-            bulk_natural_avg = bulk_total_natural_soil[-index:]
-            bulk_natural_avg = np.mean(bulk_natural_avg)
-
-            raw_output.write(0, 22, "bulk_total_natural_soil")
-            raw_output.write(0, 23, "bulk_natural_surface_soil")
-            raw_output.write(0, 24, "natural_soil_air")
-            raw_output.write(0, 25, "natural_soil_water")
-            raw_output.write(0, 26, "natural_soil_solid")
-            raw_output.write(0, 27, "deep_natural_soil")
-
-            for i, val in enumerate(bulk_total_natural_soil):
-                raw_output.write(i+1, 22, val)
-            for i, val in enumerate(bulk_natural_surface_soil):
-                raw_output.write(i+1, 23, val)
-            for i, val in enumerate(natural_soil_air):
-                raw_output.write(i+1, 24, val)
-            for i, val in enumerate(natural_soil_water):
-                raw_output.write(i+1, 25, val)
-            for i, val in enumerate(natural_soil_solid):
-                raw_output.write(i+1, 26, val)
-            for i, val in enumerate(deep_natural_soil):
-                raw_output.write(i+1, 27, val)
-
-            natural_soil_air_avg = natural_soil_air[-index:]
-            natural_soil_air_avg = np.mean(natural_soil_air_avg)
-
-            natural_soil_water_avg = natural_soil_water[-index:]
-            natural_soil_water_avg = np.mean(natural_soil_water_avg)
-
-            natural_soil_solid_avg = natural_soil_solid[-index:]
-            natural_soil_solid_avg = np.mean(natural_soil_solid_avg)
-
-            deep_natural_soil_avg = deep_natural_soil[-index:]
-            deep_natural_soil_avg = np.mean(deep_natural_soil_avg)
-
-            bulk_total_natural_soil_avg = bulk_total_natural_soil[-index:]
-            bulk_total_natural_soil_avg = np.mean(bulk_total_natural_soil_avg)
-
-            bulk_natural_surface_soil_avg = bulk_natural_surface_soil[-index:]
-            bulk_natural_surface_soil_avg = np.mean(bulk_natural_surface_soil_avg)
-
-            average_output.write(21,0,"bulk_total_natural_soil_avg")
-            average_output.write(22,0,"bulk_natural_surface_soil_avg")
-            average_output.write(23,0,"natural_soil_air_avg")
-            average_output.write(24,0,"natural_soil_water_avg")
-            average_output.write(25,0,"natural_soil_solid_avg")
-            average_output.write(26,0,"deep_natural_soil_avg")
-
-            average_output.write(21,1,bulk_total_natural_soil_avg)
-            average_output.write(22,1,bulk_natural_surface_soil_avg)
-            average_output.write(23,1,natural_soil_air_avg)
-            average_output.write(24,1,natural_soil_water_avg)
-            average_output.write(25,1,natural_soil_solid_avg)
-            average_output.write(26,1,deep_natural_soil_avg)
+            bulk_natural_surface_soil = ((natural_soil_air * sur_air_factor)
+                + (natural_soil_water * sur_water_factor)
+                + (natural_soil_solid * sur_solid_factor))
 
 
         if len(deep_soil3_fugacity) !=0:
@@ -3662,7 +3463,10 @@ class FateAndTransport:
             solid_factor = np.true_divide(solid_vol,s3_total)
             deep3_factor = np.true_divide(deepsV3,s3_total)
 
-            bulk_total_agricultural_soil = (agricultural_soil_air * air_factor) + (agricultural_soil_water * water_factor) + (agricultural_soil_solid * solid_factor) + (deep_agricultural_soil * deep3_factor)
+            bulk_total_agricultural_soil = ((agricultural_soil_air * air_factor)
+                + (agricultural_soil_water * water_factor)
+                + (agricultural_soil_solid * solid_factor)
+                + (deep_agricultural_soil * deep3_factor))
 
             # Agricultural Surface Soil Calculations #
 
@@ -3672,74 +3476,90 @@ class FateAndTransport:
             sur_water_factor = np.true_divide(water_vol,factor)
             sur_solid_factor = np.true_divide(solid_vol,factor)
 
-            bulk_agricultural_surface_soil = (agricultural_soil_air * sur_air_factor) + (agricultural_soil_water * sur_water_factor) + (agricultural_soil_solid * sur_solid_factor)
+            bulk_agricultural_surface_soil = ((agricultural_soil_air * sur_air_factor)
+                + (agricultural_soil_water * sur_water_factor) +
+                (agricultural_soil_solid * sur_solid_factor))
 
+            output = {}
+            output["bulk_air_conc"] = {"values": bulk_air_conc}
+            output["air_conc"] = {"values": air_conc}
+            output["aerosol_conc"] = {"values": aerosol_conc}
 
-            agricultural_air_avg = agricultural_soil_air[-index:]
-            agricultural_air_avg = np.mean(agricultural_air_avg)
+            output["bulk_freshwater_column"] = {"values": bulk_freshwater_column}
+            output["fw_conc"] = {"values": fw_conc}
+            output["fw_sus_sed_conc"] = {"values": fw_sus_sed_conc}
+            output["bulk_freshwater_sediment"] = {"values": bulk_freshwater_sediment}
+            output["fw_sed_water"] = {"values": fw_sed_water}
+            output["fw_sed_solid"] = {"values": fw_sed_solid}
 
-            agricultural_water_avg = agricultural_soil_water[-index:]
-            agricultural_water_avg = np.mean(agricultural_water_avg)
+            output["bulk_seawater_column"] = {"values": bulk_seawater_column}
+            output["sw_conc"] = {"values": sw_conc}
+            output["sw_sus_sed_conc"] = {"values": sw_sus_sed_conc}
+            output["bulk_seawater_sediment"] = {"values": bulk_seawater_sediment}
+            output["sw_sed_water"] = {"values": sw_sed_water}
+            output["sw_sed_solid"] = {"values": sw_sed_solid}
 
-            agricultural_solid_avg = agricultural_soil_solid[-index:]
-            agricultural_solid_avg = np.mean(agricultural_solid_avg)
+            output["bulk_total_urban_soil"] = {"values": bulk_total_urban_soil}
+            output["bulk_urban_surface_soil"] = {"values": bulk_urban_surface_soil}
+            output["urban_soil_air"] = {"values": urban_soil_air}
+            output["urban_soil_water"] = {"values": urban_soil_water}
+            output["urban_soil_solid"] = {"values": urban_soil_solid}
+            output["deep_urban_soil"] = {"values": deep_urban_soil}
 
-            deep_agricultural_avg = deep_agricultural_soil[-index:]
-            deep_agricultural_avg = np.mean(deep_agricultural_avg)
+            output["bulk_total_natural_soil"] = {"values": bulk_total_natural_soil}
+            output["bulk_natural_surface_soil"] = {"values": bulk_natural_surface_soil}
+            output["natural_soil_air"] = {"values": natural_soil_air}
+            output["natural_soil_water"] = {"values": natural_soil_water}
+            output["natural_soil_solid"] = {"values": natural_soil_solid}
+            output["deep_natural_soil"] = {"values": deep_natural_soil}
 
-            bulk_agricultural_avg = bulk_total_agricultural_soil[-index:]
-            bulk_agricultural_avg = np.mean(bulk_agricultural_avg)
+            output["bulk_total_agricultural_soil"] = {"values": bulk_total_agricultural_soil}
+            output["bulk_agricultural_surface_soil"] = {"values": bulk_agricultural_surface_soil}
+            output["agricultural_soil_air"] = {"values": agricultural_soil_air}
+            output["agricultural_soil_water"] = {"values": agricultural_soil_water}
+            output["agricultural_soil_solid"] = {"values": agricultural_soil_solid}
+            output["deep_agricultural_soil"] = {"values": deep_agricultural_soil}
 
-            raw_output.write(0, 28, "bulk_total_agricultural_soil")
-            raw_output.write(0, 29, "bulk_agricultural_surface_soil")
-            raw_output.write(0, 30, "agricultural_soil_air")
-            raw_output.write(0, 31, "agricultural_soil_water")
-            raw_output.write(0, 32, "agricultural_soil_solid")
-            raw_output.write(0, 33, "deep_agricultural_soil")
+        for prop, vals in output.iteritems():
+            time_at_equil = vals['values'][365:]
+            vals['avg'] = np.mean(time_at_equil)
+            vals['values'] = list(vals['values'])
 
-            for i, val in enumerate(bulk_total_agricultural_soil):
-                raw_output.write(i+1, 28, val)
-            for i, val in enumerate(bulk_agricultural_surface_soil):
-                raw_output.write(i+1, 29, val)
-            for i, val in enumerate(agricultural_soil_air):
-                raw_output.write(i+1, 30, val)
-            for i, val in enumerate(agricultural_soil_water):
-                raw_output.write(i+1, 31, val)
-            for i, val in enumerate(agricultural_soil_solid):
-                raw_output.write(i+1, 32, val)
-            for i, val in enumerate(deep_agricultural_soil):
-                raw_output.write(i+1, 33, val)
+        # add required environment variable for exposure
+        # for env_var in ['soilP2']:
+        #     self.chem_prop[env_var] = self.env[env_var]
 
-            agricultural_soil_air_avg = agricultural_soil_air[-index:]
-            agricultural_soil_air_avg = np.mean(agricultural_soil_air_avg)
+        ft_out = {
+            'results': output,
+            'chem_prop': self.chem_prop
+        }
 
-            agricultural_soil_water_avg = agricultural_soil_water[-index:]
-            agricultural_soil_water_avg = np.mean(agricultural_soil_water_avg)
+        return ft_out
 
-            agricultural_soil_solid_avg = agricultural_soil_solid[-index:]
-            agricultural_soil_solid_avg = np.mean(agricultural_soil_solid_avg)
+    def write_output(self, ft_out):
+        chem_book = xlwt.Workbook()
 
-            deep_agricultural_soil_avg = deep_agricultural_soil[-index:]
-            deep_agricultural_soil_avg = np.mean(deep_agricultural_soil_avg)
+        output_name = "new_output"
+        # output_name = ("%s_output_" % (self.env_name) +
+        #     datetime.datetime.now().strftime("%b_%d_%y-%H_%M_%S") + ".xls")
+        chem_parameters = chem_book.add_sheet('Chem_Parameters')
+        raw_output = chem_book.add_sheet('Raw_output')
+        average_output = chem_book.add_sheet('Average_output')
 
-            bulk_total_agricultural_soil_avg = bulk_total_agricultural_soil[-index:]
-            bulk_total_agricultural_soil_avg = np.mean(bulk_total_agricultural_soil_avg)
+        i = 0
+        for prop, vals in ft_out['results'].iteritems():
+            average_output.write(i, 0, prop)
+            if 'avg' in vals.keys():
+                average_output.write(i, 1, vals['avg'])
+            raw_output.write(0, i, prop)
+            for idx, v in enumerate(vals['values']):
+                raw_output.write(idx + 1, i, v)
+            i += 1
 
-            bulk_agricultural_surface_soil_avg = bulk_agricultural_surface_soil[-index:]
-            bulk_agricultural_surface_soil_avg = np.mean(bulk_agricultural_surface_soil_avg)
-
-            average_output.write(27,0,"bulk_total_agricultural_soil_avg")
-            average_output.write(28,0,"bulk_agricultural_surface_soil_avg")
-            average_output.write(29,0,"agricultural_soil_air_avg")
-            average_output.write(30,0,"agricultural_soil_water_avg")
-            average_output.write(31,0,"agricultural_soil_solid_avg")
-            average_output.write(32,0,"deep_agricultural_soil_avg")
-
-            average_output.write(27,1,bulk_total_agricultural_soil_avg)
-            average_output.write(28,1,bulk_agricultural_surface_soil_avg)
-            average_output.write(29,1,agricultural_soil_air_avg)
-            average_output.write(30,1,agricultural_soil_water_avg)
-            average_output.write(31,1,agricultural_soil_solid_avg)
-            average_output.write(32,1,deep_agricultural_soil_avg)
+        i = 0
+        for prop, val in ft_out['chem_prop'].iteritems():
+            chem_parameters.write(i, 0, prop)
+            chem_parameters.write(i, 1, val)
+            i += 1
 
         chem_book.save(output_name)
