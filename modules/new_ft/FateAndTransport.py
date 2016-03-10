@@ -162,7 +162,83 @@ class FateAndTransport:
         time1 = datetime.datetime.now()
         #print time1, "1"
 
-        
+        # ENVIRONMENTAL PARAMETER LOADING #
+        workbook_title = os.path.join(self.workbooks, workbook)
+        #print workbook_names
+
+        #print workbook_title
+        main_workbook = xlrd.open_workbook(workbook_title)
+        environment_worksheet = main_workbook.sheet_by_name('Environment')
+        environment_code = environment_worksheet.col_values(1, start_rowx=0,end_rowx=None)
+        environment_value = environment_worksheet.col_values(2, start_rowx=0,end_rowx=None)
+        environment = zip(environment_code, environment_value)
+
+        # CLIMATE PARAMETER LOADING #
+        climate_worksheet = main_workbook.sheet_by_name('Climate')
+        climate_month = climate_worksheet.col_values(0, start_rowx=1,end_rowx=None)
+        climate_day = climate_worksheet.col_values(1, start_rowx=1,end_rowx=None)
+        climate_year = climate_worksheet.col_values(2, start_rowx=1,end_rowx=None)
+        climate_precip = climate_worksheet.col_values(3, start_rowx=1,end_rowx=None)
+        climate_windspeed = climate_worksheet.col_values(4, start_rowx=1,end_rowx=None)
+        climate_flow = climate_worksheet.col_values(5, start_rowx=1,end_rowx=None)
+        climate_temp = climate_worksheet.col_values(6, start_rowx=1,end_rowx=None)
+
+        # CREATE DATETIME OBJECTS #
+        new_datetime = []
+        new_month = [int(i) for i in climate_month]
+        new_day = [int(i) for i in climate_day]
+        new_year = [int(i) for i in climate_year]
+        dt = zip(new_year, new_month, new_day)
+        for val in dt:
+            mystring = ' '.join(map(str, val))
+            dt = datetime.datetime.strptime(mystring, "%Y %m %d")
+            new_datetime.append(dt)
+        climate = zip(new_datetime, climate_precip, climate_windspeed, climate_flow, climate_temp)
+
+        # RELEASE PARAMETER LOADING #
+        release_worksheet = main_workbook.sheet_by_name('Releases')
+        release_month = release_worksheet.col_values(0, start_rowx=1,end_rowx=None)
+        release_day = release_worksheet.col_values(1, start_rowx=1,end_rowx=None)
+        release_year = release_worksheet.col_values(2, start_rowx=1,end_rowx=None)
+        release_air = release_worksheet.col_values(3, start_rowx=1,end_rowx=None)
+        release_freshwater = release_worksheet.col_values(4, start_rowx=1,end_rowx=None)
+        release_seawater = release_worksheet.col_values(5, start_rowx=1,end_rowx=None)
+        release_soil1 = release_worksheet.col_values(6, start_rowx=1,end_rowx=None)
+        release_soil2 = release_worksheet.col_values(7, start_rowx=1,end_rowx=None)
+        release_soil3 = release_worksheet.col_values(8, start_rowx=1,end_rowx=None)
+        release_fwsediment = release_worksheet.col_values(9, start_rowx=1,end_rowx=None)
+        release_swsediment = release_worksheet.col_values(10, start_rowx=1,end_rowx=None)
+        release_dsoil1 = release_worksheet.col_values(11, start_rowx=1,end_rowx=None)
+        release_dsoil2 = release_worksheet.col_values(12, start_rowx=1,end_rowx=None)
+        release_dsoil3 = release_worksheet.col_values(13, start_rowx=1,end_rowx=None)
+        release = zip(new_datetime, release_air, release_freshwater, release_seawater, release_soil1, release_soil2,  release_soil3, release_fwsediment, release_swsediment, release_dsoil1, release_dsoil2, release_dsoil3)
+
+        # BACKGROUND CONCENTRATION LOADING #
+        background_worksheet = main_workbook.sheet_by_name('bgConc')
+        compartment_names = background_worksheet.col_values(1, start_rowx=2,end_rowx=None)
+        code = background_worksheet.col_values(2, start_rowx=2,end_rowx=None)
+        compartment_values = background_worksheet.col_values(3, start_rowx=2,end_rowx=None)
+        background = zip(compartment_names, code, compartment_values)
+
+        # CHEMICAL PROPERTY PARAMETER LOADING #
+        chemProp_worksheet = main_workbook.sheet_by_name('chemProp')
+        propCodes = chemProp_worksheet.col_values(1, start_rowx=2,end_rowx=None)
+        propValues = chemProp_worksheet.col_values(2, start_rowx=2,end_rowx=None)
+        chem_Prop = zip(propCodes, propValues)
+
+        # DETERMINE COMPARTMENT EXISTENCE #
+        # comp_worksheet = main_workbook.sheet_by_name('Compartments')
+        # compCodes = comp_worksheet.col_values(1, start_rowx=1,end_rowx=None)
+        # compValues = comp_worksheet.col_values(2, start_rowx=1,end_rowx=None)
+        # comp_existence = zip(compCodes,compValues)
+
+        # VISCOSITY LOADING #
+        # visc_worksheet = main_workbook.sheet_by_name('Viscosities')
+        # visc_temp = visc_worksheet.col_values(0, start_rowx=1,end_rowx=None)
+        # visc_vals = visc_worksheet.col_values(1, start_rowx=1,end_rowx=None)
+        # visc_vals_air = visc_worksheet.col_values(3, start_rowx=1,end_rowx=None)
+        # viscosities = zip(visc_temp, visc_vals)
+        # viscosities_air = zip(visc_temp, visc_vals_air)
         viscosities = self.visc
 
         ##########CLIMATE PROPERTIES##########
@@ -2177,185 +2253,155 @@ class FateAndTransport:
         #RECALCULATE REMOVAL VALUES TO INCLUDE AMOUNTS LOST TO OTHER COMPARTMENTS
 
         indices = []
-
-        airchoice = compValues[0]
-        indices.append(airchoice)
-
-        fwchoice = compValues[1]
-        indices.append(fwchoice)
-
-        swchoice = compValues[2]
-        indices.append(swchoice)
-
-        s1choice = compValues[3]
-        indices.append(s1choice)
-
-        s2choice = compValues[4]
-        indices.append(s2choice)
-
-        s3choice = compValues[5]
-        indices.append(s3choice)
-
-        fwsedchoice = compValues[6]
-        indices.append(fwsedchoice)
-
-        swsedchoice = compValues[7]
-        indices.append(swsedchoice)
-
-        ds1choice = compValues[8]
-        indices.append(ds1choice)
-
-        ds2choice = compValues[9]
-        indices.append(ds2choice)
-
-        ds3choice = compValues[10]
-        indices.append(ds3choice)
+        for comp_val in ['A', 'fW', 'sW', 'S1', 'S2', 'S3',
+                'fwSed', 'swSed', 'dS1', 'dS2', 'dS3']:
+            indices.append(self.comp[comp_val])
 
         indices = np.array(indices)
         matrix_index = np.where(indices > 0)
 
         r_one = np.vstack((dAremoval,dAtoFW,dAtoSW,dAtoS1,dAtoS2,dAtoS3,dAtoFSed,dAtoSSed,dAtoDeepS1,dAtoDeepS2,dAtoDeepS3))
         new_r_one = []
-        if airchoice == 1:
+        if self.comp['A'] == 1:
             for i in matrix_index:
                 rows = r_one[i]
                 for val in rows:
                     new_r_one.append(val)
         dAremoval = np.sum(new_r_one, axis=0)
         dAremoval = np.multiply(-1,dAremoval)
-        #print dAremoval[0], "dAremoval"
+        # print dAremoval[0], "dAremoval"
 
         r_two = np.vstack((dFWtoA,dFWremoval,dFWtoSW,dFWtoS1,dFWtoS2,dFWtoS3,dFWtoFSed,dFWtoSSed,dFWtoDeepS1,dFWtoDeepS2,dFWtoDeepS3))
         new_r_two = []
-        if fwchoice == 1:
+        if self.comp['fW'] == 1:
             for i in matrix_index:
                 rows = r_two[i]
                 for val in rows:
                     new_r_two.append(val)
-            if swchoice == 0:
+            if self.comp['sW'] == 0:
                 new_r_two.append(dFWadvection)
-            if fwsedchoice == 0:
+            if self.comp['fwSed'] == 0:
                 new_r_two.append(dSedFWdep)
         dFWremoval = np.sum(new_r_two, axis=0)
         dFWremoval = np.multiply(-1,dFWremoval)
-        #print dFWremoval[0], "dFWremoval"
+        # print dFWremoval[0], "dFWremoval"
 
         r_three = np.vstack((dSWtoA,dSWtoFW,dSWremoval,dSWtoS1,dSWtoS2,dSWtoS3,dSWtoFSed,dSWtoSSed,dSWtoDeepS1,dSWtoDeepS2,dSWtoDeepS3))
         new_r_three = []
-        if swchoice == 1:
+        if self.comp['sW'] == 1:
             for i in matrix_index:
                 rows = r_three[i]
                 for val in rows:
                     new_r_three.append(val)
-            if s1choice == 1 and fwchoice == 0:
+            if self.comp['S1'] == 1 and self.comp['fW'] == 0:
                 new_r_three.append(dS1toFW)
-            if s2choice == 1 and fwchoice == 0:
+            if self.comp['S2'] == 1 and self.comp['fW'] == 0:
                 new_r_three.append(dS2toFW)
-            if s3choice == 1 and fwchoice == 0:
+            if self.comp['S3'] == 1 and self.comp['fW'] == 0:
                 new_r_three.append(dS3toFW)
-            if swsedchoice == 0:
+            if self.comp['swSed'] == 0:
                 new_r_three.append(dSedSWdep)
         dSWremoval = np.sum(new_r_three, axis=0)
         dSWremoval = np.multiply(-1,dSWremoval)
-        #print "dSWremoval"
+        # print "dSWremoval"
 
         r_four = np.vstack((dS1toA,dS1toFW,dS1toSW,dS1removal,dS1toS2,dS1toS3,dS1toFSed,dS1toSSed,dS1toDeepS1,dS1toDeepS2,dS1toDeepS3))
         new_r_four = []
-        if s1choice == 1:
+        if self.comp['S1'] == 1:
             for i in matrix_index:
                 rows = r_four[i]
                 for val in rows:
                     new_r_four.append(val)
-            if fwchoice == 0:
+            if self.comp['fW'] == 0:
                 new_r_four.append(dS1toFW)
         dS1removal = np.sum(new_r_four, axis=0)
         dS1removal = np.multiply(-1,dS1removal)
-        #print dS1removal[0], "dS1removal"
+        # print dS1removal[0], "dS1removal"
 
         r_five = np.vstack((dS2toA,dS2toFW,dS2toSW,dS2toS1,dS2removal,dS2toS3,dS2toFSed,dS2toSSed,dS2toDeepS1,dS2toDeepS2,dS2toDeepS3))
         new_r_five = []
-        if s2choice == 1:
+        if self.comp['S2'] == 1:
             for i in matrix_index:
                 rows = r_five[i]
                 for val in rows:
                     new_r_five.append(val)
-            if fwchoice == 0:
+            if self.comp['fW'] == 0:
                 new_r_five.append(dS2toFW)
         dS2removal = np.sum(new_r_five, axis=0)
         dS2removal = np.multiply(-1,dS2removal)
-        #print dS2removal[0], "dS2removal"
+        # print dS2removal[0], "dS2removal"
 
         r_six = np.vstack((dS3toA,dS3toFW,dS3toSW,dS3toS1,dS3toS2,dS3removal,dS3toFSed,dS3toSSed,dS3toDeepS1,dS3toDeepS2,dS3toDeepS3))
         new_r_six = []
-        if s3choice == 1:
+        if self.comp['S3'] == 1:
             for i in matrix_index:
                 rows = r_six[i]
                 for val in rows:
                     new_r_six.append(val)
-            if fwchoice == 0:
+            if self.comp['fW'] == 0:
                 new_r_six.append(dS3toFW)
         dS3removal = np.sum(new_r_six, axis=0)
         dS3removal = np.multiply(-1,dS3removal)
-        #print dS3removal[0], "dS3removal"
+        # print dS3removal[0], "dS3removal"
 
         r_seven = np.vstack((dFSedtoA,dFSedtoFW,dFSedtoSW,dFSedtoS1,dFSedtoS2,dFSedtoS3,dFSedremoval,dFSedtoSSed,dFSedtoDeepS1,dFSedtoDeepS2,dFSedtoDeepS3))
         new_r_seven = []
-        if fwsedchoice == 1:
+        if self.comp['fwSed'] == 1:
             for i in matrix_index:
                 rows = r_seven[i]
                 for val in rows:
                     new_r_seven.append(val)
-            if fwchoice == 0:
+            if self.comp['fW'] == 0:
                 new_r_seven.append(dSedFWsus)
         dFSedremoval = np.sum(new_r_seven, axis=0)
         dFSedremoval = np.multiply(-1,dFSedremoval)
-        #print dFSedremoval[0], "dFSedremoval"
+        # print dFSedremoval[0], "dFSedremoval"
 
         r_eight = np.vstack((dSSedtoA,dSSedtoFW,dSSedtoSW,dSSedtoS1,dSSedtoS2,dSSedtoS3,dSSedtoFSed,dSSedremoval,dSSedtoDeepS1,dSSedtoDeepS2,dSSedtoDeepS3))
         new_r_eight = []
-        if swsedchoice == 1:
+        if self.comp['swSed'] == 1:
             for i in matrix_index:
                 rows = r_eight[i]
                 for val in rows:
                     new_r_eight.append(val)
-            if swchoice == 0:
+            if self.comp['sW'] == 0:
                 new_r_eight.append(dSedSWsus)
         dSSedremoval = np.sum(new_r_eight, axis=0)
         dSSedremoval = np.multiply(-1,dSSedremoval)
-        #print "dSSedremoval"
+        # print "dSSedremoval"
 
         r_nine =  np.vstack((dDeepS1toA,dDeepS1toFW,dDeepS1toSW,dDeepS1toS1,dDeepS1toS2,dDeepS1toS3,dDeepS1toFSed,dDeepS1toSSed,dDeepS1removal,dDeepS1toDeepS2,dDeepS1toDeepS3))
         new_r_nine = []
-        if ds1choice == 1:
+        if self.comp['dS1'] == 1:
             for i in matrix_index:
                 rows = r_nine[i]
                 for val in rows:
                     new_r_nine.append(val)
         dDeepS1removal = np.sum(new_r_nine, axis=0)
         dDeepS1removal = np.multiply(-1,dDeepS1removal)
-        #print dDeepS1removal[0], "dDeepS1removal"
+        # print dDeepS1removal[0], "dDeepS1removal"
 
         r_ten = np.vstack((dDeepS2toA,dDeepS2toFW,dDeepS2toSW,dDeepS2toS1,dDeepS2toS2,dDeepS2toS3,dDeepS2toFSed,dDeepS2toSSed,dDeepS2toDeepS1,dDeepS2removal,dDeepS2toDeepS3))
         new_r_ten = []
-        if ds2choice == 1:
+        if self.comp['dS2'] == 1:
             for i in matrix_index:
                 rows = r_ten[i]
                 for val in rows:
                     new_r_ten.append(val)
         dDeepS2removal = np.sum(new_r_ten, axis=0)
         dDeepS2removal = np.multiply(-1,dDeepS2removal)
-        #print dDeepS2removal[0], "dDeepS2removal"
+        # print dDeepS2removal[0], "dDeepS2removal"
 
         r_eleven = np.vstack((dDeepS3toA,dDeepS3toFW,dDeepS3toSW,dDeepS3toS1,dDeepS3toS2,dDeepS3toS3,dDeepS3toFSed,dDeepS3toSSed,dDeepS3toDeepS1,dDeepS3toDeepS2,dDeepS3removal))
         new_r_eleven = []
-        if ds3choice == 1:
+        if self.comp['dS3'] == 1:
             for i in matrix_index:
                 rows = r_eleven[i]
                 for val in rows:
                     new_r_eleven.append(val)
         dDeepS3removal = np.sum(new_r_eleven, axis=0)
         dDeepS3removal = np.multiply(-1,dDeepS3removal)
-        #print dDeepS3removal[0], "dDeepS3removal"
+        # print dDeepS3removal[0], "dDeepS3removal"
 
 
 
@@ -2628,7 +2674,6 @@ class FateAndTransport:
         #dDeepS3removal = np.multiply(-1,factor10)
 
 
-
         #print "#############################"
 
         days = len(new_datetime)
@@ -2652,38 +2697,9 @@ class FateAndTransport:
         dmatrix = []
         indices = []
 
-        airchoice = compValues[0]
-        indices.append(airchoice)
-
-        fwchoice = compValues[1]
-        indices.append(fwchoice)
-
-        swchoice = compValues[2]
-        indices.append(swchoice)
-
-        s1choice = compValues[3]
-        indices.append(s1choice)
-
-        s2choice = compValues[4]
-        indices.append(s2choice)
-
-        s3choice = compValues[5]
-        indices.append(s3choice)
-
-        fwsedchoice = compValues[6]
-        indices.append(fwsedchoice)
-
-        swsedchoice = compValues[7]
-        indices.append(swsedchoice)
-
-        ds1choice = compValues[8]
-        indices.append(ds1choice)
-
-        ds2choice = compValues[9]
-        indices.append(ds2choice)
-
-        ds3choice = compValues[10]
-        indices.append(ds3choice)
+        for comp_val in ['A', 'fW', 'sW', 'S1', 'S2', 'S3',
+                'fwSed', 'swSed', 'dS1', 'dS2', 'dS3']:
+            indices.append(self.comp[comp_val])
 
         time1 = datetime.datetime.now()
         #print time1, "1"
@@ -2954,32 +2970,30 @@ class FateAndTransport:
 
             ######## SELECT COMPARTMENTS #######
 
-            if airchoice == 1:
+            if self.comp['A'] == 1:
                 dmatrix.append(d1)
-            if fwchoice == 1:
+            if self.comp['fW'] == 1:
                 dmatrix.append(d2)
-            if swchoice == 1:
+            if self.comp['sW'] == 1:
                 dmatrix.append(d3)
-            if s1choice == 1:
+            if self.comp['S1'] == 1:
                 dmatrix.append(d4)
-            if s2choice == 1:
+            if self.comp['S2'] == 1:
                 dmatrix.append(d5)
-            if s3choice == 1:
+            if self.comp['S3'] == 1:
                 dmatrix.append(d6)
-            if fwsedchoice == 1:
+            if self.comp['fwSed'] == 1:
                 dmatrix.append(d7)
-            if swsedchoice == 1:
+            if self.comp['swSed'] == 1:
                 dmatrix.append(d8)
-            if ds1choice == 1:
+            if self.comp['dS1'] == 1:
                 dmatrix.append(d9)
-            if ds2choice == 1:
+            if self.comp['dS2'] == 1:
                 dmatrix.append(d10)
-            if ds3choice == 1:
+            if self.comp['dS3'] == 1:
                 dmatrix.append(d11)
             dmatrix2 = np.array(dmatrix)
             dmatrix = []
-
-
 
 
             #print "####### ODE SOLVER #######"

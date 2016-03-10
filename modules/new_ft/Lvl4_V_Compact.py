@@ -2048,9 +2048,9 @@ class FateAndTransport:
         dmatrix = []
         indices = []
 
-        for val in self.comp.values():
-            indices.append(val)
-
+        for comp_val in ['A', 'fW', 'sW', 'S1', 'S2', 'S3',
+                'fwSed', 'swSed', 'dS1', 'dS2', 'dS3']:
+            indices.append(self.comp[comp_val])
 
         time1 = datetime.datetime.now()
         # print time1, "1"
