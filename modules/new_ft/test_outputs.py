@@ -23,6 +23,7 @@ test_book = 'SF_glycerin_beta.xlsx'
 
 L = FateAndTransport()
 L.load_chem(test_book)
+L.load_environment(test_book)
 Lout = L.run(test_book)
 L.write_output(Lout)
 

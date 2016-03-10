@@ -26,10 +26,10 @@ class FateAndTransport:
     def load_environment(self, title):
         self.env_name = title
         # try:
-        main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, (title + ".xlsx")))
+        main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, title))
         # except:
         #     main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, (title + ".xls")))
-        environment_worksheet = main_workbook.sheet_by_name('ENV_final')
+        environment_worksheet = main_workbook.sheet_by_name('Environment')
         env_codes = environment_worksheet.col_values(1, start_rowx=1,end_rowx=None)
         env_values = environment_worksheet.col_values(2, start_rowx=1,end_rowx=None)
         # environment
@@ -135,7 +135,6 @@ class FateAndTransport:
             chem_prop[name] = float(prop_values[idx])
 
         self.chem_prop = chem_prop
-        print self.chem_prop
         return chem_prop
 
     def run(self, workbook):
@@ -163,84 +162,8 @@ class FateAndTransport:
         time1 = datetime.datetime.now()
         #print time1, "1"
 
-        # ENVIRONMENTAL PARAMETER LOADING #
-        workbook_title = os.path.join(self.workbooks, workbook)
-        #print workbook_names
-
-        #print workbook_title
-        main_workbook = xlrd.open_workbook(workbook_title)
-        environment_worksheet = main_workbook.sheet_by_name('Environment')
-        environment_code = environment_worksheet.col_values(1, start_rowx=0,end_rowx=None)
-        environment_value = environment_worksheet.col_values(2, start_rowx=0,end_rowx=None)
-        environment = zip(environment_code, environment_value)
-
-        # CLIMATE PARAMETER LOADING #
-        climate_worksheet = main_workbook.sheet_by_name('Climate')
-        climate_month = climate_worksheet.col_values(0, start_rowx=1,end_rowx=None)
-        climate_day = climate_worksheet.col_values(1, start_rowx=1,end_rowx=None)
-        climate_year = climate_worksheet.col_values(2, start_rowx=1,end_rowx=None)
-        climate_precip = climate_worksheet.col_values(3, start_rowx=1,end_rowx=None)
-        climate_windspeed = climate_worksheet.col_values(4, start_rowx=1,end_rowx=None)
-        climate_flow = climate_worksheet.col_values(5, start_rowx=1,end_rowx=None)
-        climate_temp = climate_worksheet.col_values(6, start_rowx=1,end_rowx=None)
-
-        # CREATE DATETIME OBJECTS #
-        new_datetime = []
-        new_month = [int(i) for i in climate_month]
-        new_day = [int(i) for i in climate_day]
-        new_year = [int(i) for i in climate_year]
-        dt = zip(new_year, new_month, new_day)
-        for val in dt:
-            mystring = ' '.join(map(str, val))
-            dt = datetime.datetime.strptime(mystring, "%Y %m %d")
-            new_datetime.append(dt)
-        climate = zip(new_datetime, climate_precip, climate_windspeed, climate_flow, climate_temp)
-
-        # RELEASE PARAMETER LOADING #
-        release_worksheet = main_workbook.sheet_by_name('Releases')
-        release_month = release_worksheet.col_values(0, start_rowx=1,end_rowx=None)
-        release_day = release_worksheet.col_values(1, start_rowx=1,end_rowx=None)
-        release_year = release_worksheet.col_values(2, start_rowx=1,end_rowx=None)
-        release_air = release_worksheet.col_values(3, start_rowx=1,end_rowx=None)
-        release_freshwater = release_worksheet.col_values(4, start_rowx=1,end_rowx=None)
-        release_seawater = release_worksheet.col_values(5, start_rowx=1,end_rowx=None)
-        release_soil1 = release_worksheet.col_values(6, start_rowx=1,end_rowx=None)
-        release_soil2 = release_worksheet.col_values(7, start_rowx=1,end_rowx=None)
-        release_soil3 = release_worksheet.col_values(8, start_rowx=1,end_rowx=None)
-        release_fwsediment = release_worksheet.col_values(9, start_rowx=1,end_rowx=None)
-        release_swsediment = release_worksheet.col_values(10, start_rowx=1,end_rowx=None)
-        release_dsoil1 = release_worksheet.col_values(11, start_rowx=1,end_rowx=None)
-        release_dsoil2 = release_worksheet.col_values(12, start_rowx=1,end_rowx=None)
-        release_dsoil3 = release_worksheet.col_values(13, start_rowx=1,end_rowx=None)
-        release = zip(new_datetime, release_air, release_freshwater, release_seawater, release_soil1, release_soil2,  release_soil3, release_fwsediment, release_swsediment, release_dsoil1, release_dsoil2, release_dsoil3)
-
-        # BACKGROUND CONCENTRATION LOADING #
-        background_worksheet = main_workbook.sheet_by_name('bgConc')
-        compartment_names = background_worksheet.col_values(1, start_rowx=2,end_rowx=None)
-        code = background_worksheet.col_values(2, start_rowx=2,end_rowx=None)
-        compartment_values = background_worksheet.col_values(3, start_rowx=2,end_rowx=None)
-        background = zip(compartment_names, code, compartment_values)
-
-        # CHEMICAL PROPERTY PARAMETER LOADING #
-        chemProp_worksheet = main_workbook.sheet_by_name('chemProp')
-        propCodes = chemProp_worksheet.col_values(1, start_rowx=2,end_rowx=None)
-        propValues = chemProp_worksheet.col_values(2, start_rowx=2,end_rowx=None)
-        chem_Prop = zip(propCodes, propValues)
-
-        # DETERMINE COMPARTMENT EXISTENCE #
-        comp_worksheet = main_workbook.sheet_by_name('Compartments')
-        compCodes = comp_worksheet.col_values(1, start_rowx=1,end_rowx=None)
-        compValues = comp_worksheet.col_values(2, start_rowx=1,end_rowx=None)
-        comp_existence = zip(compCodes,compValues)
-
-        # VISCOSITY LOADING #
-        visc_worksheet = main_workbook.sheet_by_name('Viscosities')
-        visc_temp = visc_worksheet.col_values(0, start_rowx=1,end_rowx=None)
-        visc_vals = visc_worksheet.col_values(1, start_rowx=1,end_rowx=None)
-        visc_vals_air = visc_worksheet.col_values(3, start_rowx=1,end_rowx=None)
-        viscosities = zip(visc_temp, visc_vals)
-        viscosities_air = zip(visc_temp, visc_vals_air)
-
+        
+        viscosities = self.visc
 
         ##########CLIMATE PROPERTIES##########
         airTemp = climate_temp
@@ -259,7 +182,6 @@ class FateAndTransport:
 
         # Load in the K factors
         for a, b in environment:
-            #print a, b
             if a == 'kffact1':
                 kffact1 = float(b)
             if a == 'kffact2':
@@ -876,10 +798,12 @@ class FateAndTransport:
             new_visc = 0.0017602-2.74517338e-5*val
             neg_visc.append(new_visc)
 
-        visc_temp = [a for a, b in viscosities]
-        viscosity = [b for a, b in viscosities]
-        visc_temp = np.concatenate((neg_temp,visc_temp), axis=0)
-        viscosity = np.concatenate((neg_visc,viscosity), axis=0)
+        # visc_temp = [a for a, b in viscosities]
+        # viscosity = [b for a, b in viscosities]
+        # visc_temp = np.concatenate((neg_temp,visc_temp), axis=0)
+        # viscosity = np.concatenate((neg_visc,viscosity), axis=0)
+        visc_temp = np.concatenate((neg_temp, self.visc['temp']), axis=0)
+        viscosity = np.concatenate((neg_visc, self.visc['vals']), axis=0)
 
         s = len(temp)
 
@@ -910,10 +834,9 @@ class FateAndTransport:
         # converting from lb*s/ft^2 to kg/m*hour
         neg_visc_air = [(x*1.72e5) for x in neg_visc_air]
 
-        visc_temp_air = [a for a, b in viscosities_air]
-        viscosity_air = [b for a, b in viscosities_air]
-        visc_temp_air = np.concatenate((neg_temp_air,visc_temp_air), axis=0)
-        viscosity_air = np.concatenate((neg_visc_air,viscosity_air), axis=0)
+        visc_temp_air = np.concatenate((neg_temp_air, self.visc['temp']), axis=0)
+        viscosity_air = np.concatenate((neg_visc_air, self.visc['vals_air']), axis=0)
+
 
         # viscosity of air is in kg/m*s
         viscosity_air = [(x/3600) for x in viscosity_air]
