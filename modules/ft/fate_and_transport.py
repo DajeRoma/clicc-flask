@@ -16,6 +16,10 @@ from itertools import tee, islice, chain, izip
 import os.path
 import inspect
 
+# standalone run options
+stnd_aln_env = "SF_glycerin_beta.xlsx"
+stnd_aln_chem = "SF_glycerin_beta.xlsx"
+
 class FateAndTransport:
     def __init__(self):
         class_directory = os.path.dirname(os.path.abspath(
@@ -24,7 +28,7 @@ class FateAndTransport:
         self.workbooks = os.path.join(class_directory, "workbooks")
 
     def load_environment(self, title):
-        self.env_name = title
+        self.env_name = title.split(".")[0]
         # try:
         main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, title))
         # except:
@@ -126,6 +130,7 @@ class FateAndTransport:
                     imported[prop] = attempt_float(val)
 
     def load_chem(self, workbook):
+        self.chem_name = workbook.split(".")[0]
         main_workbook = xlrd.open_workbook(os.path.join(self.workbooks, workbook))
         chemProp_worksheet = main_workbook.sheet_by_name('chemProp')
         prop_names = chemProp_worksheet.col_values(1, start_rowx=2,end_rowx=None)
@@ -252,7 +257,6 @@ class FateAndTransport:
         factor5 = np.true_divide(1,2.471)
         factor6 = np.multiply(Ei,factor5)
         R = np.multiply(factor4,factor6)
-
 
         # Load in nlcd relative proportions to calculate crop factor (C)
         #for a, b in environment:
@@ -3320,12 +3324,14 @@ class FateAndTransport:
             vals['values'] = list(vals['values'])
 
         # add required environment variable for exposure
-        # for env_var in ['soilP2']:
-        #     self.chem_prop[env_var] = self.env[env_var]
+        self.env_prop = {}
+        for env_var in ['soilP2']:
+            self.env_prop[env_var] = self.env[env_var]
 
         ft_out = {
             'results': output,
-            'chem_prop': self.chem_prop
+            'chem_props': self.chem_prop,
+            'env_props': self.env_prop
         }
 
         return ft_out
@@ -3334,10 +3340,12 @@ class FateAndTransport:
     def write_output(self, ft_out):
         chem_book = xlwt.Workbook()
 
-        output_name = "new_output"
-        # output_name = ("%s_output_" % (self.env_name) +
-        #     datetime.datetime.now().strftime("%b_%d_%y-%H_%M_%S") + ".xls")
+        # output_name = "new_output"
+        output_name = (self.chem_name + self.env_name +
+            datetime.datetime.now().strftime("%b-%d-%y_%H-%M") + ".xls")
+
         chem_parameters = chem_book.add_sheet('Chem_Parameters')
+        env_parameters = chem_book.add_sheet('env_Parameters')
         raw_output = chem_book.add_sheet('Raw_output')
         average_output = chem_book.add_sheet('Average_output')
 
@@ -3352,9 +3360,22 @@ class FateAndTransport:
             i += 1
 
         i = 0
-        for prop, val in ft_out['chem_prop'].iteritems():
-            chem_parameters.write(i, 0, prop)
-            chem_parameters.write(i, 1, val)
+        for prop, val in ft_out['chem_props'].iteritems():
+            chem_parameters.write(i, 1, prop)
+            chem_parameters.write(i, 2, val)
+            i += 1
+
+        i = 0
+        for prop, val in ft_out['env_props'].iteritems():
+            env_parameters.write(i, 1, prop)
+            env_parameters.write(i, 2, val)
             i += 1
 
         chem_book.save(output_name)
+
+if __name__ == "__main__":
+    g = FateAndTransport()
+    g.load_chem(stnd_aln_chem)
+    g.load_environment(stnd_aln_env)
+    g_out = g.run()
+    g.write_output(g_out)
