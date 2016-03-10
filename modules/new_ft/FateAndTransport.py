@@ -16,13 +16,12 @@ from itertools import tee, islice, chain, izip
 import os.path
 import inspect
 
-class FT_Old:
+class FateAndTransport:
     def __init__(self):
         class_directory = os.path.dirname(os.path.abspath(
             inspect.getfile(inspect.currentframe())))
         self.directory = class_directory
         self.workbooks = os.path.join(class_directory, "workbooks")
-
 
     def run(self):
         time1 = datetime.datetime.now()
@@ -3091,7 +3090,7 @@ class FT_Old:
 
         chem_book = xlwt.Workbook()
         ext = '.xls'
-        output_name = "old_output"
+        output_name = "new_output"
         chem_parameters = chem_book.add_sheet('Chem_Parameters')
 
         chem_parameters.write(0,0,"Octanol/Water Partition Coefficient")
