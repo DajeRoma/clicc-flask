@@ -137,16 +137,14 @@ class FateAndTransport:
         self.chem_prop = chem_prop
         return chem_prop
 
-    def run(self, workbook):
+    def run(self, inputs = {}):
+        if inputs:
+            self.chem_prop = inputs
 
-        # for a, b in chem_Prop:
-        #     if a == 'kOctWater':
+        # Set Up Chemical Properties
         kOctanolWater = self.chem_prop['kOctWater']
-        #     if a == 'kOrgWater':
         kOrganicWater = self.chem_prop['kOrgWater']
-        #     if a == 'kAirWater':
         kAirWater = self.chem_prop['kAirWater']
-        #     if a == 'kAerAir':
         kAerosolAir = self.chem_prop['kAerAir']
 
         kDegredationInAir = np.multiply(np.true_divide(1, (self.chem_prop['kDegAir'] / .693)), 24)
@@ -160,115 +158,20 @@ class FateAndTransport:
         molecular_mass = np.true_divide(self.chem_prop['MW'], 1000)
 
         time1 = datetime.datetime.now()
-        #print time1, "1"
 
-        # ENVIRONMENTAL PARAMETER LOADING #
-        workbook_title = os.path.join(self.workbooks, workbook)
-        #print workbook_names
-
-        #print workbook_title
-        main_workbook = xlrd.open_workbook(workbook_title)
-        environment_worksheet = main_workbook.sheet_by_name('Environment')
-        environment_code = environment_worksheet.col_values(1, start_rowx=0,end_rowx=None)
-        environment_value = environment_worksheet.col_values(2, start_rowx=0,end_rowx=None)
-        environment = zip(environment_code, environment_value)
-
-        # CLIMATE PARAMETER LOADING #
-        climate_worksheet = main_workbook.sheet_by_name('Climate')
-        climate_month = climate_worksheet.col_values(0, start_rowx=1,end_rowx=None)
-        climate_day = climate_worksheet.col_values(1, start_rowx=1,end_rowx=None)
-        climate_year = climate_worksheet.col_values(2, start_rowx=1,end_rowx=None)
-        climate_precip = climate_worksheet.col_values(3, start_rowx=1,end_rowx=None)
-        climate_windspeed = climate_worksheet.col_values(4, start_rowx=1,end_rowx=None)
-        climate_flow = climate_worksheet.col_values(5, start_rowx=1,end_rowx=None)
-        climate_temp = climate_worksheet.col_values(6, start_rowx=1,end_rowx=None)
-
-        # CREATE DATETIME OBJECTS #
-        new_datetime = []
-        new_month = [int(i) for i in climate_month]
-        new_day = [int(i) for i in climate_day]
-        new_year = [int(i) for i in climate_year]
-        dt = zip(new_year, new_month, new_day)
-        for val in dt:
-            mystring = ' '.join(map(str, val))
-            dt = datetime.datetime.strptime(mystring, "%Y %m %d")
-            new_datetime.append(dt)
-        climate = zip(new_datetime, climate_precip, climate_windspeed, climate_flow, climate_temp)
-
-        # self.release = {
-        #     'date': new_datetime,
-        #     'air': release_worksheet.col_values(3, start_rowx=1,end_rowx=None),
-        #     'freshwater': release_worksheet.col_values(4, start_rowx=1,end_rowx=None),
-        #     'seawater': release_worksheet.col_values(5, start_rowx=1,end_rowx=None),
-        #     'soil1': release_worksheet.col_values(6, start_rowx=1,end_rowx=None),
-        #     'soil2': release_worksheet.col_values(7, start_rowx=1,end_rowx=None),
-        #     'soil3': release_worksheet.col_values(8, start_rowx=1,end_rowx=None),
-        #     'fwsediment': release_worksheet.col_values(9, start_rowx=1,end_rowx=None),
-        #     'swsediment': release_worksheet.col_values(10, start_rowx=1,end_rowx=None),
-        #     'dsoil1': release_worksheet.col_values(11, start_rowx=1,end_rowx=None),
-        #     'dsoil2': release_worksheet.col_values(12, start_rowx=1,end_rowx=None),
-        #     'dsoil3': release_worksheet.col_values(13, start_rowx=1,end_rowx=None)
-        # }
-
-        # RELEASE PARAMETER LOADING #
-        # release_worksheet = main_workbook.sheet_by_name('Releases')
-        # release_month = release_worksheet.col_values(0, start_rowx=1,end_rowx=None)
-        # release_day = release_worksheet.col_values(1, start_rowx=1,end_rowx=None)
-        # release_year = release_worksheet.col_values(2, start_rowx=1,end_rowx=None)
-        # self.release['air'] = release_worksheet.col_values(3, start_rowx=1,end_rowx=None)
-        # self.release['freshwater'] = release_worksheet.col_values(4, start_rowx=1,end_rowx=None)
-        # release_seawater = release_worksheet.col_values(5, start_rowx=1,end_rowx=None)
-        # release_soil1 = release_worksheet.col_values(6, start_rowx=1,end_rowx=None)
-        # release_soil2 = release_worksheet.col_values(7, start_rowx=1,end_rowx=None)
-        # release_soil3 = release_worksheet.col_values(8, start_rowx=1,end_rowx=None)
-        # release_fwsediment = release_worksheet.col_values(9, start_rowx=1,end_rowx=None)
-        # release_swsediment = release_worksheet.col_values(10, start_rowx=1,end_rowx=None)
-        # release_dsoil1 = release_worksheet.col_values(11, start_rowx=1,end_rowx=None)
-        # release_dsoil2 = release_worksheet.col_values(12, start_rowx=1,end_rowx=None)
-        # release_dsoil3 = release_worksheet.col_values(13, start_rowx=1,end_rowx=None)
-        # release = zip(new_datetime, self.release['air'], self.release['freshwater'], release_seawater, release_soil1, release_soil2,  release_soil3, release_fwsediment, self.release['swsediment'], release_dsoil1, release_dsoil2, release_dsoil3)
-
-        # # BACKGROUND CONCENTRATION LOADING #
-        # background_worksheet = main_workbook.sheet_by_name('bgConc')
-        # compartment_names = background_worksheet.col_values(1, start_rowx=2,end_rowx=None)
-        # code = background_worksheet.col_values(2, start_rowx=2,end_rowx=None)
-        # compartment_values = background_worksheet.col_values(3, start_rowx=2,end_rowx=None)
-        # background = zip(compartment_names, code, compartment_values)
-
-
-        # CHEMICAL PROPERTY PARAMETER LOADING #
-        # chemProp_worksheet = main_workbook.sheet_by_name('chemProp')
-        # propCodes = chemProp_worksheet.col_values(1, start_rowx=2,end_rowx=None)
-        # propValues = chemProp_worksheet.col_values(2, start_rowx=2,end_rowx=None)
-        # chem_Prop = zip(propCodes, propValues)
-
-        # DETERMINE COMPARTMENT EXISTENCE #
-        # comp_worksheet = main_workbook.sheet_by_name('Compartments')
-        # compCodes = comp_worksheet.col_values(1, start_rowx=1,end_rowx=None)
-        # compValues = comp_worksheet.col_values(2, start_rowx=1,end_rowx=None)
-        # comp_existence = zip(compCodes,compValues)
-
-        # VISCOSITY LOADING #
-        # visc_worksheet = main_workbook.sheet_by_name('Viscosities')
-        # visc_temp = visc_worksheet.col_values(0, start_rowx=1,end_rowx=None)
-        # visc_vals = visc_worksheet.col_values(1, start_rowx=1,end_rowx=None)
-        # visc_vals_air = visc_worksheet.col_values(3, start_rowx=1,end_rowx=None)
-        # viscosities = zip(visc_temp, visc_vals)
-        # viscosities_air = zip(visc_temp, visc_vals_air)
-        # viscosities = self.visc
+        # Environment loading is way to
+        environment = zip(self.env.keys(), self.env.values())
 
         ##########CLIMATE PROPERTIES##########
-        airTemp = climate_temp
-        airSpeed = [x for x in climate_windspeed]
+        airTemp = self.climate['temp']
+        airSpeed = [x for x in self.climate['windspeed']]
         airSpeed = np.multiply(airSpeed,86400)
-        fwSpeed = [x for x in climate_flow]
+        fwSpeed = [x for x in self.climate['flow']]
         fwSpeed = np.multiply(fwSpeed,86400)
-        swSpeed = np.zeros([1, len(new_datetime)])
-        precipR = [x for x in climate_precip]
+        swSpeed = np.zeros([1, len(self.climate['date'])])
+        precipR = [x for x in self.climate['precip']]
         precipR = [(x/1000) for x in precipR]
         #precipR = np.multiply(precipR,0.6095996708)
-
-
 
         ########## RUSLE ##########
 
@@ -282,7 +185,7 @@ class FateAndTransport:
                 kffact3 = float(b)
 
         # NOT NEEDED - ANNUAL PRECIP SUMS WHILE ACCOUNTING FOR LEAP YEARS#
-        R_precip = [x for x in climate_precip]
+        R_precip = [x for x in self.climate['precip']]
 
         #date_store = []
         #first_date = new_datetime[0]
@@ -322,7 +225,6 @@ class FateAndTransport:
         #for val in new_precips:
         #    x = np.sum(val)
         #    annual_sums.append(x)
-
 
         ##### NEW RUSLE #####
         leng = len(R_precip)
@@ -457,8 +359,6 @@ class FateAndTransport:
                 natural_LS = b
             if a == ag_match:
                 ag_LS = b
-
-
 
         # Best Management Factor (P)
         for a, b in environment:
@@ -1003,8 +903,8 @@ class FateAndTransport:
         #Manning roughness coefficient, pg 330 (0.403/21)#
             n = 0.0191904762
             Cd = 5*9.81*(n**2)
-            FWvelocity = (climate_flow[i])/freshwA;
-            #SWvelocity = (climate_flow[i])/seawA;
+            FWvelocity = (self.climate['flow'][i])/freshwA;
+            #SWvelocity = (self.climate['flow'][i])/seawA;
             #uf = sqrt(Cd)*FWvelocity;
             #us = sqrt(Cd)*SWvelocity;
 
@@ -1887,19 +1787,19 @@ class FateAndTransport:
         dAtoS3 = np.add(factor,factor2)
 
         #DATOFSED#
-        dAtoFSed = np.zeros([1, len(new_datetime)])
+        dAtoFSed = np.zeros([1, len(self.climate['date'])])
 
         #DATOSSED#
-        dAtoSSed = np.zeros([1, len(new_datetime)])
+        dAtoSSed = np.zeros([1, len(self.climate['date'])])
 
         #DATODEEPS1#
-        dAtoDeepS1 = np.zeros([1, len(new_datetime)])
+        dAtoDeepS1 = np.zeros([1, len(self.climate['date'])])
 
         #DATODEEPS2#
-        dAtoDeepS2 = np.zeros([1, len(new_datetime)])
+        dAtoDeepS2 = np.zeros([1, len(self.climate['date'])])
 
         #DATODEEPS3#
-        dAtoDeepS3 = np.zeros([1, len(new_datetime)])
+        dAtoDeepS3 = np.zeros([1, len(self.climate['date'])])
 
 
         ###AEROSOL###
@@ -1918,28 +1818,28 @@ class FateAndTransport:
         dFWtoSW = dFWadvection
 
         #DFWTOS1#
-        dFWtoS1 = np.zeros([1, len(new_datetime)])
+        dFWtoS1 = np.zeros([1, len(self.climate['date'])])
 
         #DFWTOS2#
-        dFWtoS2 = np.zeros([1, len(new_datetime)])
+        dFWtoS2 = np.zeros([1, len(self.climate['date'])])
 
         #DFWTO3S#
-        dFWtoS3 = np.zeros([1, len(new_datetime)])
+        dFWtoS3 = np.zeros([1, len(self.climate['date'])])
 
         #DFWTOFSED#
         dFWtoFSed = np.add(dSedFWdiffusion,dSedFWdep)
 
         #DFWTOSSED#
-        dFWtoSSed = np.zeros([1, len(new_datetime)])
+        dFWtoSSed = np.zeros([1, len(self.climate['date'])])
 
         #DFWTODEEPS1#
-        dFWtoDeepS1 = np.zeros([1, len(new_datetime)])
+        dFWtoDeepS1 = np.zeros([1, len(self.climate['date'])])
 
         #DFWTODEEPS2#
-        dFWtoDeepS2 = np.zeros([1, len(new_datetime)])
+        dFWtoDeepS2 = np.zeros([1, len(self.climate['date'])])
 
         #DFWTODEEPS3#
-        dFWtoDeepS3 = np.zeros([1, len(new_datetime)])
+        dFWtoDeepS3 = np.zeros([1, len(self.climate['date'])])
 
         ###SEAWATER###
 
@@ -1947,34 +1847,34 @@ class FateAndTransport:
         dSWtoA = dASWdiffusion
 
         #dSWTOFW#
-        dSWtoFW = np.zeros([1, len(new_datetime)])
+        dSWtoFW = np.zeros([1, len(self.climate['date'])])
 
         #DSWREMOVAL#
         dSWremoval = np.add(dWaterSeaReact,dSWadvection)
 
         #DSWTOS1#
-        dSWtoS1 = np.zeros([1, len(new_datetime)])
+        dSWtoS1 = np.zeros([1, len(self.climate['date'])])
 
         #DSWTOS2#
-        dSWtoS2 = np.zeros([1, len(new_datetime)])
+        dSWtoS2 = np.zeros([1, len(self.climate['date'])])
 
         #DSWTOS3#
-        dSWtoS3 = np.zeros([1, len(new_datetime)])
+        dSWtoS3 = np.zeros([1, len(self.climate['date'])])
 
         #DSWTOFSED#
-        dSWtoFSed = np.zeros([1, len(new_datetime)])
+        dSWtoFSed = np.zeros([1, len(self.climate['date'])])
 
         #DSWTOSSED#
         dSWtoSSed = np.add(dSedSWdiffusion,dSedSWdep)
 
         #DSWTODEEPS1#
-        dSWtoDeepS1 = np.zeros([1, len(new_datetime)])
+        dSWtoDeepS1 = np.zeros([1, len(self.climate['date'])])
 
         #DSWTODEEPS2#
-        dSWtoDeepS2 = np.zeros([1, len(new_datetime)])
+        dSWtoDeepS2 = np.zeros([1, len(self.climate['date'])])
 
         #DSWTODEEPS3#
-        dSWtoDeepS3 = np.zeros([1, len(new_datetime)])
+        dSWtoDeepS3 = np.zeros([1, len(self.climate['date'])])
 
         ###SOIL1###
 
@@ -1985,31 +1885,31 @@ class FateAndTransport:
         dS1toFW = np.add(dSFWrunS1,dSFWrunW1)
 
         #DS1TOSW#
-        dS1toSW = np.zeros([1, len(new_datetime)])
+        dS1toSW = np.zeros([1, len(self.climate['date'])])
 
         #DS1REMOVAL#
         dS1removal = np.add(dSoilReact1,dSFWleach1)
 
         #DS1TOS2#
-        dS1toS2 = np.zeros([1, len(new_datetime)])
+        dS1toS2 = np.zeros([1, len(self.climate['date'])])
 
         #DS1TOS3#
-        dS1toS3 = np.zeros([1, len(new_datetime)])
+        dS1toS3 = np.zeros([1, len(self.climate['date'])])
 
         #DS1TOFSED#
-        dS1toFSed = np.zeros([1, len(new_datetime)])
+        dS1toFSed = np.zeros([1, len(self.climate['date'])])
 
         #DS1TOSSED#
-        dS1toSSed = np.zeros([1, len(new_datetime)])
+        dS1toSSed = np.zeros([1, len(self.climate['date'])])
 
         #DS1TODEEPS1#
         dS1toDeepS1 = dS1toDeepS1leach
 
         #DS1TODEEPS2#
-        dS1toDeepS2 = np.zeros([1, len(new_datetime)])
+        dS1toDeepS2 = np.zeros([1, len(self.climate['date'])])
 
         #DS1TODEEPS3#
-        dS1toDeepS3 = np.zeros([1, len(new_datetime)])
+        dS1toDeepS3 = np.zeros([1, len(self.climate['date'])])
 
         ###SOIL2###
 
@@ -2020,31 +1920,31 @@ class FateAndTransport:
         dS2toFW = np.add(dSFWrunS2,dSFWrunW2)
 
         #DS2TOSW#
-        dS2toSW = np.zeros([1, len(new_datetime)])
+        dS2toSW = np.zeros([1, len(self.climate['date'])])
 
         #DS2TOS1#
-        dS2toS1 = np.zeros([1, len(new_datetime)])
+        dS2toS1 = np.zeros([1, len(self.climate['date'])])
 
         #DSREMOVAL2#
         dS2removal = np.add(dSoilReact2,dSFWleach2)
 
         #DS2TOS3#
-        dS2toS3 = np.zeros([1, len(new_datetime)])
+        dS2toS3 = np.zeros([1, len(self.climate['date'])])
 
         #DS2TOFSED#
-        dS2toFSed = np.zeros([1, len(new_datetime)])
+        dS2toFSed = np.zeros([1, len(self.climate['date'])])
 
         #DS2TOSSED#
-        dS2toSSed = np.zeros([1, len(new_datetime)])
+        dS2toSSed = np.zeros([1, len(self.climate['date'])])
 
         #DS2TODEEPS1#
-        dS2toDeepS1 = np.zeros([1, len(new_datetime)])
+        dS2toDeepS1 = np.zeros([1, len(self.climate['date'])])
 
         #DS2TODEEPS2#
         dS2toDeepS2 = dS2toDeepS2leach
 
         #DS2TODEEPS3#
-        dS2toDeepS3 = np.zeros([1, len(new_datetime)])
+        dS2toDeepS3 = np.zeros([1, len(self.climate['date'])])
 
         ###SOIL3###
 
@@ -2055,28 +1955,28 @@ class FateAndTransport:
         dS3toFW = np.add(dSFWrunS3,dSFWrunW3)
 
         #DS3TOSW#
-        dS3toSW = np.zeros([1, len(new_datetime)])
+        dS3toSW = np.zeros([1, len(self.climate['date'])])
 
         #DS3TOS1#
-        dS3toS1 = np.zeros([1, len(new_datetime)])
+        dS3toS1 = np.zeros([1, len(self.climate['date'])])
 
         #DS3TOS2#
-        dS3toS2 = np.zeros([1, len(new_datetime)])
+        dS3toS2 = np.zeros([1, len(self.climate['date'])])
 
         #DS3REMOVAL#
         dS3removal = np.add(dSoilReact3,dSFWleach3)
 
         #DS3TOFSED#
-        dS3toFSed = np.zeros([1, len(new_datetime)])
+        dS3toFSed = np.zeros([1, len(self.climate['date'])])
 
         #DS3TOSSED#
-        dS3toSSed = np.zeros([1, len(new_datetime)])
+        dS3toSSed = np.zeros([1, len(self.climate['date'])])
 
         #DS3TODEEPS1#
-        dS3toDeepS1 = np.zeros([1, len(new_datetime)])
+        dS3toDeepS1 = np.zeros([1, len(self.climate['date'])])
 
         #DS3TODEEPS2#
-        dS3toDeepS2 = np.zeros([1, len(new_datetime)])
+        dS3toDeepS2 = np.zeros([1, len(self.climate['date'])])
 
         #DS3TODEEPS1#
         dS3toDeepS3 = dS3toDeepS3leach
@@ -2084,109 +1984,109 @@ class FateAndTransport:
         ###FRESHWATER SEDIMENT###
 
         #DFSEDTOA#
-        dFSedtoA = np.zeros([1, len(new_datetime)])
+        dFSedtoA = np.zeros([1, len(self.climate['date'])])
 
         #DFSEDTOFW#
         dFSedtoFW = np.add(dSedFWdiffusion,dSedFWsus)
 
         #DFSEDTOSW#
-        dFSedtoSW = np.zeros([1, len(new_datetime)])
+        dFSedtoSW = np.zeros([1, len(self.climate['date'])])
 
         #DFSEDTOS1#
-        dFSedtoS1 = np.zeros([1, len(new_datetime)])
+        dFSedtoS1 = np.zeros([1, len(self.climate['date'])])
 
         #DFSEDTOS2#
-        dFSedtoS2 = np.zeros([1, len(new_datetime)])
+        dFSedtoS2 = np.zeros([1, len(self.climate['date'])])
 
         #DFSEDTOS3#
-        dFSedtoS3 = np.zeros([1, len(new_datetime)])
+        dFSedtoS3 = np.zeros([1, len(self.climate['date'])])
 
         #DFSEDREMOVAL#
         dFSedremoval = np.add(dSedimentFreshReact,dSedFWbur)
 
         #DFSEDTOSSED#
-        dFSedtoSSed = np.zeros([1, len(new_datetime)])
+        dFSedtoSSed = np.zeros([1, len(self.climate['date'])])
 
         #DFSEDTODEEPS1#
-        dFSedtoDeepS1 = np.zeros([1, len(new_datetime)])
+        dFSedtoDeepS1 = np.zeros([1, len(self.climate['date'])])
 
         #DFSEDTODEEPS2#
-        dFSedtoDeepS2 = np.zeros([1, len(new_datetime)])
+        dFSedtoDeepS2 = np.zeros([1, len(self.climate['date'])])
 
         #DFSEDTODEEPS3#
-        dFSedtoDeepS3 = np.zeros([1, len(new_datetime)])
+        dFSedtoDeepS3 = np.zeros([1, len(self.climate['date'])])
 
         ###SEAWATER SEDIMENT###
 
         #DSSEDTOA#
-        dSSedtoA = np.zeros([1, len(new_datetime)])
+        dSSedtoA = np.zeros([1, len(self.climate['date'])])
 
         #DSSEDTOFW#
-        dSSedtoFW = np.zeros([1, len(new_datetime)])
+        dSSedtoFW = np.zeros([1, len(self.climate['date'])])
 
         #DSSEDTOSW#
         dSSedtoSW = np.add(dSedSWdiffusion,dSedSWsus)
 
         #DSSEDTOS1#
-        dSSedtoS1 = np.zeros([1, len(new_datetime)])
+        dSSedtoS1 = np.zeros([1, len(self.climate['date'])])
 
         #DSSEDTOS2#
-        dSSedtoS2 = np.zeros([1, len(new_datetime)])
+        dSSedtoS2 = np.zeros([1, len(self.climate['date'])])
 
         #DSSEDTOS3#
-        dSSedtoS3 = np.zeros([1, len(new_datetime)])
+        dSSedtoS3 = np.zeros([1, len(self.climate['date'])])
 
         #DSSEDTOFSED#
-        dSSedtoFSed = np.zeros([1, len(new_datetime)])
+        dSSedtoFSed = np.zeros([1, len(self.climate['date'])])
 
         #DSSEDREMOVAL#
         dSSedremoval = np.add(dSedimentSeaReact,dSedSWbur)
 
         #DSSEDTODEEPS1#
-        dSSedtoDeepS1 = np.zeros([1, len(new_datetime)])
+        dSSedtoDeepS1 = np.zeros([1, len(self.climate['date'])])
 
         #DSSEDTODEEPS2#
-        dSSedtoDeepS2 = np.zeros([1, len(new_datetime)])
+        dSSedtoDeepS2 = np.zeros([1, len(self.climate['date'])])
 
         #DSSEDTODEEPS3#
-        dSSedtoDeepS3 = np.zeros([1, len(new_datetime)])
+        dSSedtoDeepS3 = np.zeros([1, len(self.climate['date'])])
 
 
 
         ###DEEP SOIL1###
 
         #DDEEPS1TOA#
-        dDeepS1toA = np.zeros([1, len(new_datetime)])
+        dDeepS1toA = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS1TOFW#
-        dDeepS1toFW = np.zeros([1, len(new_datetime)])
+        dDeepS1toFW = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS1TOSW#
-        dDeepS1toSW = np.zeros([1, len(new_datetime)])
+        dDeepS1toSW = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS1TOS1#
-        dDeepS1toS1 = np.zeros([1, len(new_datetime)])
+        dDeepS1toS1 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS1TOS2#
-        dDeepS1toS2 = np.zeros([1, len(new_datetime)])
+        dDeepS1toS2 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS1TOS3#
-        dDeepS1toS3 = np.zeros([1, len(new_datetime)])
+        dDeepS1toS3 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS1TOFSED#
-        dDeepS1toFSed = np.zeros([1, len(new_datetime)])
+        dDeepS1toFSed = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS1TOSSED#
-        dDeepS1toSSed = np.zeros([1, len(new_datetime)])
+        dDeepS1toSSed = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS1REMOVAL#
         dDeepS1removal = dDeepSoilReact1
 
         #DDEEPS1TODEEPS2
-        dDeepS1toDeepS2 = np.zeros([1, len(new_datetime)])
+        dDeepS1toDeepS2 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS1TODEEPS3
-        dDeepS1toDeepS3 = np.zeros([1, len(new_datetime)])
+        dDeepS1toDeepS3 = np.zeros([1, len(self.climate['date'])])
 
 
 
@@ -2194,37 +2094,37 @@ class FateAndTransport:
         ###DEEP SOIL2###
 
         #DDEEPS2TOA#
-        dDeepS2toA = np.zeros([1, len(new_datetime)])
+        dDeepS2toA = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS2TOFW#
-        dDeepS2toFW = np.zeros([1, len(new_datetime)])
+        dDeepS2toFW = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS2TOSW#
-        dDeepS2toSW = np.zeros([1, len(new_datetime)])
+        dDeepS2toSW = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS2TOS1#
-        dDeepS2toS1 = np.zeros([1, len(new_datetime)])
+        dDeepS2toS1 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS2TOS2#
-        dDeepS2toS2 = np.zeros([1, len(new_datetime)])
+        dDeepS2toS2 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS2TOS3#
-        dDeepS2toS3 = np.zeros([1, len(new_datetime)])
+        dDeepS2toS3 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS2TOFSED#
-        dDeepS2toFSed = np.zeros([1, len(new_datetime)])
+        dDeepS2toFSed = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS2TOSSED#
-        dDeepS2toSSed = np.zeros([1, len(new_datetime)])
+        dDeepS2toSSed = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS2TODEEPS1
-        dDeepS2toDeepS1 = np.zeros([1, len(new_datetime)])
+        dDeepS2toDeepS1 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS2REMOVAL#
         dDeepS2removal = dDeepSoilReact2
 
         #DDEEPS2TODEEPS3
-        dDeepS2toDeepS3 = np.zeros([1, len(new_datetime)])
+        dDeepS2toDeepS3 = np.zeros([1, len(self.climate['date'])])
 
 
 
@@ -2232,34 +2132,34 @@ class FateAndTransport:
         ###DEEP SOIL3###
 
         #DDEEPS3TOA#
-        dDeepS3toA = np.zeros([1, len(new_datetime)])
+        dDeepS3toA = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3TOFW#
-        dDeepS3toFW = np.zeros([1, len(new_datetime)])
+        dDeepS3toFW = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3TOSW#
-        dDeepS3toSW = np.zeros([1, len(new_datetime)])
+        dDeepS3toSW = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3TOS1#
-        dDeepS3toS1 = np.zeros([1, len(new_datetime)])
+        dDeepS3toS1 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3TOS2#
-        dDeepS3toS2 = np.zeros([1, len(new_datetime)])
+        dDeepS3toS2 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3TOS3#
-        dDeepS3toS3 = np.zeros([1, len(new_datetime)])
+        dDeepS3toS3 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3TOFSED#
-        dDeepS3toFSed = np.zeros([1, len(new_datetime)])
+        dDeepS3toFSed = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3TOSSED#
-        dDeepS3toSSed = np.zeros([1, len(new_datetime)])
+        dDeepS3toSSed = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3TODEEPS1
-        dDeepS3toDeepS1 = np.zeros([1, len(new_datetime)])
+        dDeepS3toDeepS1 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3TODEEPS2
-        dDeepS3toDeepS2 = np.zeros([1, len(new_datetime)])
+        dDeepS3toDeepS2 = np.zeros([1, len(self.climate['date'])])
 
         #DDEEPS3REMOVAL#
         dDeepS3removal = dDeepSoilReact3
@@ -2424,7 +2324,7 @@ class FateAndTransport:
         if len(new_r_one) !=0:
             pass
         else:
-            dAremoval = np.zeros([1, len(new_datetime)])
+            dAremoval = np.zeros([1, len(self.climate['date'])])
 
             def A_comp(n):
                 for val in dAremoval:
@@ -2435,7 +2335,7 @@ class FateAndTransport:
         if len(new_r_two) !=0:
             pass
         else:
-            dFWremoval = np.zeros([1, len(new_datetime)])
+            dFWremoval = np.zeros([1, len(self.climate['date'])])
 
             def FW_comp(n):
                 for val in dFWremoval:
@@ -2446,7 +2346,7 @@ class FateAndTransport:
         if len(new_r_three) !=0:
             pass
         else:
-            dSWremoval = np.zeros([1, len(new_datetime)])
+            dSWremoval = np.zeros([1, len(self.climate['date'])])
 
             def SW_comp(n):
                 for val in dSWremoval:
@@ -2457,7 +2357,7 @@ class FateAndTransport:
         if len(new_r_four) !=0:
             pass
         else:
-            dS1removal = np.zeros([1, len(new_datetime)])
+            dS1removal = np.zeros([1, len(self.climate['date'])])
 
             def S1_comp(n):
                 for val in dS1removal:
@@ -2468,7 +2368,7 @@ class FateAndTransport:
         if len(new_r_five) !=0:
             pass
         else:
-            dS2removal = np.zeros([1, len(new_datetime)])
+            dS2removal = np.zeros([1, len(self.climate['date'])])
 
             def S2_comp(n):
                 for val in dS2removal:
@@ -2479,7 +2379,7 @@ class FateAndTransport:
         if len(new_r_six) !=0:
             pass
         else:
-            dS3removal = np.zeros([1, len(new_datetime)])
+            dS3removal = np.zeros([1, len(self.climate['date'])])
 
             def S3_comp(n):
                 for val in dS3removal:
@@ -2490,7 +2390,7 @@ class FateAndTransport:
         if len(new_r_seven) !=0:
             pass
         else:
-            dFSedremoval = np.zeros([1, len(new_datetime)])
+            dFSedremoval = np.zeros([1, len(self.climate['date'])])
 
             def FSed_comp(n):
                 for val in dFSedremoval:
@@ -2501,7 +2401,7 @@ class FateAndTransport:
         if len(new_r_eight) !=0:
             pass
         else:
-            dSSedremoval = np.zeros([1, len(new_datetime)])
+            dSSedremoval = np.zeros([1, len(self.climate['date'])])
 
             def SSed_comp(n):
                 for val in dSSedremoval:
@@ -2512,7 +2412,7 @@ class FateAndTransport:
         if len(new_r_nine) !=0:
             pass
         else:
-            dDeepS1removal = np.zeros([1, len(new_datetime)])
+            dDeepS1removal = np.zeros([1, len(self.climate['date'])])
 
             def DeepS1_comp(n):
                 for val in dDeepS1removal:
@@ -2523,7 +2423,7 @@ class FateAndTransport:
         if len(new_r_ten) !=0:
             pass
         else:
-            dDeepS2removal = np.zeros([1, len(new_datetime)])
+            dDeepS2removal = np.zeros([1, len(self.climate['date'])])
 
             def DeepS2_comp(n):
                 for val in dDeepS2removal:
@@ -2534,7 +2434,7 @@ class FateAndTransport:
         if len(new_r_eleven) !=0:
             pass
         else:
-            dDeepS3removal = np.zeros([1, len(new_datetime)])
+            dDeepS3removal = np.zeros([1, len(self.climate['date'])])
 
             def DeepS3_comp(n):
                 for val in dDeepS3removal:
@@ -2692,7 +2592,7 @@ class FateAndTransport:
 
         #print "#############################"
 
-        days = len(new_datetime)
+        days = len(self.climate['date'])
         #print days, "days"
 
         bg0 = np.array([bgConcAir, bgConcFW, bgConcSW, bgConcSoil1, bgConcSoil2, bgConcSoil3, bgConcFWsed, bgConcSWsed, bgConcSoil1, bgConcSoil2, bgConcSoil3])
@@ -3030,7 +2930,7 @@ class FateAndTransport:
 
             t0 = 0.0
             t1 = 1
-            time = len(new_datetime)
+            time = len(self.climate['date'])
 
             last = fresults[-1]
             soln = ode(ode_solv, jac).set_integrator('vode', method='bdf', order = 5, with_jacobian=True)
@@ -3095,30 +2995,6 @@ class FateAndTransport:
         if indices[10] == 1:
             deep_soil3_fugacity = new_test[0]
             new_test = np.delete(new_test, 0, 0)
-
-
-
-
-        rowtitles = ['new_datetime']
-        rowtitles2 = ['new_datetime']
-        rowtitles3 = ['new_datetime']
-        data_columns = [(new_datetime)]
-        data_columns2 = [(new_datetime)]
-        data_columns3 = [(new_datetime)]
-
-        #chem_book = xlwt.Workbook()
-        #output_name = "%s_ouput" % (workbook_names)
-        #chem_parameters = chem_book.add_sheet('Chem_Parameters')
-
-        #for i, val in enumerate(propCodes):
-        #    chem_parameters.write(i, 0, val)
-        #for i, val in enumerate(propValues):
-        #    chem_parameters.write(i, 1, val)
-
-        #raw_output = chem_book.add_sheet('Raw_output')
-
-        #soil_output = chem_book.add_sheet('Soil_output')
-
 
         time2 = datetime.datetime.now()
         #print time2, "2"
@@ -3453,6 +3329,7 @@ class FateAndTransport:
         }
 
         return ft_out
+
 
     def write_output(self, ft_out):
         chem_book = xlwt.Workbook()
