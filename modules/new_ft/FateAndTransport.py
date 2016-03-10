@@ -213,18 +213,19 @@ class FateAndTransport:
         release_dsoil3 = release_worksheet.col_values(13, start_rowx=1,end_rowx=None)
         release = zip(new_datetime, release_air, release_freshwater, release_seawater, release_soil1, release_soil2,  release_soil3, release_fwsediment, release_swsediment, release_dsoil1, release_dsoil2, release_dsoil3)
 
-        # BACKGROUND CONCENTRATION LOADING #
-        background_worksheet = main_workbook.sheet_by_name('bgConc')
-        compartment_names = background_worksheet.col_values(1, start_rowx=2,end_rowx=None)
-        code = background_worksheet.col_values(2, start_rowx=2,end_rowx=None)
-        compartment_values = background_worksheet.col_values(3, start_rowx=2,end_rowx=None)
-        background = zip(compartment_names, code, compartment_values)
+        # # BACKGROUND CONCENTRATION LOADING #
+        # background_worksheet = main_workbook.sheet_by_name('bgConc')
+        # compartment_names = background_worksheet.col_values(1, start_rowx=2,end_rowx=None)
+        # code = background_worksheet.col_values(2, start_rowx=2,end_rowx=None)
+        # compartment_values = background_worksheet.col_values(3, start_rowx=2,end_rowx=None)
+        # background = zip(compartment_names, code, compartment_values)
+
 
         # CHEMICAL PROPERTY PARAMETER LOADING #
-        chemProp_worksheet = main_workbook.sheet_by_name('chemProp')
-        propCodes = chemProp_worksheet.col_values(1, start_rowx=2,end_rowx=None)
-        propValues = chemProp_worksheet.col_values(2, start_rowx=2,end_rowx=None)
-        chem_Prop = zip(propCodes, propValues)
+        # chemProp_worksheet = main_workbook.sheet_by_name('chemProp')
+        # propCodes = chemProp_worksheet.col_values(1, start_rowx=2,end_rowx=None)
+        # propValues = chemProp_worksheet.col_values(2, start_rowx=2,end_rowx=None)
+        # chem_Prop = zip(propCodes, propValues)
 
         # DETERMINE COMPARTMENT EXISTENCE #
         # comp_worksheet = main_workbook.sheet_by_name('Compartments')
@@ -239,7 +240,7 @@ class FateAndTransport:
         # visc_vals_air = visc_worksheet.col_values(3, start_rowx=1,end_rowx=None)
         # viscosities = zip(visc_temp, visc_vals)
         # viscosities_air = zip(visc_temp, visc_vals_air)
-        viscosities = self.visc
+        # viscosities = self.visc
 
         ##########CLIMATE PROPERTIES##########
         airTemp = climate_temp
@@ -1070,29 +1071,29 @@ class FateAndTransport:
 
 
         ##########LOAD BACKGROUND CONCENTRATION##########
-        for a, b, c in background:
-            if b == 'A':
-                bgConcAir = float(c)
-            if b == 'fW':
-                bgConcFW = float(c)
-            if b == 'sW':
-                bgConcSW = float(c)
-            if b == 'S1':
-                bgConcSoil1 = float(c)
-            if b == 'S2':
-                bgConcSoil2 = float(c)
-            if b == 'S3':
-                bgConcSoil3 = float(c)
-            if b == 'fwSed':
-                bgConcFWsed = float(c)
-            if b == 'swSed':
-                bgConcSWsed = float(c)
-            if b == 'dS1':
-                bgConcDSoil1 = float(c)
-            if b == 'dS2':
-                bgConcDSoil2 = float(c)
-            if b == 'dS3':
-                bgConcDSoil3 = float(c)
+        for key, value in self.bg.iteritems():
+            if key == 'A':
+                bgConcAir = value
+            if key == 'fW':
+                bgConcFW = value
+            if key == 'sW':
+                bgConcSW = value
+            if key == 'S1':
+                bgConcSoil1 = value
+            if key == 'S2':
+                bgConcSoil2 = value
+            if key == 'S3':
+                bgConcSoil3 = value
+            if key == 'fwSed':
+                bgConcFWsed = value
+            if key == 'swSed':
+                bgConcSWsed = value
+            if key == 'dS1':
+                bgConcDSoil1 = value
+            if key == 'dS2':
+                bgConcDSoil2 = value
+            if key == 'dS3':
+                bgConcDSoil3 = value
 
         ##########LOAD RELEASES##########
 
