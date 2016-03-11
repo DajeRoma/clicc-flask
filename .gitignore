@@ -5,3 +5,4 @@ modules/qsar/results/**
 modules/qsar/logging/**
 modules/qsar/batch_files/log.txt
 modules/new_ft/*.xls
+modules/*.xls

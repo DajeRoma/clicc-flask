@@ -6,12 +6,11 @@ import numpy as np
 import datetime
 
 # info for standalone use
-stand_alone_input = "SF_glycerin_betaSF_glycerin_betaMar_10_16-10_25_18"
+stand_alone_input = "SF_glycerin_betaSF_glycerin_betaMar-10-16_12-07.xls"
 
 class Exposure:
     def __init__(self):
         self.arrays = {}
-        inputs = {}
 
     def run_standalone(self, title):
         main_workbook = xlrd.open_workbook(title)
@@ -32,8 +31,15 @@ class Exposure:
         for idx, name in enumerate(chem_col1):
             chem_props[name] = chem_col2[idx]
 
+        env_sheet = main_workbook.sheet_by_name('Env_Parameters')
+        env_col1 = env_sheet.col_values(1, start_rowx=0, end_rowx=None)
+        env_col2 = env_sheet.col_values(2, start_rowx=0, end_rowx=None)
+        env_props = {}
+        for idx, name in enumerate(env_col1):
+            env_props[name] = env_col2[idx]
+
+
         ft_out = {
-        # Concentrations - kg/m^3
             'results': {
                 'air_conc': {'values': ft_out['air_conc']},
                 'aerosol_conc': {'values': ft_out['aerosol_conc']},
@@ -43,39 +49,32 @@ class Exposure:
                 'agricultural_soil_water': {'values': ft_out['agricultural_soil_water']}
             },
             'chem_props': {
-            # Densities - kg/m^3
-                'densitySoil2':	chem_props['soilP2'],
-                'densityAir': None,
-                'densityWater':	None,
-            # Misc
-                'T': len(ft_out['fw_conc']),
-                'p': None,
-                'kOctanolWater': chem_props['kOctWater'],
+                'kOctWater': chem_props['kOctWater'],
                 'kAirWater': chem_props['kAirWater'],
-                'kDegredationInSoil':	chem_props['kDegSoil'],
+                'kDegSoil':	chem_props['kDegSoil'],
                 'BCF': chem_props['BCF']
             },
             'env_props': {
-
+                'soilP2':	env_props['soilP2']
             }
         }
 
-        def attempt_float(value):
-            try:
-                return float(value)
-            except:
-                return value
+        # def attempt_float(value):
+        #     try:
+        #         return float(value)
+        #     except:
+        #         return value
+        #
+        # for key, val in inputs.iteritems():
+        #     # try to convert members of an array of values(strings) to floats.
+        #     # If it fails, probably because target isn't an array, it converts
+        #     # target itself to float itself
+        #     if isinstance(val, list):
+        #         inputs[key] = map(attempt_float, val)
+        #     else:
+        #         inputs[key] = attempt_float(val)
 
-        for key, val in inputs.iteritems():
-            # try to convert members of an array of values(strings) to floats.
-            # If it fails, probably because target isn't an array, it converts
-            # target itself to float itself
-            if isinstance(val, list):
-                inputs[key] = map(attempt_float, val)
-            else:
-                inputs[key] = attempt_float(val)
-
-        results = self.run(inputs)
+        results = self.run(ft_out)
         self.write_output(results)
 
 
@@ -206,6 +205,5 @@ class Exposure:
         chem_book.save(output_name)
 
 if __name__ == "__main__":
-    g = ExposureMod()
-    output = g.run_standalone(stand_alone_input)
-    g.write_output(output)
+    g = Exposure()
+    g.run_standalone(stand_alone_input)

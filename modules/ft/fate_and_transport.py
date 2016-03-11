@@ -3345,7 +3345,7 @@ class FateAndTransport:
             datetime.datetime.now().strftime("%b-%d-%y_%H-%M") + ".xls")
 
         chem_parameters = chem_book.add_sheet('Chem_Parameters')
-        env_parameters = chem_book.add_sheet('env_Parameters')
+        env_parameters = chem_book.add_sheet('Env_Parameters')
         raw_output = chem_book.add_sheet('Raw_output')
         average_output = chem_book.add_sheet('Average_output')
 
