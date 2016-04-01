@@ -5,7 +5,8 @@ import xlwt
 import numpy as np
 import datetime
 
-# info for standalone use
+# info for standalone use. file must be in the root folder of whatever the base
+# script is.
 stand_alone_input = "SF_glycerin_betaSF_glycerin_betaMar-10-16_12-07.xls"
 
 class Exposure:

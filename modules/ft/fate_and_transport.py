@@ -16,7 +16,7 @@ from itertools import tee, islice, chain, izip
 import os.path
 import inspect
 
-# standalone run options
+# Standalone run options. Name of file in workbooks folder.
 stnd_aln_env = "SF_glycerin_beta.xlsx"
 stnd_aln_chem = "SF_glycerin_beta.xlsx"
 

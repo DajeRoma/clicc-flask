@@ -11,9 +11,6 @@ from modules.ft.fate_and_transport_lvl4 import FateAndTransport as FAT
 from celery import Celery
 from flask.ext.sendmail import Mail, Message
 
-
-
-
 app = Flask(__name__)
 mail = Mail(app)
 app.config.update(
@@ -58,6 +55,7 @@ def per_request_callbacks(response):
         response = func(response)
     return response
 
+# main work method
 @app.route('/run_job', methods=['POST','GET'])
 def run_job():
     if request.method == 'POST':
@@ -102,58 +100,7 @@ def run_job():
             'qsar': qsar_results
             }})
 
-# deprecated until basic functionality is more polished
-# @app.route('/upload_epi_result', methods=['POST'])
-# def upload_file():
-#     if request.method == 'POST':
-#         epi_file = request.files['file']
-#         if epi_file and allowed_file(epi_file.filename):
-#             filename = secure_filename(epi_file.filename)
-#             chems_array = qsar.run(epi_file)
-#             for chem in chems_array:
-#                 for module in [ft, exp]:
-#                     chem.update(module.run(chem))
-#             return jsonify({'parsed_results':chems_array})
-
-#chemspider interaction deprecated until smiles generation solved
-# @app.route('/search', methods=['POST'])
-# def search_cs():
-#     query = request.form['query']
-#     chem = chem_spider.get_chem(query)
-#     return jsonify(chem)
-
-
-# Test routes using seed data
-@app.route('/server_test')
-def index():
-    return 'Hello'
-
-@app.route('/sikuli_test', methods=['GET'])
-def run_sikuli_test():
-    result = qsar.run()
-    return jsonify(result)
-
-@app.route('/exposure_test', methods=['GET'])
-def run_exposure_default_values():
-    result = exp.run()
-    return jsonify(result)
-
-@app.route('/qsar_test', methods=['GET'])
-def run_qsar_default_values():
-    result = qsar.run()
-    return jsonify({'parsed_results':result})
-
-@app.route('/lcia_test', methods=['GET'])
-def run_lcia_default_values():
-    result = lcia.predict()
-    return jsonify({'parsed_results':result})
-
-@app.route('/ft_exposure_test', methods=['GET'])
-def test_ft_exposure():
-    fat_outs = fat.run({})
-    exposure_results = exp.run(fat_outs['exposure_inputs'])
-    return jsonify({'results': exposure_results})
-
+# quick test method for use in Async calls.
 def test_run():
     qsar_results = qsar.run()[0]
     chem = copy.copy(qsar_results)
@@ -167,10 +114,10 @@ def test_run():
         'qsar': qsar_results
         }}
 
-
+# Async tasks
 @celery.task(name='__main__.send_status_email')
 def send_status_email(ticket):
-    # send an email regarding ticket status
+    # send an email regarding ticket status. This needs to be set up with a mail server.
     msg = Message("CLiCC Tool Result Status", sender=("no-reply","no-reply"))
     msg.body = """Hello, the results of {0}, ticket {1}, have returned with a
         status of {2}. Please submit your ticket number for more
@@ -225,8 +172,58 @@ def check_ticket():
             return ticket['status']
     except:
         return "Ticket not found."
+# deprecated until basic functionality is more polished
+# @app.route('/upload_epi_result', methods=['POST'])
+# def upload_file():
+#     if request.method == 'POST':
+#         epi_file = request.files['file']
+#         if epi_file and allowed_file(epi_file.filename):
+#             filename = secure_filename(epi_file.filename)
+#             chems_array = qsar.run(epi_file)
+#             for chem in chems_array:
+#                 for module in [ft, exp]:
+#                     chem.update(module.run(chem))
+#             return jsonify({'parsed_results':chems_array})
+
+#chemspider interaction deprecated until smiles generation solved
+# @app.route('/search', methods=['POST'])
+# def search_cs():
+#     query = request.form['query']
+#     chem = chem_spider.get_chem(query)
+#     return jsonify(chem)
 
 
+# Test routes using seed data. Left commented in case examples are needed.
+@app.route('/server_test')
+def index():
+    return 'Hello'
+#
+# @app.route('/sikuli_test', methods=['GET'])
+# def run_sikuli_test():
+#     result = qsar.run()
+#     return jsonify(result)
+#
+# @app.route('/exposure_test', methods=['GET'])
+# def run_exposure_default_values():
+#     result = exp.run()
+#     return jsonify(result)
+#
+# @app.route('/qsar_test', methods=['GET'])
+# def run_qsar_default_values():
+#     result = qsar.run()
+#     return jsonify({'parsed_results':result})
+#
+# @app.route('/lcia_test', methods=['GET'])
+# def run_lcia_default_values():
+#     result = lcia.predict()
+#     return jsonify({'parsed_results':result})
+#
+# @app.route('/ft_exposure_test', methods=['GET'])
+# def test_ft_exposure():
+#     fat_outs = fat.run({})
+#     exposure_results = exp.run(fat_outs['exposure_inputs'])
+#     return jsonify({'results': exposure_results})
+#
 
 if __name__ == '__main__':
     app.run(debug = True)
